@@ -9,9 +9,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
-using CmdApi.Models;
+using danceCoolServer.Models;
 
-namespace CmdApi
+namespace danceCoolServer
 {
     public class Startup
     {

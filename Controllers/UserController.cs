@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using CmdApi.Models;
+using danceCoolServer.Models;
 
 namespace CmdApi.Controllers
 

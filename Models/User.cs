@@ -1,4 +1,4 @@
-namespace CmdApi.Models
+namespace danceCoolServer.Models
 {
     public class User
     {

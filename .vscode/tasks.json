@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/CmdApi.csproj"
+                "${workspaceFolder}/danceCoolServer.csproj"
             ],
             "problemMatcher": "$tsc"
         },
@@ -17,7 +17,7 @@
             "type": "process",
             "args": [
                 "publish",
-                "${workspaceFolder}/CmdApi.csproj"
+                "${workspaceFolder}/danceCoolServer.csproj"
             ],
             "problemMatcher": "$tsc"
         },
@@ -28,7 +28,7 @@
             "args": [
                 "watch",
                 "run",
-                "${workspaceFolder}/CmdApi.csproj"
+                "${workspaceFolder}/danceCoolServer.csproj"
             ],
             "problemMatcher": "$tsc"
         }

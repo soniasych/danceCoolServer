@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace CmdApi.Models
+namespace danceCoolServer.Models
 {
     public class UserContex : DbContext
     {
