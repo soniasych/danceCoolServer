@@ -9,9 +9,9 @@ namespace CmdApi.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly UserContex _context;
+        private readonly UserContext _context;
 
-        public UserController(UserContex context) => _context = context;
+        public UserController(UserContext context) => _context = context;
         
         //GET:    api/user
         [HttpGet]

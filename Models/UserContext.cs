@@ -2,9 +2,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace danceCoolServer.Models
 {
-    public class UserContex : DbContext
+    public class UserContext : DbContext
     {
-        public UserContex(DbContextOptions<UserContex> options) : base (options)
+        public UserContext(DbContextOptions<UserContext> options) : base (options)
         {
 
         }

@@ -22,7 +22,7 @@ namespace danceCoolServer
         
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<UserContex>
+            services.AddDbContext<UserContext>
             (opt => opt.UseSqlServer(Configuration["Data:CommandAPIConnection:ConnectionString"]));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
