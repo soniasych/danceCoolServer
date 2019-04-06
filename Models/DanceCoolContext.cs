@@ -25,7 +25,7 @@ namespace danceCoolServer.Models
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
-                optionsBuilder.UseSqlServer("Server=ARCH;Database=DanceCool;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer("Server=DESKTOP-MSSKMVD\\SQLEXPRESS;Database=DanceCool;Trusted_Connection=True;");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
