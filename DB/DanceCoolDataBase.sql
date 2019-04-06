@@ -246,7 +246,7 @@ CREATE TABLE [dbo].[Group]
     [DirectionId] INT NOT NULL,
     [LevelId] INT NOT NULL,
     CONSTRAINT FK_Direction_Group FOREIGN KEY ([DirectionId]) REFERENCES [dbo].[DanceDirection]([Id]),
-    CONSTRAINT FK_Level_Group FOREIGN KEY ([LevelId]) REFERENCES [dbo].[GroupSkillLevel]([Id])
+    CONSTRAINT FK_Level_Group FOREIGN KEY ([LevelId]) REFERENCES [dbo].[SkillLevel]([Id])
 );
 GO
 
