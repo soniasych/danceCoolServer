@@ -1,8 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace danceCoolServer.Models
 {
-    public class DanceCoolContext : DbContext
+    public partial class DanceCoolContext : DbContext
     {
         public DanceCoolContext()
         {
@@ -13,10 +15,15 @@ namespace danceCoolServer.Models
         {
         }
 
+        public virtual DbSet<Abonement> Abonement { get; set; }
         public virtual DbSet<DanceDirection> DanceDirection { get; set; }
         public virtual DbSet<Group> Group { get; set; }
         public virtual DbSet<GroupSkillLevel> GroupSkillLevel { get; set; }
+        public virtual DbSet<Lesson> Lesson { get; set; }
+        public virtual DbSet<LessonType> LessonType { get; set; }
+        public virtual DbSet<Payment> Payment { get; set; }
         public virtual DbSet<Role> Role { get; set; }
+        public virtual DbSet<SkillLevel> SkillLevel { get; set; }
         public virtual DbSet<User> User { get; set; }
         public virtual DbSet<UserCredentials> UserCredentials { get; set; }
         public virtual DbSet<UserGroup> UserGroup { get; set; }
@@ -25,12 +32,23 @@ namespace danceCoolServer.Models
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
+            {
                 optionsBuilder.UseSqlServer("Server=DESKTOP-MSSKMVD\\SQLEXPRESS;Database=DanceCool;Trusted_Connection=True;");
+            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasAnnotation("ProductVersion", "2.2.3-servicing-35854");
+
+            modelBuilder.Entity<Abonement>(entity =>
+            {
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.Property(e => e.AbonementName)
+                    .IsRequired()
+                    .HasMaxLength(50);
+            });
 
             modelBuilder.Entity<DanceDirection>(entity =>
             {
@@ -45,13 +63,13 @@ namespace danceCoolServer.Models
                     .WithMany(p => p.Group)
                     .HasForeignKey(d => d.DirectionId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Group__Direction__1F98B2C1");
+                    .HasConstraintName("FK_Direction_Group");
 
                 entity.HasOne(d => d.Level)
                     .WithMany(p => p.Group)
                     .HasForeignKey(d => d.LevelId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Group__LevelId__208CD6FA");
+                    .HasConstraintName("FK_Level_Group");
             });
 
             modelBuilder.Entity<GroupSkillLevel>(entity =>
@@ -65,8 +83,67 @@ namespace danceCoolServer.Models
                     .HasMaxLength(50);
             });
 
+            modelBuilder.Entity<Lesson>(entity =>
+            {
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.Property(e => e.Date).HasColumnType("datetime");
+
+                entity.HasOne(d => d.Group)
+                    .WithMany(p => p.InverseGroup)
+                    .HasForeignKey(d => d.GroupId)
+                    .HasConstraintName("FK_Group_Lesson");
+
+                entity.HasOne(d => d.LessonType)
+                    .WithMany(p => p.InverseLessonType)
+                    .HasForeignKey(d => d.LessonTypeId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_LessonType_Lesson");
+            });
+
+            modelBuilder.Entity<LessonType>(entity =>
+            {
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.Property(e => e.LessonTypeName)
+                    .IsRequired()
+                    .HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<Payment>(entity =>
+            {
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.Property(e => e.Date).HasColumnType("datetime");
+
+                entity.Property(e => e.TotalSum).HasColumnType("money");
+
+                entity.HasOne(d => d.UserReceiver)
+                    .WithMany(p => p.InverseUserReceiver)
+                    .HasForeignKey(d => d.UserReceiverId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_UserReceiver_Payment");
+
+                entity.HasOne(d => d.UserSender)
+                    .WithMany(p => p.InverseUserSender)
+                    .HasForeignKey(d => d.UserSenderId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_UserSender_Payment");
+            });
+
             modelBuilder.Entity<Role>(entity =>
             {
+                entity.Property(e => e.RoleName)
+                    .IsRequired()
+                    .HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<SkillLevel>(entity =>
+            {
+                entity.Property(e => e.Description)
+                    .IsRequired()
+                    .HasMaxLength(1024);
+
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(50);
@@ -81,6 +158,10 @@ namespace danceCoolServer.Models
                 entity.Property(e => e.LastName)
                     .IsRequired()
                     .HasMaxLength(512);
+
+                entity.Property(e => e.PhoneNumber)
+                    .HasMaxLength(17)
+                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<UserCredentials>(entity =>
@@ -97,7 +178,7 @@ namespace danceCoolServer.Models
                     .WithMany(p => p.UserCredentials)
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__UserCrede__Passw__151B244E");
+                    .HasConstraintName("FK_User_UserCredentials");
             });
 
             modelBuilder.Entity<UserGroup>(entity =>
@@ -106,13 +187,13 @@ namespace danceCoolServer.Models
                     .WithMany(p => p.UserGroup)
                     .HasForeignKey(d => d.GroupId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__UserGroup__Group__245D67DE");
+                    .HasConstraintName("FK_Group_UserGroup");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.UserGroup)
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__UserGroup__UserI__236943A5");
+                    .HasConstraintName("FK_User_UserGroup");
             });
 
             modelBuilder.Entity<UserRole>(entity =>
@@ -121,13 +202,13 @@ namespace danceCoolServer.Models
                     .WithMany(p => p.UserRole)
                     .HasForeignKey(d => d.RoleId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__UserRole__RoleId__18EBB532");
+                    .HasConstraintName("FK_Role_UserRole");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.UserRole)
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__UserRole__UserId__17F790F9");
+                    .HasConstraintName("FK_User_UserRole");
             });
         }
     }
