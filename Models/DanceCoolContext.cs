@@ -18,7 +18,6 @@ namespace danceCoolServer.Models
         public virtual DbSet<Abonement> Abonement { get; set; }
         public virtual DbSet<DanceDirection> DanceDirection { get; set; }
         public virtual DbSet<Group> Group { get; set; }
-        public virtual DbSet<GroupSkillLevel> GroupSkillLevel { get; set; }
         public virtual DbSet<Lesson> Lesson { get; set; }
         public virtual DbSet<LessonType> LessonType { get; set; }
         public virtual DbSet<Payment> Payment { get; set; }
@@ -33,7 +32,8 @@ namespace danceCoolServer.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=DESKTOP-MSSKMVD\\SQLEXPRESS;Database=DanceCool;Trusted_Connection=True;");
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+                optionsBuilder.UseSqlServer("Server=XPS15\\SQLEXPRESS;Database=DanceCool;Trusted_Connection=True;");
             }
         }
 
@@ -70,17 +70,6 @@ namespace danceCoolServer.Models
                     .HasForeignKey(d => d.LevelId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Level_Group");
-            });
-
-            modelBuilder.Entity<GroupSkillLevel>(entity =>
-            {
-                entity.Property(e => e.Description)
-                    .IsRequired()
-                    .HasMaxLength(1024);
-
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasMaxLength(50);
             });
 
             modelBuilder.Entity<Lesson>(entity =>

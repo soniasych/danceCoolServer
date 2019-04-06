@@ -15,7 +15,7 @@ namespace danceCoolServer.Models
         public int LevelId { get; set; }
 
         public virtual DanceDirection Direction { get; set; }
-        public virtual GroupSkillLevel Level { get; set; }
+        public virtual SkillLevel Level { get; set; }
         public virtual ICollection<UserGroup> UserGroup { get; set; }
     }
 }

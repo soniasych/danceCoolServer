@@ -1,5 +1,4 @@
-﻿using danceCoolServer.Models;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Mvc;
@@ -17,8 +16,6 @@ namespace danceCoolServer
         
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<DanceCoolContext>
-                (opt => opt.UseSqlServer(Configuration["Data:CommandAPIConnection:ConnectionString"]));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
