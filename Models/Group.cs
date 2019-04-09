@@ -7,6 +7,7 @@ namespace danceCoolServer.Models
     {
         public Group()
         {
+            Lesson = new HashSet<Lesson>();
             UserGroup = new HashSet<UserGroup>();
         }
 
@@ -16,6 +17,7 @@ namespace danceCoolServer.Models
 
         public virtual DanceDirection Direction { get; set; }
         public virtual SkillLevel Level { get; set; }
+        public virtual ICollection<Lesson> Lesson { get; set; }
         public virtual ICollection<UserGroup> UserGroup { get; set; }
     }
 }

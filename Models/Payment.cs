@@ -5,12 +5,6 @@ namespace danceCoolServer.Models
 {
     public partial class Payment
     {
-        public Payment()
-        {
-            InverseUserReceiver = new HashSet<Payment>();
-            InverseUserSender = new HashSet<Payment>();
-        }
-
         public int Id { get; set; }
         public DateTime Date { get; set; }
         public decimal TotalSum { get; set; }
@@ -18,9 +12,8 @@ namespace danceCoolServer.Models
         public int UserReceiverId { get; set; }
         public int AbonementId { get; set; }
 
-        public virtual Payment UserReceiver { get; set; }
-        public virtual Payment UserSender { get; set; }
-        public virtual ICollection<Payment> InverseUserReceiver { get; set; }
-        public virtual ICollection<Payment> InverseUserSender { get; set; }
+        public virtual Abonement Abonement { get; set; }
+        public virtual User UserReceiver { get; set; }
+        public virtual User UserSender { get; set; }
     }
 }

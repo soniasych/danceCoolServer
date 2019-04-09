@@ -32,8 +32,7 @@ namespace danceCoolServer.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=XPS15\\SQLEXPRESS;Database=DanceCool;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer("Server=ARCH;Database=DanceCool;Trusted_Connection=True;");
             }
         }
 
@@ -79,12 +78,12 @@ namespace danceCoolServer.Models
                 entity.Property(e => e.Date).HasColumnType("datetime");
 
                 entity.HasOne(d => d.Group)
-                    .WithMany(p => p.InverseGroup)
+                    .WithMany(p => p.Lesson)
                     .HasForeignKey(d => d.GroupId)
                     .HasConstraintName("FK_Group_Lesson");
 
                 entity.HasOne(d => d.LessonType)
-                    .WithMany(p => p.InverseLessonType)
+                    .WithMany(p => p.Lesson)
                     .HasForeignKey(d => d.LessonTypeId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_LessonType_Lesson");
@@ -107,14 +106,20 @@ namespace danceCoolServer.Models
 
                 entity.Property(e => e.TotalSum).HasColumnType("money");
 
+                entity.HasOne(d => d.Abonement)
+                    .WithMany(p => p.Payment)
+                    .HasForeignKey(d => d.AbonementId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Abonement_Payment");
+
                 entity.HasOne(d => d.UserReceiver)
-                    .WithMany(p => p.InverseUserReceiver)
+                    .WithMany(p => p.PaymentUserReceiver)
                     .HasForeignKey(d => d.UserReceiverId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_UserReceiver_Payment");
 
                 entity.HasOne(d => d.UserSender)
-                    .WithMany(p => p.InverseUserSender)
+                    .WithMany(p => p.PaymentUserSender)
                     .HasForeignKey(d => d.UserSenderId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_UserSender_Payment");

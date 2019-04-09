@@ -338,8 +338,8 @@ CREATE TABLE [dbo].[Lesson]
     [Room] INT NOT NULL,
     [LessonTypeId] INT NOT NULL,
     [GroupId] INT NULL,
-    CONSTRAINT FK_LessonType_Lesson FOREIGN KEY ([LessonTypeId]) REFERENCES [dbo].[Lesson]([Id]),
-    CONSTRAINT FK_Group_Lesson FOREIGN KEY ([GroupId]) REFERENCES [dbo].[Lesson]([Id])
+    CONSTRAINT FK_LessonType_Lesson FOREIGN KEY ([LessonTypeId]) REFERENCES [dbo].[LessonType]([Id]),
+    CONSTRAINT FK_Group_Lesson FOREIGN KEY ([GroupId]) REFERENCES [dbo].[Group]([Id])
 );
 GO
 
@@ -360,7 +360,8 @@ CREATE TABLE [dbo].[Payment]
     [UserSenderId] INT NOT NULL,
     [UserReceiverId] INT NOT NULL,
     [AbonementId] INT NOT NULL,
-    CONSTRAINT FK_UserSender_Payment FOREIGN KEY ([UserSenderId]) REFERENCES [dbo].[Payment]([Id]),
-    CONSTRAINT FK_UserReceiver_Payment FOREIGN KEY ([UserReceiverId]) REFERENCES [dbo].[Payment]([Id])
+    CONSTRAINT FK_UserSender_Payment FOREIGN KEY ([UserSenderId]) REFERENCES [dbo].[User]([Id]),
+    CONSTRAINT FK_UserReceiver_Payment FOREIGN KEY ([UserReceiverId]) REFERENCES [dbo].[User]([Id]),
+	CONSTRAINT FK_Abonement_Payment FOREIGN KEY ([AbonementId]) REFERENCES [dbo].[Abonement]([Id])
 );
 GO

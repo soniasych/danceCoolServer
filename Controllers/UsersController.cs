@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using danceCoolServer.Models;
+using danceCoolServer.DTO;
 
 namespace danceCoolServer.Controllers
 {
@@ -22,9 +23,20 @@ namespace danceCoolServer.Controllers
 
         // GET: api/Users
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetUser()
+        public async Task<ActionResult<IEnumerable<UserDTO>>> GetUser()
         {
-            return await _context.User.ToListAsync();
+            IEnumerable<User> users = await _context.User.ToListAsync();
+            if (users == null)
+            {
+                return null;
+            }
+            var dtos = new List<UserDTO>();
+            foreach (var user in users)
+            {
+                dtos.Add(UserToUserDTO(user));
+            }
+            return dtos;
+          
         }
 
         // GET: api/Users/5
@@ -100,6 +112,14 @@ namespace danceCoolServer.Controllers
         private bool UserExists(int id)
         {
             return _context.User.Any(e => e.Id == id);
+        }
+
+        private UserDTO UserToUserDTO(User user)
+        {
+            return new UserDTO(user.Id,
+                               user.FirstName,
+                               user.LastName,
+                              user.PhoneNumber);
         }
     }
 }
