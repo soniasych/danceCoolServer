@@ -4,4 +4,9 @@
     <TargetFramework>netcoreapp3.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\DanceCoolDataAccessLogic\DanceCoolDataAccessLogic.csproj" />
+    <ProjectReference Include="..\DanceCoolDTO\DanceCoolDTO.csproj" />
+  </ItemGroup>
+
 </Project>
