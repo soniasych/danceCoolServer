@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using DanceCoolDataAccessLogic.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace DanceCoolDataAccessLogic.Repositories.Interfaces
 {
@@ -11,14 +12,8 @@ namespace DanceCoolDataAccessLogic.Repositories.Interfaces
         {
         }
 
-        public Task<IEnumerable<Role>> GetAllRolesAsync()
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<IEnumerable<Role>> GetAllRolesAsync() => Context.Roles;
 
-        public Task<Role> GetAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<Role> GetAsync(int id) => await Context.Roles.FirstOrDefaultAsync(role => role.Id == id);
     }
 }

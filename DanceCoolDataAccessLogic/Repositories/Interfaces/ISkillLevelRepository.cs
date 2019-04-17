@@ -6,7 +6,6 @@ namespace DanceCoolDataAccessLogic.Repositories.Interfaces
 {
     interface ISkillLevelRepository : IRepository<SkillLevel>
     {
-        Task<IEnumerable<SkillLevel>> GetAllSkillLevelsAsync();
         Task<SkillLevel> GetAsync(int id);
     }
 }
