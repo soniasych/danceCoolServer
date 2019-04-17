@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DanceCoolDataAccessLogic\DanceCoolDataAccessLogic.csproj" />
+    <ProjectReference Include="..\DanceCoolDTO\DanceCoolDTO.csproj" />
   </ItemGroup>
 
 </Project>

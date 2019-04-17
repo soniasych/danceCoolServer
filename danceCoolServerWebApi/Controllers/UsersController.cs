@@ -1,9 +1,11 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using danceCoolServer.Models;
-//using danceCoolServer.DTO;
+using DanceCoolDataAccessLogic.Repositories;
+using DanceCoolDTO;
 
 namespace danceCoolServer.Controllers
 {
@@ -20,21 +22,10 @@ namespace danceCoolServer.Controllers
 
         // GET: api/Users
         [HttpGet]
-        //public async Task<ActionResult<IEnumerable<UserDTO>>> GetUser()
-        //{
-        //    IEnumerable<User> users = await _context.User.ToListAsync();
-        //    if (users == null)
-        //    {
-        //        return null;
-        //    }
-        //    var dtos = new List<UserDTO>();
-        //    foreach (var user in users)
-        //    {
-        //        dtos.Add(UserToUserDTO(user));
-        //    }
-        //    return dtos;
-          
-        //}
+        public async Task<ActionResult<IEnumerable<User>>> GetUser()
+        {
+            return await _context.User.ToListAsync();
+        }
 
         // GET: api/Users/5
         [HttpGet("{id}")]
@@ -110,13 +101,5 @@ namespace danceCoolServer.Controllers
         {
             return _context.User.Any(e => e.Id == id);
         }
-
-        //private UserDTO UserToUserDTO(User user)
-        //{
-        //    return new UserDTO(user.Id,
-        //                       user.FirstName,
-        //                       user.LastName,
-        //                      user.PhoneNumber);
-        //}
     }
 }
