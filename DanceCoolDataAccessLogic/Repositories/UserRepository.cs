@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using DanceCoolDataAccessLogic.Entities;
 using DanceCoolDataAccessLogic.Repositories.Interfaces;
@@ -16,12 +14,12 @@ namespace DanceCoolDataAccessLogic.Repositories
 
         public async Task<IEnumerable<User>> GetAllUsersAsync()
         {
-            return Context.User;
+            return Context.Users;
         }
 
-        public Task<User> GetAsync(int id)
+        public async Task<User> GetAsync(int id)
         {
-            return Context.User.FirstOrDefaultAsync(user => user.Id == id);
+            return await Context.Users.FirstOrDefaultAsync(user => user.Id == id);
         }
     }
 }

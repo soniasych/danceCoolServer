@@ -8,7 +8,7 @@ using DanceCoolDataAccessLogic.Repositories.Interfaces;
 
 namespace DanceCoolDataAccessLogic.Repositories
 {
-    class BaseRepository<TEntity> : IRepository<TEntity> where TEntity : class
+    internal class BaseRepository<TEntity> : IRepository<TEntity> where TEntity : class
     {
         protected readonly DanceCoolContext Context;
 

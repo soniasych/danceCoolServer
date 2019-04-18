@@ -5,9 +5,11 @@ VisualStudioVersion = 16.0.28729.10
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "danceCoolWebApi", "danceCoolServerWebApi\danceCoolWebApi.csproj", "{15D8D5AD-089C-4385-8EA2-39AB3A34BB93}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DanceCoolDTO", "DanceCoolDTO\DanceCoolDTO.csproj", "{A243FFD8-FD41-4F0B-837D-F79559676767}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DanceCoolDTO", "DanceCoolDTO\DanceCoolDTO.csproj", "{A243FFD8-FD41-4F0B-837D-F79559676767}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DanceCoolDataAccessLogic", "DanceCoolDataAccessLogic\DanceCoolDataAccessLogic.csproj", "{A92617A5-C3D0-40D4-B204-ACA914B28199}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DanceCoolBusinessLogic", "DanceCoolBusinessLogic\DanceCoolBusinessLogic.csproj", "{B2787E82-C37F-4A0C-8445-0F929B6DD6BD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{A92617A5-C3D0-40D4-B204-ACA914B28199}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A92617A5-C3D0-40D4-B204-ACA914B28199}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A92617A5-C3D0-40D4-B204-ACA914B28199}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2787E82-C37F-4A0C-8445-0F929B6DD6BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2787E82-C37F-4A0C-8445-0F929B6DD6BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2787E82-C37F-4A0C-8445-0F929B6DD6BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2787E82-C37F-4A0C-8445-0F929B6DD6BD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
