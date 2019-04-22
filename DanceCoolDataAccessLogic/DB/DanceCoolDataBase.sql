@@ -163,6 +163,22 @@ CREATE TABLE [dbo].[UserCredentials]
 );
 GO
 
+-- Insert rows into table 'UserCredentials' in schema '[dbo]'
+INSERT INTO [dbo].[UserCredentials]
+    ([UserId], [Email], [Password])
+VALUES
+    (1, 'andrushchenko@mail.com', 'MamaMylaRamu'),
+    (2, 'peliukh@mail.com', 'MamaMylaRamu'),
+    (3, 'lutsshyn@mail.com', 'MamaMylaRamu'),
+    (4, 'pakholkiv@mail.com', 'MamaMylaRamu'),
+    (5, 'koval@mail.com', 'MamaMylaRamu'),
+    (6, 'danchuk@mail.com', 'MamaMylaRamu'),
+    (7, 'kravchenko@mail.com', 'MamaMylaRamu'),
+    (8, 'chabarenko@mail.com', 'MamaMylaRamu'),
+    (9, 'gorbova@mail.com', 'MamaMylaRamu'),
+    (10, 'kotyk@mail.com', 'MamaMylaRamu')
+GO
+
 -- Create a new table called '[UserRole]' in schema '[dbo]'
 CREATE TABLE [dbo].[UserRole]
 (
@@ -252,11 +268,17 @@ GO
 
 -- Insert rows into table 'Group' in schema '[dbo]'
 INSERT INTO [dbo].[Group]
-(DirectionId, LevelId )
+    (DirectionId, LevelId )
 VALUES
-(1,2),
-(2,1),
-(3,3)
+    (1, 1),
+    (1, 2),
+    (1, 3),
+    (2, 1),
+    (2, 2),
+    (2, 3),
+    (3, 1),
+    (3, 2),
+    (3, 3)
 GO
 
 -- Create a new table called '[UserGroup]' in schema '[dbo]'
@@ -271,8 +293,10 @@ CREATE TABLE [dbo].[UserGroup]
 GO
 
 INSERT INTO [dbo].[UserGroup]
-(UserId, GroupId)
-VALUES (1,1),(2,1)
+    (UserId, GroupId)
+VALUES
+    (1, 1),
+    (2, 1)
 GO
 
 DECLARE @salsaLaCount INT = 7;
@@ -289,8 +313,10 @@ GO
 
 
 INSERT INTO [dbo].[UserGroup]
-(UserId, GroupId)
-VALUES (3,2),(4,2)
+    (UserId, GroupId)
+VALUES
+    (3, 2),
+    (4, 2)
 GO
 
 DECLARE @salsaLaCount INT = 15;
@@ -306,8 +332,10 @@ END;
 GO
 
 INSERT INTO [dbo].[UserGroup]
-(UserId, GroupId)
-VALUES (5,3),(6,3)
+    (UserId, GroupId)
+VALUES
+    (5, 3),
+    (6, 3)
 GO
 
 DECLARE @salsaLaCount INT = 22;
@@ -325,7 +353,8 @@ GO
 -- Create a new table called '[LessonType]' in schema '[dbo]'
 CREATE TABLE [dbo].[LessonType]
 (
-    [Id] INT NOT NULL PRIMARY KEY, -- Primary Key column
+    [Id] INT NOT NULL PRIMARY KEY,
+    -- Primary Key column
     [LessonTypeName] NVARCHAR(50) NOT NULL
 );
 GO
@@ -333,7 +362,8 @@ GO
 -- Create a new table called '[Lesson]' in schema '[dbo]'
 CREATE TABLE [dbo].[Lesson]
 (
-    [Id] INT NOT NULL PRIMARY KEY, -- Primary Key column
+    [Id] INT NOT NULL PRIMARY KEY,
+    -- Primary Key column
     [Date] DATETIME NOT NULL,
     [Room] INT NOT NULL,
     [LessonTypeId] INT NOT NULL,
@@ -346,7 +376,8 @@ GO
 -- Create a new table called '[Abonement]' in schema '[dbo]'
 CREATE TABLE [dbo].[Abonement]
 (
-    [Id] INT NOT NULL PRIMARY KEY, -- Primary Key column
+    [Id] INT NOT NULL PRIMARY KEY,
+    -- Primary Key column
     [AbonementName] NVARCHAR(50) NOT NULL
 );
 GO
@@ -354,7 +385,8 @@ GO
 -- Create a new table called '[Payment]' in schema '[dbo]'
 CREATE TABLE [dbo].[Payment]
 (
-    [Id] INT NOT NULL PRIMARY KEY, -- Primary Key column
+    [Id] INT NOT NULL PRIMARY KEY,
+    -- Primary Key column
     [Date] DATETIME NOT NULL,
     [TotalSum] MONEY NOT NULL,
     [UserSenderId] INT NOT NULL,
@@ -362,6 +394,6 @@ CREATE TABLE [dbo].[Payment]
     [AbonementId] INT NOT NULL,
     CONSTRAINT FK_UserSender_Payment FOREIGN KEY ([UserSenderId]) REFERENCES [dbo].[User]([Id]),
     CONSTRAINT FK_UserReceiver_Payment FOREIGN KEY ([UserReceiverId]) REFERENCES [dbo].[User]([Id]),
-	CONSTRAINT FK_Abonement_Payment FOREIGN KEY ([AbonementId]) REFERENCES [dbo].[Abonement]([Id])
+    CONSTRAINT FK_Abonement_Payment FOREIGN KEY ([AbonementId]) REFERENCES [dbo].[Abonement]([Id])
 );
 GO

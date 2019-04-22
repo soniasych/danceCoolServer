@@ -17,9 +17,14 @@ namespace DanceCoolDataAccessLogic.Repositories
             return Context.UserCredentials;
         }
 
-        public Task<UserCredentials> GetAsync(int id)
+        public Task<UserCredentials> GetUserCredentialsByIdAsync(int id)
         {
             return Context.UserCredentials.FirstOrDefaultAsync(credentials => credentials.Id == id);
+        }
+
+        public Task<UserCredentials> GetUserCredentialsByUserIdAsync(int userId)
+        {
+            return Context.UserCredentials.FirstOrDefaultAsync(credentials => credentials.UserId == userId);
         }
     }
 }
