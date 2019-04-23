@@ -11,9 +11,9 @@ namespace DanceCoolDataAccessLogic.Repositories
         {
         }
 
-        public Task<DanceDirection> GetDanceDirectionAsync(int id)
+        public async Task<DanceDirection> GetDanceDirectionAsync(int id)
         {
-            return Context.DanceDirection.FirstOrDefaultAsync(dd => dd.Id == id);
+            return await Context.DanceDirection.FindAsync(id);
         }
     }
 }

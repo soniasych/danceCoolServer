@@ -9,8 +9,4 @@
     <ProjectReference Include="..\DanceCoolDTO\DanceCoolDTO.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Interfaces\" />
-  </ItemGroup>
-
 </Project>
