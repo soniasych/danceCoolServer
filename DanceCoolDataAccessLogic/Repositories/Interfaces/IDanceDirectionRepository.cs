@@ -3,7 +3,7 @@ using DanceCoolDataAccessLogic.Entities;
 
 namespace DanceCoolDataAccessLogic.Repositories.Interfaces
 {
-    interface IDanceDirectionRepository : IRepository<DanceDirection>
+    public interface IDanceDirectionRepository : IRepository<DanceDirection>
     {
         Task<DanceDirection> GetDanceDirectionAsync(int id);
     }

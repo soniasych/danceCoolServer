@@ -4,7 +4,7 @@ using DanceCoolDataAccessLogic.Entities;
 
 namespace DanceCoolDataAccessLogic.Repositories.Interfaces
 {
-    interface IGroupRepository : IRepository<Group>
+    public interface IGroupRepository : IRepository<Group>
     {
         Task<IEnumerable<Group>> GetAllGroupsAsync();
         Task<Group> GetGroupByIdAsync(int id);

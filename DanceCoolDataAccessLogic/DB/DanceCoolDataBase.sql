@@ -353,17 +353,25 @@ GO
 -- Create a new table called '[LessonType]' in schema '[dbo]'
 CREATE TABLE [dbo].[LessonType]
 (
-    [Id] INT NOT NULL PRIMARY KEY,
+    [Id] INT NOT NULL PRIMARY KEY IDENTITY(1,1),
     -- Primary Key column
     [LessonTypeName] NVARCHAR(50) NOT NULL
 );
 GO
 
+-- Insert rows into table 'LessonType' in schema '[dbo]'
+INSERT INTO [dbo].[LessonType]
+(  LessonTypeName )
+VALUES
+( N'Групове' ),
+( N'Індивідуальне' ),
+( N'Парне')
+GO
+
 -- Create a new table called '[Lesson]' in schema '[dbo]'
 CREATE TABLE [dbo].[Lesson]
 (
-    [Id] INT NOT NULL PRIMARY KEY,
-    -- Primary Key column
+    [Id] INT NOT NULL PRIMARY KEY IDENTITY(1,1),
     [Date] DATETIME NOT NULL,
     [Room] INT NOT NULL,
     [LessonTypeId] INT NOT NULL,
@@ -385,8 +393,7 @@ GO
 -- Create a new table called '[Payment]' in schema '[dbo]'
 CREATE TABLE [dbo].[Payment]
 (
-    [Id] INT NOT NULL PRIMARY KEY,
-    -- Primary Key column
+    [Id] INT NOT NULL PRIMARY KEY IDENTITY(1,1),    
     [Date] DATETIME NOT NULL,
     [TotalSum] MONEY NOT NULL,
     [UserSenderId] INT NOT NULL,
