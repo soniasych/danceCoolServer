@@ -2,7 +2,7 @@
 
 namespace DanceCoolBusinessLogic.Services
 {
-    internal class BaseService
+    public class BaseService
     {
         protected readonly IUnitOfWork db;
 

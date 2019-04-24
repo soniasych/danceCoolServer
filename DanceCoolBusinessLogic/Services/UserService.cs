@@ -31,7 +31,7 @@ namespace DanceCoolBusinessLogic.Services
             return dtos;
         }
 
-        public async Task<UserDTO> GetUserById(int id)
+        public async Task<UserDTO> GetUserByIdAsync(int id)
         {
             var userModel = await db.Users.GetAsync(id);
             if (userModel != null)

@@ -86,8 +86,7 @@ GO
 -- Create a new table called '[Role]' in schema '[dbo]'
 CREATE TABLE [dbo].[Role]
 (
-    [Id] INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
-    -- Primary Key column
+    [Id] INT NOT NULL PRIMARY KEY IDENTITY(1,1),
     [RoleName] NVARCHAR(50) NOT NULL
 );
 GO
@@ -104,8 +103,7 @@ GO
 -- Create a new table called '[Users]' in schema '[dbo]'
 CREATE TABLE [dbo].[User]
 (
-    [Id] INT NOT NULL IDENTITY(1,1) PRIMARY KEY ,
-    -- Primary Key column
+    [Id] INT NOT NULL PRIMARY KEY IDENTITY(1,1),
     [FirstName] NVARCHAR(512) NOT NULL,
     [LastName] NVARCHAR(512) NOT NULL,
     [PhoneNumber] VARCHAR(17) NULL
@@ -183,7 +181,6 @@ GO
 CREATE TABLE [dbo].[UserRole]
 (
     [Id] INT NOT NULL PRIMARY KEY IDENTITY(1,1),
-    -- Primary Key column
     [UserId] INT NOT NULL,
     [RoleId] INT NOT NULL,
     CONSTRAINT FK_User_UserRole FOREIGN KEY ([UserId]) REFERENCES [dbo].[User]([Id]),
@@ -238,7 +235,6 @@ GO
 CREATE TABLE [dbo].[SkillLevel]
 (
     [Id] INT NOT NULL IDENTITY(1,1) PRIMARY KEY ,
-    -- Primary Key column
     [Name] NVARCHAR(50) NOT NULL,
     [Description] NVARCHAR(1024) NOT NULL
 );
@@ -354,7 +350,6 @@ GO
 CREATE TABLE [dbo].[LessonType]
 (
     [Id] INT NOT NULL PRIMARY KEY IDENTITY(1,1),
-    -- Primary Key column
     [LessonTypeName] NVARCHAR(50) NOT NULL
 );
 GO
@@ -385,7 +380,6 @@ GO
 CREATE TABLE [dbo].[Abonement]
 (
     [Id] INT NOT NULL PRIMARY KEY,
-    -- Primary Key column
     [AbonementName] NVARCHAR(50) NOT NULL
 );
 GO

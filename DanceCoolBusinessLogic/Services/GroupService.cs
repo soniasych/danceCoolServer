@@ -6,14 +6,26 @@ using DanceCoolDTO;
 
 namespace DanceCoolBusinessLogic.Services
 {
-    class GroupService : BaseService
+    public class GroupService : BaseService, IGroupService
     {
         public GroupService(IUnitOfWork db) : base(db)
         {
         }
 
-        public async Task<IEnumerable<GroupDTO>> GetAllGroupsAsync()
+        //private IEnumerable<Group> _groups;
+        //private bool _initialized = false;
+
+        //private async void CheckInit()
+        //{
+        //    if (_initialized)
+        //        return;
+        //    _groups = await db.Groups.GetAll();
+        //    _initialized = true;
+        //}
+
+        public async Task<List<GroupDTO>> GetAllGroupsAsync()
         {
+            //CheckInit();
             var groups = await db.Groups.GetAllGroupsAsync();
             if (groups == null)
             {
@@ -30,19 +42,15 @@ namespace DanceCoolBusinessLogic.Services
             return dtos;
         }
 
-        private async Task<UserDTO> GroupModelToGroupDTOAsync(Group groupModel)
+        private async Task<GroupDTO> GroupModelToGroupDTOAsync(Group groupModel)
         {
-            var task = new Task<UserDTO>(() =>
-            {
-                var userDto = new UserDTO(userModel.Id,
-                    groupModel.FirstName,
-                    groupModel.LastName,
-                    groupModel.PhoneNumber);
-                return userDto;
-            });
+            var level = await db.SkillLevels.GetAsync(groupModel.LevelId);
+            var directions = await db.DanceDirections.GetDanceDirectionAsync(groupModel.DirectionId);
 
-            task.Start();
-            return await task;
+            return new GroupDTO(
+                groupModel.Id,
+                directions.Name,
+                level.Name);
         }
     }
 }

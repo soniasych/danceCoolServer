@@ -4,9 +4,8 @@ using DanceCoolDTO;
 
 namespace DanceCoolBusinessLogic.Services
 {
-    interface IUserService
+    public interface IGroupService
     {
-        Task<IEnumerable<UserDTO>> GetAllUsersAsync();
-        Task<UserDTO> GetUserByIdAsync(int id);
+        Task<List<GroupDTO>> GetAllGroupsAsync();
     }
 }
