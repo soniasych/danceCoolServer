@@ -4,7 +4,7 @@ using DanceCoolDataAccessLogic.Entities;
 
 namespace DanceCoolDataAccessLogic.Repositories.Interfaces
 {
-    interface IRoleRepository : IRepository<Role>
+    public interface IRoleRepository : IRepository<Role>
     {
         Task<IEnumerable<Role>> GetAllRolesAsync();
         Task<Role> GetAsync(int id);

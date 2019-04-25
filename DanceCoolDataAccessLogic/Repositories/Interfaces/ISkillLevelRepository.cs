@@ -4,8 +4,9 @@ using DanceCoolDataAccessLogic.Entities;
 
 namespace DanceCoolDataAccessLogic.Repositories.Interfaces
 {
-    interface ISkillLevelRepository : IRepository<SkillLevel>
+    public  interface ISkillLevelRepository : IRepository<SkillLevel>
     {
-        Task<SkillLevel> GetAsync(int id);
+        IEnumerable<SkillLevel> GetAllSkillLevels();
+        SkillLevel GetSkillLevelById(int id);
     }
 }

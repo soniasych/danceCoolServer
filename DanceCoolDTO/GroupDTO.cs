@@ -1,6 +1,6 @@
 ﻿namespace DanceCoolDTO
 {
-    class GroupDTO
+    public class GroupDTO
     {
         public int GroupId { get; set; }
         public string GroupDirection { get; set; }
