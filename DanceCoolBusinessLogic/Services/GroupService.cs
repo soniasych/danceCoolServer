@@ -25,7 +25,6 @@ namespace DanceCoolBusinessLogic.Services
 
         public IEnumerable<GroupDTO> GetAllGroups()
         {
-            //CheckInit();
             var groups = db.Groups.GetAllGroups();
             if (groups == null)
             {

@@ -26,7 +26,6 @@ namespace DanceCoolDataAccessLogic.UnitOfWork
         public IUserCredentialsRepository UserCredentials => userCredentials ?? (userCredentials = new UserCredentialsRepository(_context));
         public IUserRoleRepository UserRoles => userRoles ?? (userRoles = new UserRoleRepository(_context));
 
-
         public void Complete()
         {
             _context.SaveChanges();

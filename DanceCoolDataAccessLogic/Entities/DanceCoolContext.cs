@@ -15,7 +15,7 @@ namespace DanceCoolDataAccessLogic.Entities
 
         public virtual DbSet<Abonement> Abonement { get; set; }
         public virtual DbSet<DanceDirection> DanceDirection { get; set; }
-        public virtual DbSet<Group> Groups { get; set; }
+        public virtual DbSet<Group> Group { get; set; }
         public virtual DbSet<Lesson> Lessons { get; set; }
         public virtual DbSet<LessonType> LessonTypes { get; set; }
         public virtual DbSet<Payment> Payments { get; set; }
