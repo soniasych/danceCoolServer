@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using DanceCoolDataAccessLogic.Entities;
 using DanceCoolDataAccessLogic.Repositories.Interfaces;
@@ -12,14 +13,14 @@ namespace DanceCoolDataAccessLogic.Repositories
         {
         }
 
-        public async Task<IEnumerable<SkillLevel>> GetAllSkillLevelsAsync()
+        public IEnumerable<SkillLevel> GetAllSkillLevels()
         {
-            return await Context.SkillLevel.ToListAsync();
+            return  Context.SkillLevel.ToList();
         }
 
-        public Task<SkillLevel> GetAsync(int id)
+        public SkillLevel GetSkillLevelById(int id)
         {
-            return Context.SkillLevel.FindAsync(id);
+            return Context.SkillLevel.Find(id);
         }
     }
 }

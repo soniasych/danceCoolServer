@@ -6,7 +6,7 @@ namespace DanceCoolDataAccessLogic.Repositories.Interfaces
 {
     public interface IDanceDirectionRepository : IRepository<DanceDirection>
     {
-        Task<IEnumerable<DanceDirection>> GetAllDanceDirectionsAsync();
-        Task<DanceDirection> GetDanceDirectionAsync(int id);
+        IEnumerable<DanceDirection> GetAllDanceDirections();
+        DanceDirection GetDanceDirectionById(int id);
     }
 }

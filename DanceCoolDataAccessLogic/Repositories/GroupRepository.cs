@@ -13,7 +13,7 @@ namespace DanceCoolDataAccessLogic.Repositories
         {
         }
 
-        public async Task<IEnumerable<Group>> GetAllGroupsAsync()
+        public IEnumerable<Group> GetAllGroups()
         {
             return Context.Groups;
         }
@@ -25,7 +25,7 @@ namespace DanceCoolDataAccessLogic.Repositories
 
         public async Task<IEnumerable<Group>> GetGroupsByLevelIdAsync(int id)
         {
-            return Context.Groups.Where(group => group.LevelId == id).ToList();
+            return  Context.Groups.Where(group => group.LevelId == id).ToList();
         }
 
         public async Task<IEnumerable<Group>> GetGroupsByDirectionIdAsync(int id)

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using DanceCoolDataAccessLogic.Entities;
 using DanceCoolDataAccessLogic.Repositories.Interfaces;
@@ -6,20 +7,20 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DanceCoolDataAccessLogic.Repositories
 {
-    class DanceDirectionRepository : BaseRepository<DanceDirection>, IDanceDirectionRepository
+    public class DanceDirectionRepository : BaseRepository<DanceDirection>, IDanceDirectionRepository
     {
         public DanceDirectionRepository(DanceCoolContext context) : base(context)
         {
         }
 
-        public async Task<IEnumerable<DanceDirection>> GetAllDanceDirectionsAsync()
+        public IEnumerable<DanceDirection> GetAllDanceDirections()
         {
-            return await Context.DanceDirection.ToListAsync();
+            return  Context.DanceDirection.ToList();
         }
         
-        public async Task<DanceDirection> GetDanceDirectionAsync(int id)
+        public DanceDirection GetDanceDirectionById(int id)
         {
-            return await Context.DanceDirection.FindAsync(id);
+            return Context.DanceDirection.Find(id);
         }
     }
 }

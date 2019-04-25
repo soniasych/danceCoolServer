@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using DanceCoolBusinessLogic.Services;
 using DanceCoolDataAccessLogic.Repositories.Interfaces;
 using DanceCoolDTO;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace danceCoolWebApi.Controllers
@@ -14,18 +11,18 @@ namespace danceCoolWebApi.Controllers
     [ApiController]
     public class GroupsController : ControllerBase
     {
-        private readonly IGroupRepository _groupRepository;
+        private IGroupService _groupService;
 
-        public GroupsController(IGroupRepository groupRepository)
+        public GroupsController(IGroupService groupService)
         {
-            _groupRepository = groupRepository;
+            _groupService = groupService;
         }
-        // GET: api/Groups
+
+        //GET: api/Groups
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<GroupDTO> Get()
         {
-            //var data = _groupRepository.GetAllGroupsAsync();
-            return new string[] { "value1", "value2" };
+            return _groupService.GetAllGroups();
         }
 
         // GET: api/Groups/5

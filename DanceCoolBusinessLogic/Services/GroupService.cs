@@ -23,10 +23,10 @@ namespace DanceCoolBusinessLogic.Services
         //    _initialized = true;
         //}
 
-        public async Task<List<GroupDTO>> GetAllGroupsAsync()
+        public IEnumerable<GroupDTO> GetAllGroups()
         {
             //CheckInit();
-            var groups = await db.Groups.GetAllGroupsAsync();
+            var groups = db.Groups.GetAllGroups();
             if (groups == null)
             {
                 return null;
@@ -36,16 +36,16 @@ namespace DanceCoolBusinessLogic.Services
 
             foreach (var group in groups)
             {
-                dtos.Add(await GroupModelToGroupDTOAsync(group));
+                dtos.Add(GroupModelToGroupDTO(group));
             }
 
             return dtos;
         }
 
-        private async Task<GroupDTO> GroupModelToGroupDTOAsync(Group groupModel)
+        private GroupDTO GroupModelToGroupDTO(Group groupModel)
         {
-            var level = await db.SkillLevels.GetAsync(groupModel.LevelId);
-            var directions = await db.DanceDirections.GetDanceDirectionAsync(groupModel.DirectionId);
+            var level = db.SkillLevels.GetSkillLevelById(groupModel.LevelId);
+            var directions = db.DanceDirections.GetDanceDirectionById(groupModel.DirectionId);
 
             return new GroupDTO(
                 groupModel.Id,

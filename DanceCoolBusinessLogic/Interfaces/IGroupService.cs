@@ -6,6 +6,6 @@ namespace DanceCoolBusinessLogic.Services
 {
     public interface IGroupService
     {
-        Task<List<GroupDTO>> GetAllGroupsAsync();
+        IEnumerable<GroupDTO> GetAllGroups();
     }
 }
