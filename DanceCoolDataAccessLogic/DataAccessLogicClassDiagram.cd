@@ -1,0 +1,129 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Class Name="DanceCoolDataAccessLogic.Entities.Abonement" Collapsed="true">
+    <Position X="1.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAIAAAAAAAAAgAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Abonement.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DanceCoolDataAccessLogic.Entities.DanceCoolContext" Collapsed="true">
+    <Position X="3.25" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAWAAAQBAAIQAAAAAEAAIEgAAAAgAAAAQAAAAAAA=</HashCode>
+      <FileName>Entities\DanceCoolContext.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DanceCoolDataAccessLogic.Entities.DanceDirection" Collapsed="true">
+    <Position X="5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAEAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\DanceDirection.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DanceCoolDataAccessLogic.Entities.Group" Collapsed="true">
+    <Position X="6.75" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAIAAAAAAACAACAAAABAAAAABAAAAAAAAAAE=</HashCode>
+      <FileName>Entities\Group.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DanceCoolDataAccessLogic.Entities.Lesson" Collapsed="true">
+    <Position X="1.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAEAEAAAAAAAAABAAAAAAAAQAAAABAAAAAgAAAAA=</HashCode>
+      <FileName>Entities\Lesson.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DanceCoolDataAccessLogic.Entities.LessonType" Collapsed="true">
+    <Position X="3.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAgAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\LessonType.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DanceCoolDataAccessLogic.Entities.Payment" Collapsed="true">
+    <Position X="5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAmAAAAIAAAAAAARAAAAAAAABAAAAABCAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Payment.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DanceCoolDataAccessLogic.Entities.Role" Collapsed="true">
+    <Position X="6.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAEAAAAAA=</HashCode>
+      <FileName>Entities\Role.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DanceCoolDataAccessLogic.Entities.SkillLevel" Collapsed="true">
+    <Position X="1.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAEAAAAAgAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\SkillLevel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DanceCoolDataAccessLogic.Entities.User" Collapsed="true">
+    <Position X="3.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAEAAAIAAAAAAAAAAQAAIIAAABAgAAAAAAAAAAAg=</HashCode>
+      <FileName>Entities\User.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DanceCoolDataAccessLogic.Entities.UserCredential" Collapsed="true">
+    <Position X="5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAADAAAAACAAAAAAAAAAAAgAAAAAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\UserCredentials.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DanceCoolDataAccessLogic.Entities.UserGroup" Collapsed="true">
+    <Position X="6.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAADAEAEAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\UserGroup.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DanceCoolDataAccessLogic.Entities.UserRole" Collapsed="true">
+    <Position X="1.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAADAAIAAAAAAAAAEAAAAAgAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\UserRole.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Object" Collapsed="true">
+    <Position X="9.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="DanceCoolDataAccessLogic.Repositories.BaseRepository&lt;TEntity&gt;">
+    <Position X="7.25" Y="4.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACgAAAAAAAAgAAAEgAAAAABAAAgAAAAAEAAA=</HashCode>
+      <FileName>Repositories\BaseRepository.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="DanceCoolDataAccessLogic.Repositories.UserRepository">
+    <Position X="10" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAIAAAAAA=</HashCode>
+      <FileName>Repositories\UserRepository.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="DanceCoolDataAccessLogic.Repositories.Interfaces.IRepository&lt;TEntity&gt;">
+    <Position X="5.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACAAAAAAAAAgAAAEgAAAAABAAAgAAAAAEAAA=</HashCode>
+      <FileName>Repositories\Interfaces\IRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="DanceCoolDataAccessLogic.Repositories.Interfaces.IUserRepository">
+    <Position X="3.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAIAAAAAA=</HashCode>
+      <FileName>Repositories\Interfaces\IUserRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

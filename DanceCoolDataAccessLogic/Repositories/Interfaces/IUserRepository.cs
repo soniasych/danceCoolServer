@@ -6,7 +6,7 @@ namespace DanceCoolDataAccessLogic.Repositories.Interfaces
 {
     public interface IUserRepository : IRepository<User>
     {
-        Task<IEnumerable<User>> GetAllUsersAsync();
-        Task<User> GetAsync(int id);
+        IEnumerable<User> GetAllUsers();
+        User GetUserById(int userId);
     }
 }

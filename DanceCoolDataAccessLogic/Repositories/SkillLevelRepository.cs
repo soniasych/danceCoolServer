@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using DanceCoolDataAccessLogic.Entities;
 using DanceCoolDataAccessLogic.Repositories.Interfaces;
-using Microsoft.EntityFrameworkCore;
 
 namespace DanceCoolDataAccessLogic.Repositories
 {
@@ -21,6 +19,12 @@ namespace DanceCoolDataAccessLogic.Repositories
         public SkillLevel GetSkillLevelById(int id)
         {
             return Context.SkillLevel.Find(id);
+        }
+
+        public string GetSkillLevelNameById(int id)
+        {
+            var skillLevel = GetSkillLevelById(id);
+            return skillLevel.Name;
         }
     }
 }

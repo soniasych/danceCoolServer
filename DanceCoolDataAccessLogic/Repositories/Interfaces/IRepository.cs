@@ -7,14 +7,14 @@ namespace DanceCoolDataAccessLogic.Repositories.Interfaces
 {
     public interface IRepository<TEntity> where TEntity: class
     {
-        Task<TEntity> GetEntityAsync(int id);
-        Task<IEnumerable<TEntity>> GetAll();
-        Task<IEnumerable<TEntity>> FindEntity(Expression<Func<TEntity, bool>> predicate);
+        TEntity GetEntityById(int id);
+        IEnumerable<TEntity> GetAll();
+        IEnumerable<TEntity> FindEntity(Expression<Func<TEntity, bool>> predicate);
         
-        Task AddAsync(TEntity entity);
-        Task AddRangeAsync(IEnumerable<TEntity> entities);
+        void AddEntity(TEntity entity);
+        void AddRange(IEnumerable<TEntity> entities);
         
-        Task RemoveAsync(TEntity entity);
-        Task RemoveRangeAsync(IEnumerable<TEntity> entitiesToRemove);
+        void Remove(TEntity entity);
+        void RemoveRange(IEnumerable<TEntity> entitiesToRemove);
     }
 }

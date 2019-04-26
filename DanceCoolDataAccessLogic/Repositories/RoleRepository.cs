@@ -11,8 +11,8 @@ namespace DanceCoolDataAccessLogic.Repositories.Interfaces
         {
         }
 
-        public async Task<IEnumerable<Role>> GetAllRolesAsync() => Context.Roles;
+        public IEnumerable<Role> GetAllRoles() => Context.Roles;
 
-        public async Task<Role> GetAsync(int id) => await Context.Roles.FirstOrDefaultAsync(role => role.Id == id);
+        public Role GetRoleById(int id) => Context.Roles.Find(id);
     }
 }

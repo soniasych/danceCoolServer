@@ -6,7 +6,7 @@ namespace DanceCoolBusinessLogic.Services
 {
     interface IUserService
     {
-        Task<IEnumerable<UserDTO>> GetAllUsersAsync();
-        Task<UserDTO> GetUserByIdAsync(int id);
+        IEnumerable<UserDTO> GetAllUsers();
+        UserDTO GetUserByIdAsync(int id);
     }
 }

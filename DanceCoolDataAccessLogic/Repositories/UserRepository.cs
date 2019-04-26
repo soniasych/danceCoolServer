@@ -12,14 +12,14 @@ namespace DanceCoolDataAccessLogic.Repositories
         {
         }
 
-        public async Task<IEnumerable<User>> GetAllUsersAsync()
+        public IEnumerable<User> GetAllUsers()
         {
             return Context.Users;
         }
 
-        public async Task<User> GetAsync(int id)
+        public User GetUserById(int userId)
         {
-            return await Context.Users.FirstOrDefaultAsync(user => user.Id == id);
+            return Context.Users.Find(userId);
         }
     }
 }

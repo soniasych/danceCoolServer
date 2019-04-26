@@ -8,5 +8,6 @@ namespace DanceCoolDataAccessLogic.Repositories.Interfaces
     {
         IEnumerable<DanceDirection> GetAllDanceDirections();
         DanceDirection GetDanceDirectionById(int id);
+        string GetDanceDirectionNameById(int id);
     }
 }
