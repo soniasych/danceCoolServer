@@ -12,11 +12,11 @@ namespace DanceCoolDataAccessLogic.Repositories
         {
         }
 
-        public async Task<IEnumerable<UserRole>> GetAllUserRolesAsync() => Context.UserRole;
+        public async Task<IEnumerable<UserRole>> GetAllUserRolesAsync() => Context.UserRoles;
 
         public Task<UserRole> GetAsync(int id)
         {
-            return Context.UserRole.FirstOrDefaultAsync(userRole => userRole.Id == id);
+            return Context.UserRoles.FirstOrDefaultAsync(userRole => userRole.Id == id);
         }
     }
 }

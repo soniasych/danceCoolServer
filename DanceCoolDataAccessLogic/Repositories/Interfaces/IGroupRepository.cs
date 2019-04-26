@@ -9,6 +9,5 @@ namespace DanceCoolDataAccessLogic.Repositories.Interfaces
         IEnumerable<Group> GetAllGroups();
         Task<Group> GetGroupByIdAsync(int id);
         Task<IEnumerable<Group>> GetGroupsByLevelIdAsync(int id);
-        Task<IEnumerable<Group>> GetGroupsByDirectionIdAsync(int id);
     }
 }

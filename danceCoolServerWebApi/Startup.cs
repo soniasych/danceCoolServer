@@ -1,7 +1,4 @@
-﻿using System;
-using Autofac;
-using Autofac.Extensions.DependencyInjection;
-using DanceCoolBusinessLogic.Services;
+﻿using DanceCoolBusinessLogic.Services;
 using DanceCoolDataAccessLogic.Entities;
 using DanceCoolDataAccessLogic.Repositories;
 using DanceCoolDataAccessLogic.Repositories.Interfaces;
@@ -17,29 +14,44 @@ namespace danceCoolServer
 {
     public class Startup
     {
-        public IContainer ApplicationContainer { get; private set; }
+        //public IContainer ApplicationContainer { get; private set; }
         public IConfiguration Configuration {get;}
 
         public Startup(IConfiguration configuration) => Configuration = configuration;
-        
-        public IServiceProvider ConfigureServices(IServiceCollection services)
+
+
+        //----------------------
+        //-----Working code-----
+        //----------------------
+        //public IServiceProvider ConfigureServices(IServiceCollection services)
+        //{
+        //    services.AddMvc()
+        //        .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+        //    services.AddDbContext<DanceCoolContext>
+        //        (opt => opt.UseSqlServer(Configuration["Data:CommandAPIConnection:ConnectionString"]));
+
+        //    var builder = new ContainerBuilder();
+
+        //    builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
+        //    builder.RegisterType<GroupService>().As<IGroupService>();
+
+        //    builder.Populate(services);
+
+        //    ApplicationContainer = builder.Build();
+
+        //    return new AutofacServiceProvider(ApplicationContainer);
+        //}
+
+
+        public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddDbContext<DanceCoolContext>
                 (opt => opt.UseSqlServer(Configuration["Data:CommandAPIConnection:ConnectionString"]));
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
+            services.AddTransient<IGroupService, GroupService>();
 
-            var builder = new ContainerBuilder();
-
-            builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
-            builder.RegisterType<GroupRepository>().As<IGroupRepository>();
-            builder.RegisterType<GroupService>().As<IGroupService>();
-
-            builder.Populate(services);
-
-            ApplicationContainer = builder.Build();
-
-            return new AutofacServiceProvider(ApplicationContainer);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
