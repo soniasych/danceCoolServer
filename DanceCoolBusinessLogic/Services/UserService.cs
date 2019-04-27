@@ -33,7 +33,7 @@ namespace DanceCoolBusinessLogic.Services
         public UserDTO GetUserById(int id)
         {
             var userModel = db.Users.GetUserById(id);
-            if (userModel != null)
+            if (userModel == null)
             {
                 return null;
             }

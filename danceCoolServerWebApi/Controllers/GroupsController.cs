@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace danceCoolWebApi.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
     public class GroupsController : ControllerBase
     {
@@ -18,34 +17,36 @@ namespace danceCoolWebApi.Controllers
 
         //GET: api/Groups
         [HttpGet]
-        public IEnumerable<GroupDTO> Get()
+        [Route("api/groups")]
+        public IEnumerable<GroupDTO> GetAllGroups()
         {
             return _groupService.GetAllGroups();
         }
 
         // GET: api/Groups/5
-        [HttpGet("{id}", Name = "Get")]
-        public string GetEntity(int id)
+        [HttpGet]
+        [Route("api/groups/{id}")]
+        public GroupDTO GetGroupById(int id)
         {
-            return "value";
+            return _groupService.GetGroupById(id);
         }
 
-        // POST: api/Groups
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
+        //// POST: api/Groups
+        //[HttpPost]
+        //public void Post([FromBody] string value)
+        //{
+        //}
 
-        // PUT: api/Groups/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
+        //// PUT: api/Groups/5
+        //[HttpPut("{id}")]
+        //public void Put(int id, [FromBody] string value)
+        //{
+        //}
 
-        // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+        //// DELETE: api/ApiWithActions/5
+        //[HttpDelete("{id}")]
+        //public void Delete(int id)
+        //{
+        //}
     }
 }
