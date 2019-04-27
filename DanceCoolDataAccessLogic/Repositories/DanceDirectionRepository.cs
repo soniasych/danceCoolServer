@@ -15,12 +15,12 @@ namespace DanceCoolDataAccessLogic.Repositories
 
         public IEnumerable<DanceDirection> GetAllDanceDirections()
         {
-            return  Context.DanceDirection.ToList();
+            return  Context.DanceDirections.ToList();
         }
         
         public DanceDirection GetDanceDirectionById(int id)
         {
-            return Context.DanceDirection.Find(id);
+            return Context.DanceDirections.Find(id);
         }
 
         public string GetDanceDirectionNameById(int id)

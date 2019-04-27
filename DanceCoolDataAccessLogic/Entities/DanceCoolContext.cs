@@ -13,24 +13,25 @@ namespace DanceCoolDataAccessLogic.Entities
         {
         }
 
-        public virtual DbSet<Abonement> Abonement { get; set; }
-        public virtual DbSet<DanceDirection> DanceDirection { get; set; }
-        public virtual DbSet<Group> Group { get; set; }
-        public virtual DbSet<Lesson> Lessons { get; set; }
+        public virtual DbSet<Abonement> Abonements { get; set; }
+        public virtual DbSet<DanceDirection> DanceDirections { get; set; }
+        public virtual DbSet<Group> Groups { get; set; }
         public virtual DbSet<LessonType> LessonTypes { get; set; }
+        public virtual DbSet<Lesson> Lessons { get; set; }
         public virtual DbSet<Payment> Payments { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
-        public virtual DbSet<SkillLevel> SkillLevel { get; set; }
-        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<SkillLevel> SkillLevels { get; set; }
         public virtual DbSet<UserCredentials> UserCredentials { get; set; }
-        public virtual DbSet<UserGroup> UserGroup { get; set; }
-        public virtual DbSet<UserRole> UserRole { get; set; }
+        public virtual DbSet<UserGroup> UserGroups { get; set; }
+        public virtual DbSet<UserRole> UserRoles { get; set; }
+        public virtual DbSet<User> Users { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=XPS15\\SQLEXPRESS;Database=DanceCool;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer("Server=ARCH;Database=DanceCool;Trusted_Connection=True;");
+
             }
         }
 
@@ -69,10 +70,15 @@ namespace DanceCoolDataAccessLogic.Entities
                     .HasConstraintName("FK_Level_Group");
             });
 
+            modelBuilder.Entity<LessonType>(entity =>
+            {
+                entity.Property(e => e.LessonTypeName)
+                    .IsRequired()
+                    .HasMaxLength(50);
+            });
+
             modelBuilder.Entity<Lesson>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
                 entity.Property(e => e.Date).HasColumnType("datetime");
 
                 entity.HasOne(d => d.Group)
@@ -87,19 +93,8 @@ namespace DanceCoolDataAccessLogic.Entities
                     .HasConstraintName("FK_LessonType_Lesson");
             });
 
-            modelBuilder.Entity<LessonType>(entity =>
-            {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
-                entity.Property(e => e.LessonTypeName)
-                    .IsRequired()
-                    .HasMaxLength(50);
-            });
-
             modelBuilder.Entity<Payment>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
                 entity.Property(e => e.Date).HasColumnType("datetime");
 
                 entity.Property(e => e.TotalSum).HasColumnType("money");
@@ -139,21 +134,6 @@ namespace DanceCoolDataAccessLogic.Entities
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(50);
-            });
-
-            modelBuilder.Entity<User>(entity =>
-            {
-                entity.Property(e => e.FirstName)
-                    .IsRequired()
-                    .HasMaxLength(512);
-
-                entity.Property(e => e.LastName)
-                    .IsRequired()
-                    .HasMaxLength(512);
-
-                entity.Property(e => e.PhoneNumber)
-                    .HasMaxLength(17)
-                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<UserCredentials>(entity =>
@@ -201,6 +181,21 @@ namespace DanceCoolDataAccessLogic.Entities
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_User_UserRole");
+            });
+
+            modelBuilder.Entity<User>(entity =>
+            {
+                entity.Property(e => e.FirstName)
+                    .IsRequired()
+                    .HasMaxLength(512);
+
+                entity.Property(e => e.LastName)
+                    .IsRequired()
+                    .HasMaxLength(512);
+
+                entity.Property(e => e.PhoneNumber)
+                    .HasMaxLength(17)
+                    .IsUnicode(false);
             });
         }
     }

@@ -15,22 +15,22 @@ namespace DanceCoolDataAccessLogic.Repositories
 
         public IEnumerable<Group> GetAllGroups()
         {
-            return Context.Group;
+            return Context.Groups;
         }
 
         public Group GetGroupById(int id)
         {
-            return Context.Group.FirstOrDefault(group => group.Id == id);
+            return Context.Groups.FirstOrDefaultAsync(group => group.Id == id);
         }
 
         public IEnumerable<Group> GetGroupsByLevelId(int id)
         {
-            return  Context.Group.Where(group => group.LevelId == id).ToList();
+            return  Context.Groups.Where(group => group.LevelId == id).ToList();
         }
 
         public IEnumerable<Group> GetGroupsByDirectionId(int id)
         {
-            return Context.Group.Where(group => group.DirectionId == id).ToList();
+            return Context.Groups.Where(group => group.DirectionId == id).ToList();
         }
     }
 }
