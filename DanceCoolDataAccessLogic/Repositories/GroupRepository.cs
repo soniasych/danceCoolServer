@@ -20,7 +20,7 @@ namespace DanceCoolDataAccessLogic.Repositories
 
         public Group GetGroupById(int id)
         {
-            return Context.Groups.FirstOrDefaultAsync(group => group.Id == id);
+            return Context.Groups.FirstOrDefault(group => group.Id == id);
         }
 
         public IEnumerable<Group> GetGroupsByLevelId(int id)
