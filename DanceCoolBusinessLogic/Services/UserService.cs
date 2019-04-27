@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
-using System.Threading.Tasks;
 using DanceCoolDataAccessLogic.Entities;
 using DanceCoolDataAccessLogic.UnitOfWork;
 using DanceCoolDTO;
 
 namespace DanceCoolBusinessLogic.Services
 {
-    class UserService : BaseService, IUserService
+    public class UserService : BaseService, IUserService
     {
         public UserService(IUnitOfWork db) : base(db)
         {
@@ -31,7 +30,7 @@ namespace DanceCoolBusinessLogic.Services
             return dtos;
         }
 
-        public UserDTO GetUserByIdAsync(int id)
+        public UserDTO GetUserById(int id)
         {
             var userModel = db.Users.GetUserById(id);
             if (userModel != null)
@@ -40,6 +39,25 @@ namespace DanceCoolBusinessLogic.Services
             }
 
             return UserModelToUserDTO(userModel);
+        }
+
+        public IEnumerable<UserDTO> GetUsersFromGroup(int groupId)
+        {           
+            var userModelsInGroup = db.Users.GetUsersByGroupId(groupId);
+            
+            if (userModelsInGroup == null)
+            {
+                return null;
+            }
+
+            var usersInGroup = new List<UserDTO>();
+
+            foreach (var item in userModelsInGroup)
+            {
+                usersInGroup.Add(UserModelToUserDTO(item));
+            }
+
+            return usersInGroup;
         }
 
         private UserDTO UserModelToUserDTO(User userModel) => 

@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+using System.Linq;
 using DanceCoolDataAccessLogic.Entities;
 using DanceCoolDataAccessLogic.Repositories.Interfaces;
-using Microsoft.EntityFrameworkCore;
 
 namespace DanceCoolDataAccessLogic.Repositories
 {
-    class UserRepository : BaseRepository<User>, IUserRepository
+    internal class UserRepository : BaseRepository<User>, IUserRepository
     {
         public UserRepository(DanceCoolContext context) : base(context)
         {
@@ -20,6 +19,16 @@ namespace DanceCoolDataAccessLogic.Repositories
         public User GetUserById(int userId)
         {
             return Context.Users.Find(userId);
+        }
+
+        public IEnumerable<User> GetUsersByGroupId(int groupId)
+        {
+            var usersInGroupArray = Context.UserGroups.Where(ug => ug.GroupId == groupId)
+                .ToArray()
+                .Select(user => user.Id);
+
+            var usersInGroup = Context.Users.Where(user => usersInGroupArray.Contains(user.Id));
+            return usersInGroup;
         }
     }
 }

@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
-using System.Threading.Tasks;
 using DanceCoolDataAccessLogic.Entities;
 using DanceCoolDataAccessLogic.Repositories.Interfaces;
-using Microsoft.EntityFrameworkCore;
 
 namespace DanceCoolDataAccessLogic.Repositories
 {

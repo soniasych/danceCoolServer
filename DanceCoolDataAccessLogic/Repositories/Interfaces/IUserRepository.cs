@@ -8,5 +8,6 @@ namespace DanceCoolDataAccessLogic.Repositories.Interfaces
     {
         IEnumerable<User> GetAllUsers();
         User GetUserById(int userId);
+        IEnumerable<User> GetUsersByGroupId(int groupId);
     }
 }

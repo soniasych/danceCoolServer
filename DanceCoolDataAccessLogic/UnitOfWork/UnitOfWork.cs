@@ -15,6 +15,7 @@ namespace DanceCoolDataAccessLogic.UnitOfWork
         private ISkillLevelRepository skillLevels;
         private IUserCredentialsRepository userCredentials;
         private IUserRoleRepository userRoles;
+        private IUserGroupRepository userGroups;
 
         public UnitOfWork(DanceCoolContext context) => _context = context;
 
@@ -25,6 +26,7 @@ namespace DanceCoolDataAccessLogic.UnitOfWork
         public ISkillLevelRepository SkillLevels => skillLevels ?? (skillLevels = new SkillLevelRepository(_context));
         public IUserCredentialsRepository UserCredentials => userCredentials ?? (userCredentials = new UserCredentialsRepository(_context));
         public IUserRoleRepository UserRoles => userRoles ?? (userRoles = new UserRoleRepository(_context));
+        public IUserGroupRepository UserGroups => userGroups ?? ( userGroups = new UserGroupRepository(_context));
 
         public void Complete()
         {

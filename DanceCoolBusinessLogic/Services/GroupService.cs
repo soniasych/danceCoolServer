@@ -11,17 +11,6 @@ namespace DanceCoolBusinessLogic.Services
         {
         }
 
-        //private IEnumerable<Group> _groups;
-        //private bool _initialized = false;
-
-        //private async void CheckInit()
-        //{
-        //    if (_initialized)
-        //        return;
-        //    _groups = await db.Groups.GetAll();
-        //    _initialized = true;
-        //}
-
         public IEnumerable<GroupDTO> GetAllGroups()
         {
             var groups = db.Groups.GetAllGroups();
@@ -38,6 +27,25 @@ namespace DanceCoolBusinessLogic.Services
             }
 
             return dtos;
+        }
+
+        public IEnumerable<GroupDTO> GetGroupsByUserId(int userId)
+        {
+            var groupModels = db.Groups.GetGroupsByUserId(userId);
+
+            if (groupModels == null)
+            {
+                return null;
+            }
+
+            var groupDtos = new List<GroupDTO>();
+
+            foreach (var model in groupModels)
+            {
+                groupDtos.Add(GroupModelToGroupDTO(model));
+            }
+
+            return groupDtos;
         }
 
         private GroupDTO GroupModelToGroupDTO(Group groupModel)
