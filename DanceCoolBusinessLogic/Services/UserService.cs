@@ -5,7 +5,7 @@ using DanceCoolDTO;
 
 namespace DanceCoolBusinessLogic.Services
 {
-    class UserService : BaseService, IUserService
+    public class UserService : BaseService, IUserService
     {
         public UserService(IUnitOfWork db) : base(db)
         {
@@ -43,12 +43,21 @@ namespace DanceCoolBusinessLogic.Services
 
         public IEnumerable<UserDTO> GetUsersFromGroup(int groupId)
         {           
-            var usersInGroup = db.UserGroups.GetUserGroupById(groupId);
-            var users = new List<UserDTO>();
+            var userModelsInGroup = db.Users.GetUsersByGroupId(groupId);
+            
+            if (userModelsInGroup == null)
+            {
+                return null;
+            }
 
+            var usersInGroup = new List<UserDTO>();
 
-            return users;
+            foreach (var item in userModelsInGroup)
+            {
+                usersInGroup.Add(UserModelToUserDTO(item));
+            }
 
+            return usersInGroup;
         }
 
         private UserDTO UserModelToUserDTO(User userModel) => 

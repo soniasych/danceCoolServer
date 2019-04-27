@@ -5,7 +5,7 @@ using DanceCoolDataAccessLogic.Repositories.Interfaces;
 
 namespace DanceCoolDataAccessLogic.Repositories
 {
-    class UserRepository : BaseRepository<User>, IUserRepository
+    internal class UserRepository : BaseRepository<User>, IUserRepository
     {
         public UserRepository(DanceCoolContext context) : base(context)
         {
@@ -21,11 +21,13 @@ namespace DanceCoolDataAccessLogic.Repositories
             return Context.Users.Find(userId);
         }
 
-        public IEnumerable<User> GetUserByGroupId(int groupId)
+        public IEnumerable<User> GetUsersByGroupId(int groupId)
         {
             var usersInGroupArray = Context.UserGroups.Where(ug => ug.GroupId == groupId)
-            .Select(ug => ug.UserId).ToArray();
-            var usersInGroup = Context.Users.OrderBy(user => usersInGroupArray.Contains(user.Id)).ToList();
+                .ToArray()
+                .Select(user => user.Id);
+
+            var usersInGroup = Context.Users.Where(user => usersInGroupArray.Contains(user.Id));
             return usersInGroup;
         }
     }

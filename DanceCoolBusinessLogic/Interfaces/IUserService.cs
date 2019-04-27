@@ -3,7 +3,7 @@ using DanceCoolDTO;
 
 namespace DanceCoolBusinessLogic.Services
 {
-    interface IUserService
+    public interface IUserService
     {
         IEnumerable<UserDTO> GetAllUsers();
         UserDTO GetUserById(int userId);

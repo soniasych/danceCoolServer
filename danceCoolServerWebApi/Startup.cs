@@ -25,6 +25,7 @@ namespace danceCoolServer
                 (opt => opt.UseSqlServer(Configuration["Data:CommandAPIConnection:ConnectionString"]));
             services.AddTransient<IUnitOfWork, UnitOfWork>();
             services.AddTransient<IGroupService, GroupService>();
+            services.AddTransient<IUserService, UserService>();
 
         }
 

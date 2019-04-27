@@ -1,7 +1,5 @@
 ﻿using DanceCoolDataAccessLogic.Entities;
 using DanceCoolDataAccessLogic.Repositories.Interfaces;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace DanceCoolDataAccessLogic.Repositories
@@ -10,16 +8,6 @@ namespace DanceCoolDataAccessLogic.Repositories
     {
         public UserGroupRepository(DanceCoolContext context) : base(context)
         {
-        }
-
-        public IEnumerable<UserGroup> GetAllUserGroups()
-        {
-            throw new NotImplementedException();
-        }
-
-        public UserGroup GetUserGroupById(int userGruoupId)
-        {
-            throw new NotImplementedException();
         }
 
         public int[] GetUsersIdByGroupId(int groupId) =>

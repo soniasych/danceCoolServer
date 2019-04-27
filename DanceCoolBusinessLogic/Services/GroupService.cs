@@ -11,17 +11,6 @@ namespace DanceCoolBusinessLogic.Services
         {
         }
 
-        //private IEnumerable<Group> _groups;
-        //private bool _initialized = false;
-
-        //private async void CheckInit()
-        //{
-        //    if (_initialized)
-        //        return;
-        //    _groups = await db.Groups.GetAll();
-        //    _initialized = true;
-        //}
-
         public IEnumerable<GroupDTO> GetAllGroups()
         {
             var groups = db.Groups.GetAllGroups();
