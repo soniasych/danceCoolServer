@@ -16,19 +16,28 @@ namespace DanceCoolDataAccessLogic.Repositories
             return Context.Groups;
         }
 
-        public Group GetGroupById(int id)
+        public Group GetGroupById(int groupId)
         {
-            return Context.Groups.FirstOrDefault(group => group.Id == id);
+            return Context.Groups.FirstOrDefault(group => group.Id == groupId);
         }
 
-        public IEnumerable<Group> GetGroupsByLevelId(int id)
+        public IEnumerable<Group> GetGroupsByLevelId(int levelId)
         {
-            return  Context.Groups.Where(group => group.LevelId == id).ToList();
+            return  Context.Groups.Where(group => group.LevelId == levelId).ToList();
         }
 
-        public IEnumerable<Group> GetGroupsByDirectionId(int id)
+        public IEnumerable<Group> GetGroupsByDirectionId(int directionId)
         {
-            return Context.Groups.Where(group => group.DirectionId == id).ToList();
+            return Context.Groups.Where(group => group.DirectionId == directionId).ToList();
+        }
+
+        public IEnumerable<Group> GetGroupsByUserId(int userId)
+        {
+            var groupsWithUSerArray = Context.UserGroups.Where(ug => ug.UserId == userId)
+                .ToArray()
+                .Select(user => user.Id);
+
+            return Context.Groups.Where(group => groupsWithUSerArray.Contains(group.Id));
         }
     }
 }

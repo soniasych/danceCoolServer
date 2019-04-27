@@ -29,6 +29,25 @@ namespace DanceCoolBusinessLogic.Services
             return dtos;
         }
 
+        public IEnumerable<GroupDTO> GetGroupsByUserId(int userId)
+        {
+            var groupModels = db.Groups.GetGroupsByUserId(userId);
+
+            if (groupModels == null)
+            {
+                return null;
+            }
+
+            var groupDtos = new List<GroupDTO>();
+
+            foreach (var model in groupModels)
+            {
+                groupDtos.Add(GroupModelToGroupDTO(model));
+            }
+
+            return groupDtos;
+        }
+
         private GroupDTO GroupModelToGroupDTO(Group groupModel)
         {
             var level = db.SkillLevels.GetSkillLevelById(groupModel.LevelId);
