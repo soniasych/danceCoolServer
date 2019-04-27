@@ -13,9 +13,9 @@ namespace DanceCoolBusinessLogic.Services
 
         }
 
-        public async Task<IEnumerable<UserDTO>> GetAllUsersAsync()
+        public IEnumerable<UserDTO> GetAllUsers()
         {
-            var users = await db.Users.GetAllUsersAsync();
+            var users = db.Users.GetAllUsers();
             if (users == null)
             {
                 return null;
@@ -25,36 +25,27 @@ namespace DanceCoolBusinessLogic.Services
 
             foreach (var user in users)
             {
-                dtos.Add(await UserModelToUserDTOAsync(user));
+                dtos.Add(UserModelToUserDTO(user));
             }
 
             return dtos;
         }
 
-        public async Task<UserDTO> GetUserByIdAsync(int id)
+        public UserDTO GetUserByIdAsync(int id)
         {
-            var userModel = await db.Users.GetAsync(id);
+            var userModel = db.Users.GetUserById(id);
             if (userModel != null)
             {
                 return null;
             }
 
-            return await UserModelToUserDTOAsync(userModel);
+            return UserModelToUserDTO(userModel);
         }
 
-        private async Task<UserDTO> UserModelToUserDTOAsync(User userModel)
-        {
-            var task = new Task<UserDTO>(() =>
-            {
-                var userDto = new UserDTO(userModel.Id,
+        private UserDTO UserModelToUserDTO(User userModel) => 
+            new UserDTO(userModel.Id,
                     userModel.FirstName,
                     userModel.LastName,
                     userModel.PhoneNumber);
-                return userDto;
-            });
-
-            task.Start();
-            return await task;
-        }
     }
 }

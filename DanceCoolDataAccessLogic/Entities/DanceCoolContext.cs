@@ -30,7 +30,8 @@ namespace DanceCoolDataAccessLogic.Entities
         {
             if (!optionsBuilder.IsConfigured)
             {
-optionsBuilder.UseSqlServer("Server=ARCH;Database=DanceCool;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer("Server=ARCH;Database=DanceCool;Trusted_Connection=True;");
+
             }
         }
 

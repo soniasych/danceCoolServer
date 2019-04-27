@@ -6,8 +6,8 @@ namespace DanceCoolDataAccessLogic.Repositories.Interfaces
 {
     public interface IUserCredentialsRepository : IRepository<UserCredentials>
     {
-        Task<IEnumerable<UserCredentials>> GetAllUserCredentialsAsync();
-        Task<UserCredentials> GetUserCredentialsByIdAsync(int id);
-        Task<UserCredentials> GetUserCredentialsByUserIdAsync(int userId);
+        IEnumerable<UserCredentials> GetAllUserCredentials();
+        UserCredentials GetUserCredentialsById(int id);
+        UserCredentials GetUserCredentialsByUserId(int userId);
     }
 }

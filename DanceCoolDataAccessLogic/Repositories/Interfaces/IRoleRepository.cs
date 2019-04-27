@@ -6,7 +6,7 @@ namespace DanceCoolDataAccessLogic.Repositories.Interfaces
 {
     public interface IRoleRepository : IRepository<Role>
     {
-        Task<IEnumerable<Role>> GetAllRolesAsync();
-        Task<Role> GetAsync(int id);
+        IEnumerable<Role> GetAllRoles();
+        Role GetRoleById(int id);
     }
 }

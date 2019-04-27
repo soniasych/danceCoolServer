@@ -22,5 +22,11 @@ namespace DanceCoolDataAccessLogic.Repositories
         {
             return Context.DanceDirections.Find(id);
         }
+
+        public string GetDanceDirectionNameById(int id)
+        {
+            var danceDirectioin = GetDanceDirectionById(id);
+            return danceDirectioin.Name;
+        }
     }
 }

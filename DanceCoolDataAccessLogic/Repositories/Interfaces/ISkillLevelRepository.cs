@@ -8,5 +8,6 @@ namespace DanceCoolDataAccessLogic.Repositories.Interfaces
     {
         IEnumerable<SkillLevel> GetAllSkillLevels();
         SkillLevel GetSkillLevelById(int id);
+        string GetSkillLevelNameById(int id);
     }
 }

@@ -7,7 +7,9 @@ namespace DanceCoolDataAccessLogic.Repositories.Interfaces
     public interface IGroupRepository : IRepository<Group>
     {
         IEnumerable<Group> GetAllGroups();
-        Task<Group> GetGroupByIdAsync(int id);
-        Task<IEnumerable<Group>> GetGroupsByLevelIdAsync(int id);
+        Group GetGroupById(int id);
+        IEnumerable<Group> GetGroupsByLevelId(int id);
+        IEnumerable<Group> GetGroupsByDirectionId(int id);
+
     }
 }

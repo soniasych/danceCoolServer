@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
-using System.Threading.Tasks;
 using DanceCoolDataAccessLogic.Entities;
 using DanceCoolDataAccessLogic.Repositories.Interfaces;
-using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace DanceCoolDataAccessLogic.Repositories
 {
@@ -12,19 +11,19 @@ namespace DanceCoolDataAccessLogic.Repositories
         {
         }
 
-        public async Task<IEnumerable<UserCredentials>> GetAllUserCredentialsAsync()
+        public IEnumerable<UserCredentials> GetAllUserCredentials()
         {
             return Context.UserCredentials;
         }
 
-        public Task<UserCredentials> GetUserCredentialsByIdAsync(int id)
+        public UserCredentials GetUserCredentialsById(int id)
         {
-            return Context.UserCredentials.FirstOrDefaultAsync(credentials => credentials.Id == id);
+            return Context.UserCredentials.Find(id);
         }
 
-        public Task<UserCredentials> GetUserCredentialsByUserIdAsync(int userId)
+        public UserCredentials GetUserCredentialsByUserId(int userId)
         {
-            return Context.UserCredentials.FirstOrDefaultAsync(credentials => credentials.UserId == userId);
+            return Context.UserCredentials.First(ucreds => ucreds.UserId == userId);
         }
     }
 }

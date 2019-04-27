@@ -17,37 +17,37 @@ namespace DanceCoolDataAccessLogic.Repositories
             Context = context;
         }
 
-        public async Task AddAsync(TEntity entity)
+        public void AddEntity(TEntity entity)
         {
             Context.Set<TEntity>().Add(entity);
-        }
+        }       
 
-        public async Task AddRangeAsync(IEnumerable<TEntity> entities)
+        public void AddRange(IEnumerable<TEntity> entities)
         {
             Context.Set<TEntity>().AddRange(entities);
         }
 
-        public async Task<IEnumerable<TEntity>> FindEntity(Expression<Func<TEntity, bool>> predicate)
+        public IEnumerable<TEntity> FindEntity(Expression<Func<TEntity, bool>> predicate)
         {
             return Context.Set<TEntity>().Where(predicate);
         }
 
-        public async Task<IEnumerable<TEntity>> GetAll()
+        public IEnumerable<TEntity> GetAll()
         {
             return Context.Set<TEntity>().ToList();
         }
 
-        public async Task<TEntity> GetEntityAsync(int id)
+        public TEntity GetEntityById(int id)
         {
             return Context.Set<TEntity>().Find(id);
-        }
+        }        
 
-        public async Task RemoveAsync(TEntity entity)
+        public void Remove(TEntity entity)
         {
             Context.Set<TEntity>().Remove(entity);
         }
 
-        public async Task RemoveRangeAsync(IEnumerable<TEntity> entitiesToRemove)
+        public void RemoveRange(IEnumerable<TEntity> entitiesToRemove)
         {
             Context.Set<TEntity>().RemoveRange(entitiesToRemove);
         }

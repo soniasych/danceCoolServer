@@ -18,17 +18,17 @@ namespace DanceCoolDataAccessLogic.Repositories
             return Context.Groups;
         }
 
-        public Task<Group> GetGroupByIdAsync(int id)
+        public Group GetGroupById(int id)
         {
             return Context.Groups.FirstOrDefaultAsync(group => group.Id == id);
         }
 
-        public async Task<IEnumerable<Group>> GetGroupsByLevelIdAsync(int id)
+        public IEnumerable<Group> GetGroupsByLevelId(int id)
         {
             return  Context.Groups.Where(group => group.LevelId == id).ToList();
         }
 
-        public async Task<IEnumerable<Group>> GetGroupsByDirectionIdAsync(int id)
+        public IEnumerable<Group> GetGroupsByDirectionId(int id)
         {
             return Context.Groups.Where(group => group.DirectionId == id).ToList();
         }
