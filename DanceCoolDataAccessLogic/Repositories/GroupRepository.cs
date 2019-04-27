@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using DanceCoolDataAccessLogic.Entities;
 using DanceCoolDataAccessLogic.Repositories.Interfaces;
-using Microsoft.EntityFrameworkCore;
 
 namespace DanceCoolDataAccessLogic.Repositories
 {
@@ -20,7 +18,7 @@ namespace DanceCoolDataAccessLogic.Repositories
 
         public Group GetGroupById(int id)
         {
-            return Context.Groups.FirstOrDefaultAsync(group => group.Id == id);
+            return Context.Groups.FirstOrDefault(group => group.Id == id);
         }
 
         public IEnumerable<Group> GetGroupsByLevelId(int id)

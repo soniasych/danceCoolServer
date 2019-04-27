@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
-using System.Threading.Tasks;
 using DanceCoolDataAccessLogic.Entities;
 using DanceCoolDataAccessLogic.Repositories.Interfaces;
-using Microsoft.EntityFrameworkCore;
 
 namespace DanceCoolDataAccessLogic.Repositories
 {
@@ -12,11 +10,11 @@ namespace DanceCoolDataAccessLogic.Repositories
         {
         }
 
-        public IEnumerable<UserRole> GetAllUserRoles() => Context.UserRole;
+        public IEnumerable<UserRole> GetAllUserRoles() => Context.UserRoles;
 
         public UserRole GetUserRoleById(int id)
         {
-            return Context.UserRole.Find(id);
+            return Context.UserRoles.Find(id);
         }
     }
 }

@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Threading.Tasks;
 using DanceCoolBusinessLogic.Services;
-using DanceCoolDataAccessLogic.Repositories.Interfaces;
 using DanceCoolDTO;
 using Microsoft.AspNetCore.Mvc;
 

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Threading.Tasks;
 using DanceCoolDTO;
 
 namespace DanceCoolBusinessLogic.Services
@@ -7,6 +6,7 @@ namespace DanceCoolBusinessLogic.Services
     interface IUserService
     {
         IEnumerable<UserDTO> GetAllUsers();
-        UserDTO GetUserByIdAsync(int id);
+        UserDTO GetUserById(int userId);
+        IEnumerable<UserDTO> GetUsersFromGroup(int groupId);
     }
 }

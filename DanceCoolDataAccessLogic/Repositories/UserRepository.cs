@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+using System.Linq;
 using DanceCoolDataAccessLogic.Entities;
 using DanceCoolDataAccessLogic.Repositories.Interfaces;
-using Microsoft.EntityFrameworkCore;
 
 namespace DanceCoolDataAccessLogic.Repositories
 {
@@ -20,6 +19,14 @@ namespace DanceCoolDataAccessLogic.Repositories
         public User GetUserById(int userId)
         {
             return Context.Users.Find(userId);
+        }
+
+        public IEnumerable<User> GetUserByGroupId(int groupId)
+        {
+            var usersInGroupArray = Context.UserGroups.Where(ug => ug.GroupId == groupId)
+            .Select(ug => ug.UserId).ToArray();
+            var usersInGroup = Context.Users.OrderBy(user => usersInGroupArray.Contains(user.Id)).ToList();
+            return usersInGroup;
         }
     }
 }

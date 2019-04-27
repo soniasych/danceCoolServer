@@ -11,6 +11,7 @@ namespace DanceCoolDataAccessLogic.UnitOfWork
         IUserCredentialsRepository UserCredentials { get; }
         IUserRoleRepository UserRoles { get; }
         IUserRepository Users { get; }
+        IUserGroupRepository UserGroups { get; }
 
         void Dispose();
     }
