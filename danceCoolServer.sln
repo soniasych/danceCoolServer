@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28729.10
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "danceCoolWebApi", "danceCoolServerWebApi\danceCoolWebApi.csproj", "{15D8D5AD-089C-4385-8EA2-39AB3A34BB93}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DanceCoolDTO", "DanceCoolDTO\DanceCoolDTO.csproj", "{A243FFD8-FD41-4F0B-837D-F79559676767}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DanceCoolDataAccessLogic", "DanceCoolDataAccessLogic\DanceCoolDataAccessLogic.csproj", "{A92617A5-C3D0-40D4-B204-ACA914B28199}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DanceCoolBusinessLogic", "DanceCoolBusinessLogic\DanceCoolBusinessLogic.csproj", "{B2787E82-C37F-4A0C-8445-0F929B6DD6BD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DanceCoolBusinessLogic", "DanceCoolBusinessLogic\DanceCoolBusinessLogic.csproj", "{B2787E82-C37F-4A0C-8445-0F929B6DD6BD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DanceCoolWebApiReact", "DanceCoolWebApiReact\DanceCoolWebApiReact.csproj", "{14A17CD4-C7CD-4E0C-915A-6C51A5510626}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{15D8D5AD-089C-4385-8EA2-39AB3A34BB93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{15D8D5AD-089C-4385-8EA2-39AB3A34BB93}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{15D8D5AD-089C-4385-8EA2-39AB3A34BB93}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{15D8D5AD-089C-4385-8EA2-39AB3A34BB93}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A243FFD8-FD41-4F0B-837D-F79559676767}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A243FFD8-FD41-4F0B-837D-F79559676767}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A243FFD8-FD41-4F0B-837D-F79559676767}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -33,6 +29,10 @@ Global
 		{B2787E82-C37F-4A0C-8445-0F929B6DD6BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B2787E82-C37F-4A0C-8445-0F929B6DD6BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B2787E82-C37F-4A0C-8445-0F929B6DD6BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14A17CD4-C7CD-4E0C-915A-6C51A5510626}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14A17CD4-C7CD-4E0C-915A-6C51A5510626}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14A17CD4-C7CD-4E0C-915A-6C51A5510626}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14A17CD4-C7CD-4E0C-915A-6C51A5510626}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
