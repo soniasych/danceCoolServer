@@ -12,6 +12,17 @@ namespace DanceCoolBusinessLogic.Services
 
         }
 
+        public void AddUser(UserDTO userDTO)
+        {
+            var user = UserDTOToUserModel(userDTO);
+            db.Users.AddUser(user);
+        }
+       
+        public void AddUserToGroup(UserDTO user, GroupDTO group)
+        {
+            db.UserGroups.AddUserToGroup(user.Id, group.GroupId);
+        }
+
         public IEnumerable<UserDTO> GetAllUsers()
         {
             var users = db.Users.GetAllUsers();
@@ -65,5 +76,14 @@ namespace DanceCoolBusinessLogic.Services
                     userModel.FirstName,
                     userModel.LastName,
                     userModel.PhoneNumber);
+
+        private User UserDTOToUserModel(UserDTO userDto) =>
+            new User
+            {
+                FirstName = userDto.FirstName,
+                LastName = userDto.LastName,
+                PhoneNumber = userDto.PhoneNumber 
+            };
+
     }
 }

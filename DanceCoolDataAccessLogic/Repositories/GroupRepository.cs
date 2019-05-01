@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using DanceCoolDataAccessLogic.Entities;
 using DanceCoolDataAccessLogic.Repositories.Interfaces;
@@ -38,6 +39,19 @@ namespace DanceCoolDataAccessLogic.Repositories
                 .Select(user => user.Id);
 
             return Context.Groups.Where(group => groupsWithUSerArray.Contains(group.Id));
+        }
+
+        public void AddGroup(Group group)
+        {
+            Context.Groups.Add(group);
+        }
+
+        public void ChangeGroupLevel(int groupId, int levelId)
+        {
+            var groupModel = GetGroupById(groupId);
+            groupModel.LevelId = levelId;
+            Context.SaveChanges();
+
         }
     }
 }

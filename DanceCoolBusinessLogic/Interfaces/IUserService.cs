@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using DanceCoolDataAccessLogic.Entities;
 using DanceCoolDTO;
 
 namespace DanceCoolBusinessLogic.Services
@@ -8,5 +9,8 @@ namespace DanceCoolBusinessLogic.Services
         IEnumerable<UserDTO> GetAllUsers();
         UserDTO GetUserById(int userId);
         IEnumerable<UserDTO> GetUsersFromGroup(int groupId);
+
+        void AddUser(UserDTO user);
+        void AddUserToGroup(UserDTO user, GroupDTO group);
     }
 }
