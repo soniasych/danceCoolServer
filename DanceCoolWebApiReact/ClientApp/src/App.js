@@ -3,7 +3,7 @@ import { Route } from 'react-router';
 import { Layout } from './components/Layout';
 import { Home } from './components/Main-Page/Home';
 import { Groups } from './components/Main-Page/Group/Groups';
-//import { GroupPageRoot } from './components/GroupPage/GroupPageRoot'
+import { GroupTittle } from './components/GroupPage/GroupTittle'
 
 export default class App extends Component {
   static displayName = App.name;
@@ -13,6 +13,7 @@ export default class App extends Component {
       <Layout>
         <Route exact path='/' component={Home} />
         <Route exact path='/groups' component={Groups} />
+        <Route exact path='/groups/:id' component={GroupTittle} />
       </Layout>
     );
   }
