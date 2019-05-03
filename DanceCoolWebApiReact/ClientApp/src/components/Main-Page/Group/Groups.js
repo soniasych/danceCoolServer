@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Axios from 'axios';
 
 export class Groups extends Component {
     static displayName = Groups.name;
@@ -43,8 +44,8 @@ export class Groups extends Component {
     }
 
     async populateGroupData() {
-        const responce = await fetch('api/groups');
-        const data = await responce.json();
+        const responce = await Axios.get('api/groups');
+        const data = await responce.data;
         this.setState({ groups: data, loading: false });
     }
 }
