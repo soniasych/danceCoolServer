@@ -9,10 +9,12 @@ namespace danceCoolWebApi.Controllers
     public class GroupsController : ControllerBase
     {
         private IGroupService _groupService;
+        private IUserService _userService;
 
-        public GroupsController(IGroupService groupService)
+        public GroupsController(IGroupService groupService, IUserService userService)
         {
             _groupService = groupService;
+            _userService = userService;
         }
 
         //GET: api/Groups
@@ -30,6 +32,14 @@ namespace danceCoolWebApi.Controllers
         {
             return _groupService.GetGroupById(id);
         }
+
+        [HttpGet]
+        [Route("api/groups/{groupId}/users/")]
+        public IEnumerable<UserDTO> GetUsersById(int groupId)
+        {
+            return _userService.GetUsersFromGroup(groupId);
+        }
+
 
         //// POST: api/Groups
         //[HttpPost]
