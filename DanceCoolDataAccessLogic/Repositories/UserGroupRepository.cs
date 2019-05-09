@@ -10,13 +10,14 @@ namespace DanceCoolDataAccessLogic.Repositories
         {
         }
 
-        public int[] GetUsersIdByGroupId(int groupId) =>
-            Context.UserGroups.Where(ug => ug.GroupId == groupId)
-            .Select(ug => ug.UserId)
-            .ToArray();
-
-        public int[] GetAllGroupsByUserId(int userId) =>
-            Context.UserGroups.Where(ug => ug.UserId == userId)
-            .Select(ug => ug.GroupId).ToArray();
+        public bool AddUserToGroup(int userId, int groupId)
+        {
+            Context.UserGroups.Add(new UserGroup
+            {
+                UserId = userId,
+                GroupId = groupId
+            });
+            return true;
+        }
     }
 }

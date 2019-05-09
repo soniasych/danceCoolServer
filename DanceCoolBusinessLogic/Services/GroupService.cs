@@ -54,6 +54,11 @@ namespace DanceCoolBusinessLogic.Services
             return groupDtos;
         }
 
+        public void ChangeGroupLevel(int groupId, int targetLevelId)
+        {
+            db.Groups.ChangeGroupLevel(groupId, targetLevelId);
+        }
+
         private GroupDTO GroupModelToGroupDTO(Group groupModel)
         {
             var level = db.SkillLevels.GetSkillLevelById(groupModel.LevelId);
