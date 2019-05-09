@@ -65,7 +65,6 @@ export class GroupTittle extends Component {
         );
     }
 
-
     async populateCurrentGroupData() {
         const id = this.props.match.params.id;
         const responce = await Axios.get(`api/groups/${id}`);

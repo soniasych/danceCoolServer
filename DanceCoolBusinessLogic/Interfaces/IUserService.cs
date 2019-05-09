@@ -9,7 +9,7 @@ namespace DanceCoolBusinessLogic.Services
         IEnumerable<UserDTO> GetAllUsers();
         UserDTO GetUserById(int userId);
         IEnumerable<UserDTO> GetUsersFromGroup(int groupId);
-
+        IEnumerable<UserDTO> GetAllStudents();
         void AddUser(UserDTO user);
         void AddUserToGroup(UserDTO user, GroupDTO group);
     }

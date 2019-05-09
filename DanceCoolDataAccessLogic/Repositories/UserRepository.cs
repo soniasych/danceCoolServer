@@ -40,5 +40,23 @@ namespace DanceCoolDataAccessLogic.Repositories
             var usersInGroup = Context.Users.Where(user => usersInGroupArray.Contains(user.Id));
             return usersInGroup;
         }
+
+        public IEnumerable<User> GetStudents()
+        {
+            var studentsIdArray = Context.UserRoles.Where(ur => ur.RoleId == 1)
+                .Select(ur => ur.UserId)
+                .ToArray();
+
+            return Context.Users.Where(user => studentsIdArray.Contains(user.Id));
+        }
+
+        public IEnumerable<User> GetMentors()
+        {
+            var mentorsIdArray = Context.UserRoles.Where(ur => ur.RoleId == 2)
+                .Select(ur => ur.UserId)
+                .ToArray();
+
+            return Context.Users.Where(user => mentorsIdArray.Contains(user.Id));
+        }
     }
 }

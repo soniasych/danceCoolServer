@@ -9,7 +9,7 @@ namespace DanceCoolDataAccessLogic.Repositories.Interfaces
         IEnumerable<User> GetAllUsers();
         User GetUserById(int userId);
         IEnumerable<User> GetUsersByGroupId(int groupId);
-
+        IEnumerable<User> GetStudents();
         void AddUser(User user);
         void AddUserRange(IEnumerable<User> users);
         
