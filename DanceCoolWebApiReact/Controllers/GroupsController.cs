@@ -33,21 +33,6 @@ namespace danceCoolWebApi.Controllers
             return _groupService.GetGroupById(id);
         }
 
-        [HttpGet]
-        [Route("api/groups/{groupId}/users/")]
-        public IEnumerable<UserDTO> GetUsersById(int groupId)
-        {
-            return _userService.GetUsersFromGroup(groupId);
-        }
-
-        [HttpGet]
-        [Route("api/students/")]
-        public  IEnumerable<UserDTO> GetAllStudents()
-        {
-            return _userService.GetAllStudents();
-        }
-
-
         //// POST: api/Groups
         //[HttpPost]
         //public void Post([FromBody] string value)

@@ -58,5 +58,10 @@ namespace DanceCoolDataAccessLogic.Repositories
 
             return Context.Users.Where(user => mentorsIdArray.Contains(user.Id));
         }
+
+        public IEnumerable<User> Search(string key)
+        {
+            return Context.Users.Where(user => user.FirstName.Contains(key.ToLower()));
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 using DanceCoolDataAccessLogic.Entities;
 using DanceCoolDataAccessLogic.UnitOfWork;
 using DanceCoolDTO;
@@ -88,6 +89,19 @@ namespace DanceCoolBusinessLogic.Services
             }
             return studentsDtos;
 
+        }
+
+        public IEnumerable<UserDTO> Search(string key)
+        {
+            var users = db.Users.Search(key);
+            var dtos = new List<UserDTO>();
+
+            foreach (var user in users)
+            {
+                dtos.Add(UserModelToUserDTO(user));
+            }
+
+            return dtos;
         }
 
         private UserDTO UserModelToUserDTO(User userModel) => 
