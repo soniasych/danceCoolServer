@@ -21,8 +21,9 @@ export class ManagingUsersPage extends Component {
       <table className='table table-sm'>
         <thead>
           <tr>
-            <th>Напрямок</th>
-            <th>Рівень</th>
+            <th>Ім'я</th>
+            <th>Прізвище</th>
+            <th>Нормер телефону</th>
           </tr>
         </thead>
         <tbody>
@@ -38,12 +39,10 @@ export class ManagingUsersPage extends Component {
     );
   }
 
-
   render() {
     let studentsTable = ManagingUsersPage.renderUsersList(this.state.students)
     return <div>
       <h1>Студенти школи La Lalsa</h1>
-
       {studentsTable}
     </div>;
   }
