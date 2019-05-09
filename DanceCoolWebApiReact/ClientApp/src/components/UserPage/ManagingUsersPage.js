@@ -16,9 +16,36 @@ export class ManagingUsersPage extends Component {
     this.populateAllStudents();
   }
 
+  static renderUsersList(students) {
+    return (
+      <table className='table table-sm'>
+        <thead>
+          <tr>
+            <th>Напрямок</th>
+            <th>Рівень</th>
+          </tr>
+        </thead>
+        <tbody>
+          {students.map(student =>
+            <tr key={student.id}>
+              <td>{student.firstName}</td>
+              <td>{student.lastName}</td>
+              <td>{student.phoneNumber}</td>
+            </tr>
+          )}
+        </tbody>
+      </table>
+    );
+  }
+
 
   render() {
-    return <div>Here will bee all users</div>;
+    let studentsTable = ManagingUsersPage.renderUsersList(this.state.students)
+    return <div>
+      <h1>Студенти школи La Lalsa</h1>
+
+      {studentsTable}
+    </div>;
   }
 
   async populateAllStudents() {

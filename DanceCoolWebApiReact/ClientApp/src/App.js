@@ -5,6 +5,7 @@ import { Home } from './components/Main-Page/Home';
 import { Groups } from './components/Main-Page/Group/Groups';
 import { GroupTittle } from './components/GroupPage/GroupTittle'
 import { ManagingUsersPage } from './components/UserPage/ManagingUsersPage';
+import { AdminPage } from './components/AdminPage';
 
 export default class App extends Component {
   static displayName = App.name;
@@ -13,6 +14,7 @@ export default class App extends Component {
     return (
       <Layout>
         <Route exact path='/' component={Home} />
+        <Route exact path='/god-mode-on' component={AdminPage} />
         <Route exact path='/groups' component={Groups} />
         <Route exact path='/groups/:id' component={GroupTittle} />
         <Route exact path='/students/' component={ManagingUsersPage} />
