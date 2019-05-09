@@ -12,5 +12,9 @@ namespace DanceCoolDataAccessLogic.Repositories.Interfaces
         IEnumerable<Group> GetGroupsByLevelId(int levelId);
         IEnumerable<Group> GetGroupsByDirectionId(int directionId);
         IEnumerable<Group> GetGroupsByUserId(int userId);
+
+        void AddGroup(Group group);
+
+        void ChangeGroupLevel(int groupId, int levelId);
     }
 }
