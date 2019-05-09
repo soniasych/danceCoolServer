@@ -60,6 +60,25 @@ namespace DanceCoolBusinessLogic.Services
             return usersInGroup;
         }
 
+        public IEnumerable<UserDTO> GetAllStudents()
+        {
+            var studentModels = db.Users.GetStudents();
+
+            if (studentModels == null)
+            {
+                return null;
+            }
+
+            var studentsDtos = new List<UserDTO>();
+
+            foreach (var item in studentModels)
+            {
+                studentsDtos.Add(UserModelToUserDTO(item));
+            }
+            return studentsDtos;
+
+        }
+
         private UserDTO UserModelToUserDTO(User userModel) => 
             new UserDTO(userModel.Id,
                     userModel.FirstName,
