@@ -12,7 +12,6 @@ namespace DanceCoolDataAccessLogic.Repositories.Interfaces
         IEnumerable<User> GetStudents();
         void AddUser(User user);
         void AddUserRange(IEnumerable<User> users);
-        
-
+        IEnumerable<User> Search(string key);
     }
 }

@@ -5,7 +5,7 @@ using DanceCoolDataAccessLogic.Repositories.Interfaces;
 
 namespace DanceCoolDataAccessLogic.Repositories
 {
-    internal class UserRepository : BaseRepository<User>, IUserRepository
+    public class UserRepository : BaseRepository<User>, IUserRepository
     {
         public UserRepository(DanceCoolContext context) : base(context)
         {
@@ -57,6 +57,11 @@ namespace DanceCoolDataAccessLogic.Repositories
                 .ToArray();
 
             return Context.Users.Where(user => mentorsIdArray.Contains(user.Id));
+        }
+
+        public IEnumerable<User> Search(string key)
+        {
+            return Context.Users.Where(user => user.FirstName.Contains(key.ToLower()));
         }
     }
 }

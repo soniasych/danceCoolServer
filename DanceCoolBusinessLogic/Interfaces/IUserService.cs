@@ -12,5 +12,6 @@ namespace DanceCoolBusinessLogic.Services
         IEnumerable<UserDTO> GetAllStudents();
         void AddUser(UserDTO user);
         void AddUserToGroup(UserDTO user, GroupDTO group);
+        IEnumerable<UserDTO> Search(string key);
     }
 }

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Axios from 'axios';
+import { Link } from 'react-router-dom';
 
 export class Groups extends Component {
     static displayName = Groups.name;
@@ -25,7 +26,7 @@ export class Groups extends Component {
                 <tbody>
                     {groups.map(group =>
                         <tr key={group.groupId}>
-                            <td>{group.groupDirection}</td>
+                            <td><Link to={`/groups/${group.groupId}`}>{group.groupDirection}</Link></td>
                             <td>{group.groupLevel}</td>
                         </tr>
                     )}

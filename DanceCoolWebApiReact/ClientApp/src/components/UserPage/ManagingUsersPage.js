@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Axios from 'axios';
+const { API_KEY } = process.env;
 
 export class ManagingUsersPage extends Component {
   static displayName = ManagingUsersPage.name;
@@ -8,6 +9,7 @@ export class ManagingUsersPage extends Component {
     super(props);
     this.state = {
       students: [],
+      searchQuery: '',
       loading: true
     };
   }
@@ -16,13 +18,26 @@ export class ManagingUsersPage extends Component {
     this.populateAllStudents();
   }
 
+  handleSearchChange = (event) => {
+    this.setState({
+      searchQuery: this.search.value
+    }, () => {
+      if (this.state.searchQuery && this.state.searchQuery.length > 2) {
+        if (this.state.searchQuery.length % 2 === 0) {
+          this.searchUsers()
+        }
+      }
+    })
+  }
+
   static renderUsersList(students) {
     return (
       <table className='table table-sm'>
         <thead>
           <tr>
-            <th>Напрямок</th>
-            <th>Рівень</th>
+            <th>Ім'я</th>
+            <th>Прізвище</th>
+            <th>Нормер телефону</th>
           </tr>
         </thead>
         <tbody>
@@ -38,20 +53,35 @@ export class ManagingUsersPage extends Component {
     );
   }
 
-
   render() {
     let studentsTable = ManagingUsersPage.renderUsersList(this.state.students)
-    return <div>
+    return (<div>
       <h1>Студенти школи La Lalsa</h1>
-
+      <div class="input-group input-group-sm mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="inputGroup-sizing-default">Пошук студента</span>
+        </div>
+        <input type="text"
+          ref={input => this.search = input}
+          id="studentSearchInput"
+          className="form-control"
+          aria-label="Default"
+          aria-describedby="inputGroup-sizing-default"
+          onChange={this.handleSearchChange.bind(this)} />
+      </div>
       {studentsTable}
-    </div>;
+    </div>);
   }
 
   async populateAllStudents() {
-    const responce = await Axios.get('api/students');
+    const responce = await Axios.get('api/users');
     const data = await responce.data;
     this.setState({ students: data, loading: false });
   }
 
+  async searchUsers() {
+    const responce = await Axios.get(`api/users/search?searchQuery=${this.state.searchQuery}`);
+    const data = await responce.data;
+    this.setState({ students: data, loading: false });
+  }
 }
