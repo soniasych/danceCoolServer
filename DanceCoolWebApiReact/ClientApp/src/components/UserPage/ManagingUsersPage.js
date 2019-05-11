@@ -57,21 +57,21 @@ export class ManagingUsersPage extends Component {
     let studentsTable = ManagingUsersPage.renderUsersList(this.state.students)
     return (<div>
       <h1>Студенти школи La Lalsa</h1>
-      <form>
-        <label>Пошук Студента</label>
+      <div class="input-group input-group-sm mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="inputGroup-sizing-default">Пошук студента</span>
+        </div>
         <input type="text"
           ref={input => this.search = input}
-          className="search-box"
           id="studentSearchInput"
-          aria-describedby="emailHelp"
+          className="form-control"
+          aria-label="Default"
+          aria-describedby="inputGroup-sizing-default"
           onChange={this.handleSearchChange.bind(this)} />
-      </form>
+      </div>
       {studentsTable}
     </div>);
   }
-
-
-
 
   async populateAllStudents() {
     const responce = await Axios.get('api/users');
