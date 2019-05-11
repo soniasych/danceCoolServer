@@ -10,6 +10,7 @@ namespace DanceCoolWebApiReact.Controllers
     {
         private IUserService _userService;
 
+
         public UsersController(IUserService userService)
         {
             _userService = userService;
@@ -25,7 +26,7 @@ namespace DanceCoolWebApiReact.Controllers
 
         //GET: api/students
         [HttpGet]
-        [Route("api/users")]
+        [Route("api/students")]
         public IEnumerable<UserDTO> GetAllStudents()
         {
             return _userService.GetAllStudents();
@@ -48,9 +49,10 @@ namespace DanceCoolWebApiReact.Controllers
 
         [HttpGet]
         [Route("api/users/search")]
-        public IEnumerable<UserDTO> Search(string key)
+        public IEnumerable<UserDTO> Search(string searchQuery)
         {
-            return null;
+            var searchResult = new List<UserDTO>();
+            return searchQuery == null ? searchResult : _userService.Search(searchQuery);
         }
 
         //// POST: api/Users

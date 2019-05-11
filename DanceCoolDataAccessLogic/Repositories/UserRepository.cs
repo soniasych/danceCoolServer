@@ -5,7 +5,7 @@ using DanceCoolDataAccessLogic.Repositories.Interfaces;
 
 namespace DanceCoolDataAccessLogic.Repositories
 {
-    internal class UserRepository : BaseRepository<User>, IUserRepository
+    public class UserRepository : BaseRepository<User>, IUserRepository
     {
         public UserRepository(DanceCoolContext context) : base(context)
         {
