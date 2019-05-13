@@ -69,6 +69,7 @@ export class ManagingUsersPage extends Component {
           aria-describedby="inputGroup-sizing-default"
           onChange={this.handleSearchChange.bind(this)} />
       </div>
+      <button type="button" class="btn btn-primary">Новий студент</button>
       {studentsTable}
     </div>);
   }
