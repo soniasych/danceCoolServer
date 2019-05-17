@@ -55,11 +55,13 @@ namespace DanceCoolWebApiReact.Controllers
             return searchQuery == null ? searchResult : _userService.Search(searchQuery);
         }
 
-        //// POST: api/Users
-        //[HttpPost]
-        //public void Post([FromBody] string value)
-        //{
-        //}
+        // POST: api/Users
+        [HttpPost]
+        [Route("api/users/")]
+        public void Post([FromBody] NewUserDTO userDto)
+        {
+            _userService.AddUser(userDto);
+        }
 
         //// PUT: api/Users/5
         //[HttpPut("{id}")]

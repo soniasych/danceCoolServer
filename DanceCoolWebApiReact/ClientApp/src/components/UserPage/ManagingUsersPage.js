@@ -27,6 +27,8 @@ export class ManagingUsersPage extends Component {
       () => {
         if (this.state.searchQuery && this.state.searchQuery.length > 2) {
           this.searchUsers();
+        } else {
+          this.populateAllStudents();
         }
       }
     );

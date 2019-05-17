@@ -11,44 +11,45 @@ export class AddingUserModal extends Component {
             studentLastName: '',
             studentPhoneNumber: ''
         };
+
     }
 
     static renderAddingStudentForm() {
         return (
-            <form>
-                <div class="form-row">
-                    <div class="form-group col-md-4">
-                        <label for="inputEmail4">Ім'я</label>
-                        <input
-                            type="text"
-                            class="form-control"
-                            id="newstudentFirstName"
-                            placeholder="Ім'я"
-                        />
+            <div>
+                <label>Додавання нового студента</label>
+                <form>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="newstudentFirstName"
+                                placeholder="Ім'я"
+                            />
+                        </div>
+                        <div class="form-group col-md-4">
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="newstudentFirstName"
+                                placeholder="Прізвище"
+                            />
+                        </div>
+                        <div class="form-group col-md-4">
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="newstudentFirstName"
+                                placeholder="Номер Телефону"
+                            />
+                        </div>
                     </div>
-                    <div class="form-group col-md-4">
-                        <label for="inputPassword4">Прізвище</label>
-                        <input
-                            type="text"
-                            class="form-control"
-                            id="newstudentFirstName"
-                            placeholder="Прізвище"
-                        />
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="inputPassword4">Номер Телефону</label>
-                        <input
-                            type="text"
-                            class="form-control"
-                            id="newstudentFirstName"
-                            placeholder="Номер Телефону"
-                        />
-                    </div>
-                </div>
-                <button class="btn btn-primary">
-                    Додати {Date.now().toLocaleString()}
+                    <button class="btn btn-primary">
+                        Додати
                 </button>
-            </form>
+                </form>
+            </div>
         );
     }
 
@@ -56,6 +57,13 @@ export class AddingUserModal extends Component {
         let addingUserModal = AddingUserModal.renderAddingStudentForm();
         return (<div>{addingUserModal}</div>);
     }
-
+    async addStudent() {
+        const addedStudent = {
+            firstName: this.state.studentFirstName,
+            lastName: this.state.studentLastName,
+            phoneNumber: this.state.studentPhoneNumber
+        };
+        const response = await Axios.post('api/users/', addedStudent);
+    }
 
 }

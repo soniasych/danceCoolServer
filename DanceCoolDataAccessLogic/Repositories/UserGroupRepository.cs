@@ -1,6 +1,5 @@
 ﻿using DanceCoolDataAccessLogic.Entities;
 using DanceCoolDataAccessLogic.Repositories.Interfaces;
-using System.Linq;
 
 namespace DanceCoolDataAccessLogic.Repositories
 {
