@@ -8,26 +8,45 @@ export class AddingUserModal extends Component {
         super(props);
 
         this.state = {
-            studentFirstName: 'rgosing',
-            studentLastName: 'lalaland',
+            studentFirstName: '',
+            studentLastName: '',
             studentPhoneNumber: ''
         };
 
         this.onFirtsNameInputChanged = this.onFirtsNameInputChanged.bind(this);
         this.onLastNameInputChanged = this.onLastNameInputChanged.bind(this);
         this.onPhonNumberInputChanged = this.onPhonNumberInputChanged.bind(this);
+        this.onAddStudentButtonClickHandler = this.onAddStudentButtonClickHandler.bind(this);
     }
 
     onFirtsNameInputChanged = event => {
-        this.setState({ studentFirstName: event.target.value});
+        this.setState({ studentFirstName: event.target.value });
     }
 
     onLastNameInputChanged = event => {
-        this.setState({ studentLastName: event.target.value});        
+        this.setState({ studentLastName: event.target.value });
     }
 
-    onPhonNumberInputChanged = event => {        
-        this.setState({ studentPhoneNumber: event.target.value});        
+    onPhonNumberInputChanged = event => {
+        this.setState({ studentPhoneNumber: event.target.value });
+    }
+
+    onAddStudentButtonClickHandler = event => {
+        if (this.state.studentFirstName >= 1 &&
+            this.state.studentLastName >= 1 &&
+            this.state.studentPhoneNumber >= 1) {
+                this.addStudent();
+        }
+        const addedStudent = {
+            firstName: this.state.studentFirstName,
+            lastName: this.state.studentLastName,
+            phoneNumber: this.state.studentPhoneNumber
+        };
+
+        Axios.post('api/users/', addedStudent)
+        .then(response => console.log(response));
+        
+        event.preventDefault();
     }
 
     renderAddingStudentForm() {
@@ -35,35 +54,34 @@ export class AddingUserModal extends Component {
             <div>
                 <label>Додавання нового студента</label>
                 <form>
-                    <div class="form-row">
-                        <div class="form-group col-md-4">
+                    <div className="form-row">
+                        <div className="form-group col-md-4">
                             <input
                                 type="text"
                                 value={this.state.studentFirstName}
                                 onChange={this.onFirtsNameInputChanged}
-                                className="form-control"
-                                placeholder="Ім'я"/>
+                                className="form-control"/>
                         </div>
-                        <div class="form-group col-md-4">
+                        <div className="form-group col-md-4">
                             <input
-                                type="text"                                
-                                value={this.state.studentFirstName}
+                                type="text"
+                                value={this.state.studentLastName}
                                 onChange={this.onLastNameInputChanged}
-                                class="form-control"
-                                id="newstudentFirstName"
-                                placeholder="Прізвище"/>
+                                className="form-control"
+                                id="newstudentFirstName"/>
                         </div>
-                        <div class="form-group col-md-4">
+                        <div className="form-group col-md-4">
                             <input
-                                type="text"                                
+                                type="text"
                                 value={this.state.studentPhoneNumber}
                                 onChange={this.onPhonNumberInputChanged}
-                                class="form-control"
-                                id="newstudentFirstName"
-                                placeholder="Номер Телефону"/>
+                                className="form-control"
+                                id="newstudentFirstName" />
                         </div>
                     </div>
-                    <button class="btn btn-primary">
+                    <button
+                        className="btn btn-primary"
+                        onClick={this.onAddStudentButtonClickHandler}>
                         Додати
                 </button>
                 </form>
@@ -77,12 +95,7 @@ export class AddingUserModal extends Component {
     }
 
     async addStudent() {
-        const addedStudent = {
-            firstName: this.state.studentFirstName,
-            lastName: this.state.studentLastName,
-            phoneNumber: this.state.studentPhoneNumber
-        };
-        const response = await Axios.post('api/users/', addedStudent);
+        
     }
 
 }

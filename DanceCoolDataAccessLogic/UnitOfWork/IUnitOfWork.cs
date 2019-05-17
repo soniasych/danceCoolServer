@@ -1,8 +1,9 @@
-﻿using DanceCoolDataAccessLogic.Repositories.Interfaces;
+﻿using System;
+using DanceCoolDataAccessLogic.Repositories.Interfaces;
 
 namespace DanceCoolDataAccessLogic.UnitOfWork
 {
-    public interface IUnitOfWork
+    public interface IUnitOfWork : IDisposable
     {
         IDanceDirectionRepository DanceDirections { get; }
         IGroupRepository Groups { get; }
@@ -13,6 +14,6 @@ namespace DanceCoolDataAccessLogic.UnitOfWork
         IUserRepository Users { get; }
         IUserGroupRepository UserGroups { get; }
 
-        void Dispose();
+        void Save();
     }
 }

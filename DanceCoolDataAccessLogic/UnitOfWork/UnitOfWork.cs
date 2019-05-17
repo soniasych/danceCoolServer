@@ -7,6 +7,7 @@ namespace DanceCoolDataAccessLogic.UnitOfWork
     public class UnitOfWork : IUnitOfWork
     {
         private readonly DanceCoolContext _context;
+        private bool disposed;
 
         private IUserRepository users;
         private IDanceDirectionRepository danceDirections;
@@ -17,18 +18,37 @@ namespace DanceCoolDataAccessLogic.UnitOfWork
         private IUserRoleRepository userRoles;
         private IUserGroupRepository userGroups;
 
-        public UnitOfWork(DanceCoolContext context) => _context = context;
+        public UnitOfWork(DanceCoolContext context)
+        {
+            this._context = context;
+            disposed = false;
+        }
 
-        public IUserRepository Users => users ?? (users = new UserRepository(_context));
-        public IDanceDirectionRepository DanceDirections => danceDirections ?? (danceDirections = new DanceDirectionRepository(_context));
-        public IGroupRepository Groups => groups ?? (groups = new GroupRepository(_context));
-        public IRoleRepository Roles => roles ?? (roles = new RoleRepository(_context));
-        public ISkillLevelRepository SkillLevels => skillLevels ?? (skillLevels = new SkillLevelRepository(_context));
-        public IUserCredentialsRepository UserCredentials => userCredentials ?? (userCredentials = new UserCredentialsRepository(_context));
-        public IUserRoleRepository UserRoles => userRoles ?? (userRoles = new UserRoleRepository(_context));
-        public IUserGroupRepository UserGroups => userGroups ?? ( userGroups = new UserGroupRepository(_context));
+        public IUserRepository Users => 
+            users ?? (users = new UserRepository(_context));
 
-        public void Complete()
+        public IDanceDirectionRepository DanceDirections =>
+            danceDirections ?? (danceDirections = new DanceDirectionRepository(_context));
+
+        public IGroupRepository Groups => 
+            groups ?? (groups = new GroupRepository(_context));
+
+        public IRoleRepository Roles => 
+            roles ?? (roles = new RoleRepository(_context));
+
+        public ISkillLevelRepository SkillLevels => 
+            skillLevels ?? (skillLevels = new SkillLevelRepository(_context));
+
+        public IUserCredentialsRepository UserCredentials =>
+            userCredentials ?? (userCredentials = new UserCredentialsRepository(_context));
+
+        public IUserRoleRepository UserRoles => 
+            userRoles ?? (userRoles = new UserRoleRepository(_context));
+
+        public IUserGroupRepository UserGroups => 
+            userGroups ?? (userGroups = new UserGroupRepository(_context));
+
+        public void Save()
         {
             _context.SaveChanges();
         }
@@ -36,7 +56,11 @@ namespace DanceCoolDataAccessLogic.UnitOfWork
 
         public void Dispose()
         {
-            _context.Dispose();
+            if (!disposed)
+            {
+                _context?.Dispose();
+            }
+            disposed = true;
         }
     }
 }

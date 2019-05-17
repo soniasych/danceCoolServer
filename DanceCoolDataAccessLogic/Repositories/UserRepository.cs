@@ -11,11 +11,6 @@ namespace DanceCoolDataAccessLogic.Repositories
         {
         }
 
-        public void AddUser(User user)
-        {
-            Context.Users.Add(user);
-        }
-
         public void AddUserRange(IEnumerable<User> users)
         {
             Context.Users.AddRange(users);

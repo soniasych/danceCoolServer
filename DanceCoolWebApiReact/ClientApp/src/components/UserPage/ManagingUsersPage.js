@@ -62,9 +62,9 @@ export class ManagingUsersPage extends Component {
     return (
       <div>
         <h1>Студенти школи La Lalsa</h1>
-        <div class="input-group input-group-sm mb-3">
-          <div class="input-group-prepend">
-            <span class="input-group-text" id="inputGroup-sizing-default">
+        <div className="input-group input-group-sm mb-3">
+          <div className="input-group-prepend">
+            <span className="input-group-text" id="inputGroup-sizing-default">
               Пошук студента
             </span>
           </div>

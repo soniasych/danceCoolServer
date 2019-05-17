@@ -15,7 +15,8 @@ namespace DanceCoolBusinessLogic.Services
         public void AddUser(NewUserDTO userDTO)
         {
             var user = NewUserDTOToUserModel(userDTO);
-            db.Users.AddUser(user);
+            db.Users.AddEntity(user);
+            db.Save();
         }
        
         public void AddUserToGroup(int userId, int groupId)
