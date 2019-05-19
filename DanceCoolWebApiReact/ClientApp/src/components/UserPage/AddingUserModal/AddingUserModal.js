@@ -1,24 +1,21 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {
     Modal,
     ModalHeader,
     ModalBody,
     ModalFooter
-  } from 'reactstrap';
-  
+} from 'reactstrap';
 import Axios from 'axios';
 
-export class AddingUserModal extends Component {
-    static displayName = AddingUserModal.name;
 
+export class AddingUserModal extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
             studentFirstName: '',
             studentLastName: '',
-            studentPhoneNumber: '',
-            addingStudentModalVislible: props.addingStudentModalVislible
+            studentPhoneNumber: ''
         };
 
         this.onFirtsNameInputChanged = this.onFirtsNameInputChanged.bind(this);
@@ -42,9 +39,8 @@ export class AddingUserModal extends Component {
 
     closeAddingStudenModalHandler = event => {
         this.setState({
-          addingStudentModalVislible: false
+            addingStudentModalVisible: false
         });
-        event.preventDefault();
       }
 
     onAddStudentButtonClickHandler = event => {
@@ -68,7 +64,7 @@ export class AddingUserModal extends Component {
     renderAddingStudentForm() {
         return (
             <Modal
-            isOpen={this.state.addingStudentModalVislible}>
+            isOpen={this.props.addingStudentModalVisible}>
                 <ModalHeader>Додавання нового студента</ModalHeader>
                 <ModalBody>
                     <div className="form-row">
@@ -103,7 +99,9 @@ export class AddingUserModal extends Component {
                         onClick={this.onAddStudentButtonClickHandler}>
                         Додати</button>
                         <button
-                        onClick={this.closeAddingStudenModalHandler}>
+                        className="btn btn-secondary"
+                        onClick={this.props.closeModal}>
+                        Відмінити
                         </button>
                 </ModalFooter>
             </Modal>
@@ -113,10 +111,5 @@ export class AddingUserModal extends Component {
     render() {
         let addingUserModal = this.renderAddingStudentForm();
         return (<div>{addingUserModal}</div>);
-    }
-
-    async addStudent() {
-        
-    }
-
+    }    
 }

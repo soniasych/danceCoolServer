@@ -1,10 +1,8 @@
 import React, { Component } from "react";
 import Axios from "axios";
 import { AddingUserModal } from './AddingUserModal/AddingUserModal';
-const { API_KEY } = process.env;
 
 export class ManagingUsersPage extends Component {
-  static displayName = ManagingUsersPage.name;
 
   constructor(props) {
     super(props);
@@ -14,7 +12,7 @@ export class ManagingUsersPage extends Component {
       loading: true,
       addingStudentModalVisible: false
     };
-    this.openAddingStudenModalHandler = this.openAddingStudenModalHandler.bind(this);
+    this.AddingStudenModalHandler = this.AddingStudenModalHandler.bind(AddingUserModal);
     
   }
 
@@ -60,15 +58,19 @@ export class ManagingUsersPage extends Component {
     );
   }
 
-  openAddingStudenModalHandler = event => {
-    this.setState({
-      addingStudentModalVisible: true
-    });
-    event.preventDefault();
+  AddingStudenModalHandler = event => {
+    if(this.state.addingStudentModalVisible===false){
+      this.setState({ addingStudentModalVisible: true });
+    }
+    else{
+      this.setState({ addingStudentModalVisible: false });
+    }
+     
   }  
 
   render() {
     let studentsTable = ManagingUsersPage.renderUsersList(this.state.students);
+    let visingStatus = this.state.addingStudentModalVisible;
     return (
       <div>
         <h1>Студенти школи La Lalsa</h1>
@@ -87,19 +89,23 @@ export class ManagingUsersPage extends Component {
             aria-describedby="inputGroup-sizing-default"
             onChange={this.handleSearchChange.bind(this)}
           />
+          <span>
           <button
           className="btn btn-primary"
-          onClick={this.openAddingStudenModalHandler}>
+          onClick={this.AddingStudenModalHandler}>
           Додати нового студента</button>
-        
-        </div>
-          <AddingUserModal isOpen={this.state.addingStudentModalVislible}/>
+          </span>
+          </div>                 
+          <AddingUserModal addingStudentModalVisible={this.state.addingStudentModalVisible}
+          closeModal={this.AddingStudenModalHandler}
+          />
         <br />
         {studentsTable}
       </div>
     );
   }
-
+  
+  
   async populateAllStudents() {
     const responce = await Axios.get("api/users");
     const data = await responce.data;
