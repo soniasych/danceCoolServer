@@ -11,8 +11,11 @@ export class ManagingUsersPage extends Component {
     this.state = {
       students: [],
       searchQuery: "",
-      loading: true
+      loading: true,
+      addingStudentModalVisible: false
     };
+    this.openAddingStudenModalHandler = this.openAddingStudenModalHandler.bind(this);
+    
   }
 
   componentDidMount() {
@@ -57,6 +60,13 @@ export class ManagingUsersPage extends Component {
     );
   }
 
+  openAddingStudenModalHandler = event => {
+    this.setState({
+      addingStudentModalVisible: true
+    });
+    event.preventDefault();
+  }  
+
   render() {
     let studentsTable = ManagingUsersPage.renderUsersList(this.state.students);
     return (
@@ -77,9 +87,13 @@ export class ManagingUsersPage extends Component {
             aria-describedby="inputGroup-sizing-default"
             onChange={this.handleSearchChange.bind(this)}
           />
+          <button
+          className="btn btn-primary"
+          onClick={this.openAddingStudenModalHandler}>
+          Додати нового студента</button>
+        
         </div>
-        <br />
-        <AddingUserModal />
+          <AddingUserModal isOpen={this.state.addingStudentModalVislible}/>
         <br />
         {studentsTable}
       </div>

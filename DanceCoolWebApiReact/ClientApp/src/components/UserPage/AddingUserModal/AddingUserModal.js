@@ -1,4 +1,11 @@
 import React, { Component } from 'react';
+import {
+    Modal,
+    ModalHeader,
+    ModalBody,
+    ModalFooter
+  } from 'reactstrap';
+  
 import Axios from 'axios';
 
 export class AddingUserModal extends Component {
@@ -10,13 +17,15 @@ export class AddingUserModal extends Component {
         this.state = {
             studentFirstName: '',
             studentLastName: '',
-            studentPhoneNumber: ''
+            studentPhoneNumber: '',
+            addingStudentModalVislible: props.addingStudentModalVislible
         };
 
         this.onFirtsNameInputChanged = this.onFirtsNameInputChanged.bind(this);
         this.onLastNameInputChanged = this.onLastNameInputChanged.bind(this);
         this.onPhonNumberInputChanged = this.onPhonNumberInputChanged.bind(this);
         this.onAddStudentButtonClickHandler = this.onAddStudentButtonClickHandler.bind(this);
+        this.closeAddingStudenModalHandler = this.closeAddingStudenModalHandler.bind(this);
     }
 
     onFirtsNameInputChanged = event => {
@@ -30,6 +39,13 @@ export class AddingUserModal extends Component {
     onPhonNumberInputChanged = event => {
         this.setState({ studentPhoneNumber: event.target.value });
     }
+
+    closeAddingStudenModalHandler = event => {
+        this.setState({
+          addingStudentModalVislible: false
+        });
+        event.preventDefault();
+      }
 
     onAddStudentButtonClickHandler = event => {
         if (this.state.studentFirstName >= 1 &&
@@ -51,9 +67,10 @@ export class AddingUserModal extends Component {
 
     renderAddingStudentForm() {
         return (
-            <div>
-                <label>Додавання нового студента</label>
-                <form>
+            <Modal
+            isOpen={this.state.addingStudentModalVislible}>
+                <ModalHeader>Додавання нового студента</ModalHeader>
+                <ModalBody>
                     <div className="form-row">
                         <div className="form-group col-md-4">
                             <input
@@ -78,14 +95,18 @@ export class AddingUserModal extends Component {
                                 className="form-control"
                                 id="newstudentFirstName" />
                         </div>
-                    </div>
+                    </div>                    
+                </ModalBody>
+                <ModalFooter>
                     <button
                         className="btn btn-primary"
                         onClick={this.onAddStudentButtonClickHandler}>
-                        Додати
-                </button>
-                </form>
-            </div>
+                        Додати</button>
+                        <button
+                        onClick={this.closeAddingStudenModalHandler}>
+                        </button>
+                </ModalFooter>
+            </Modal>
         );
     }
 
