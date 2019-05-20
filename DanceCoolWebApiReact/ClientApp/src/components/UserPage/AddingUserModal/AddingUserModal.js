@@ -41,13 +41,13 @@ export class AddingUserModal extends React.Component {
         this.setState({
             addingStudentModalVisible: false
         });
-      }
+    }
 
     onAddStudentButtonClickHandler = event => {
         if (this.state.studentFirstName >= 1 &&
             this.state.studentLastName >= 1 &&
             this.state.studentPhoneNumber >= 1) {
-                this.addStudent();
+            this.addStudent();
         }
         const addedStudent = {
             firstName: this.state.studentFirstName,
@@ -56,15 +56,15 @@ export class AddingUserModal extends React.Component {
         };
 
         Axios.post('api/users/', addedStudent)
-        .then(response => console.log(response));
-        
+            .then(response => console.log(response));
+
         event.preventDefault();
     }
 
     renderAddingStudentForm() {
         return (
             <Modal
-            isOpen={this.props.addingStudentModalVisible}>
+                isOpen={this.props.addingStudentModalVisible}>
                 <ModalHeader>Додавання нового студента</ModalHeader>
                 <ModalBody>
                     <div className="form-row">
@@ -73,7 +73,8 @@ export class AddingUserModal extends React.Component {
                                 type="text"
                                 value={this.state.studentFirstName}
                                 onChange={this.onFirtsNameInputChanged}
-                                className="form-control"/>
+                                className="form-control"
+                                required />
                         </div>
                         <div className="form-group col-md-4">
                             <input
@@ -81,7 +82,8 @@ export class AddingUserModal extends React.Component {
                                 value={this.state.studentLastName}
                                 onChange={this.onLastNameInputChanged}
                                 className="form-control"
-                                id="newstudentFirstName"/>
+                                id="newstudentFirstName"
+                                required />
                         </div>
                         <div className="form-group col-md-4">
                             <input
@@ -89,20 +91,13 @@ export class AddingUserModal extends React.Component {
                                 value={this.state.studentPhoneNumber}
                                 onChange={this.onPhonNumberInputChanged}
                                 className="form-control"
-                                id="newstudentFirstName" />
+                                id="newstudentFirstName"
+                                required />
                         </div>
-                    </div>                    
+                    </div>
                 </ModalBody>
                 <ModalFooter>
-                    <button
-                        className="btn btn-primary"
-                        onClick={this.onAddStudentButtonClickHandler}>
-                        Додати</button>
-                        <button
-                        className="btn btn-secondary"
-                        onClick={this.props.closeModal}>
-                        Відмінити
-                        </button>
+
                 </ModalFooter>
             </Modal>
         );
@@ -111,5 +106,5 @@ export class AddingUserModal extends React.Component {
     render() {
         let addingUserModal = this.renderAddingStudentForm();
         return (<div>{addingUserModal}</div>);
-    }    
+    }
 }

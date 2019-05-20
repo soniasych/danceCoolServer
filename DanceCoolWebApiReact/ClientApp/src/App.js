@@ -3,7 +3,7 @@ import { Route } from 'react-router';
 import { Layout } from './components/Layout';
 import { Home } from './components/Main-Page/Home';
 import { Groups } from './components/Main-Page/Group/Groups';
-import { GroupTittle } from './components/GroupPage/GroupTittle'
+import { GroupPage } from './components/GroupPage/GroupPage'
 import { ManagingUsersPage } from './components/UserPage/ManagingUsersPage';
 import { AdminPage } from './components/AdminPage';
 
@@ -16,7 +16,7 @@ export default class App extends Component {
         <Route exact path='/' component={Home} />
         <Route exact path='/god-mode-on' component={AdminPage} />
         <Route exact path='/groups' component={Groups} />
-        <Route exact path='/groups/:id' component={GroupTittle} />
+        <Route exact path='/groups/:id' component={GroupPage} />
         <Route exact path='/students/' component={ManagingUsersPage} />
         <Route exact path='/students/:id' component={ManagingUsersPage} />
       </Layout>

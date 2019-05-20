@@ -46,6 +46,9 @@ ToDelete order
 10. Role
 */
 
+IF OBJECT_ID('[dbo].[Attendances]', 'U') IS NOT NULL
+DROP TABLE [dbo].[Attendances]
+GO
 IF OBJECT_ID('[dbo].[Payments]', 'U') IS NOT NULL
 DROP TABLE [dbo].[Payments]
 GO
@@ -53,7 +56,7 @@ IF OBJECT_ID('[dbo].[Abonements]', 'U') IS NOT NULL
 DROP TABLE [dbo].[Abonements]
 GO
 IF OBJECT_ID('[dbo].[Lessons]', 'U') IS NOT NULL
-DROP TABLE [dbo].[Lessonss]
+DROP TABLE [dbo].[Lessons]
 GO
 IF OBJECT_ID('[dbo].[LessonTypes]', 'U') IS NOT NULL
 DROP TABLE [dbo].[LessonTypes]
@@ -74,7 +77,7 @@ IF OBJECT_ID('[dbo].[UserCredentials]', 'U') IS NOT NULL
 DROP TABLE [dbo].[UserCredentials]
 GO
 IF OBJECT_ID('[dbo].[UserRoles]', 'U') IS NOT NULL
-DROP TABLE [dbo].[UserRoless]
+DROP TABLE [dbo].[UserRoles]
 GO
 IF OBJECT_ID('[dbo].[Users]', 'U') IS NOT NULL
 DROP TABLE [dbo].[Users]
@@ -114,19 +117,22 @@ GO
 INSERT INTO [dbo].[Users]
     ( [FirstName], [LastName], [PhoneNumber] )
 VALUES
-    ( N'Оксана', N'Андрущенко', '+380104995985' ),
-    ( N'Мар''ян', N'Пелюх', '+380994543613' ),
-    ( N'Мар''яна', N'Луцишин', '+380816285545' ),
-    ( N'Роман', N'Пахолків', '+380760155782' ),
-    ( N'Ігор', N'Коваль', '+380837451111' ),
-    ( N'Анна', N'Данчук', '+380792884834' )
+    ( N'Оксана', N'Андрущенко', '+380104995985' ), --1
+    ( N'Мар''ян', N'Пелюх', '+380994543613' ), --2
+    ( N'Мар''яна', N'Луцишин', '+380816285545' ), --3
+    ( N'Олександр', N'Січкар', '+380813655545' ), --4
+    ( N'Роман', N'Пахолків', '+380760155782' ),--5
+    ( N'Мар''яна', N'Штокало', '+380774155782' ),--6
+    ( N'Ігор', N'Коваль', '+380837451111' ),--7
+    ( N'Анна', N'Данчук', '+380792884834' ),--8
+    ( N'Ольга', N'Коробчук', '+380792884834' )--9
 GO
 
 -- Insert Students into table 'User' in schema '[dbo]'
 INSERT INTO [dbo].[Users]
     ( [FirstName], [LastName], [PhoneNumber] )
 VALUES
-    ( N'Каріна', N'Кравченко', '+380635595952' ),--7
+    ( N'Каріна', N'Кравченко', '+380635595952' ),--10
     ( N'Юрій', N'Чабаренко', '+380730401631' ),
     ( N'Любов', N'Горбова', '+380671793382' ),
     ( N'Оксана', N'Котик', '+380979071237' ),
@@ -147,7 +153,7 @@ VALUES
     ( N'Петрик', N'П''яточкін', '+380739110666' ),
     ( N'Капітошка', N'Малий', '+380559475073' ),
     ( N'Вовчик', N'Братик', '+380934946898' ),
-    ( N'Лисичка', N'Сестричка', '+380634119407' )--28
+    ( N'Лисичка', N'Сестричка', '+380634119407' )--31
 GO
 
 -- Create a new table called '[UserCredentials]' in schema '[dbo]'
@@ -191,7 +197,7 @@ GO
 -- Insert rows into table 'UserRoles' in schema '[dbo]'
 declare @mentorCount INT = 1;
 
-WHILE @mentorCount <= 6
+WHILE @mentorCount <= 9
 BEGIN
     INSERT INTO [dbo].[UserRoles]
         ( UserId, RoleId )
@@ -201,9 +207,9 @@ BEGIN
 END;
 GO
 
-declare @studentCount INT = 7;
+declare @studentCount INT = 10;
 
-WHILE @studentCount <= 28
+WHILE @studentCount <= 31
 BEGIN
     INSERT INTO [dbo].[UserRoles]
         ( UserId, RoleId )
@@ -255,26 +261,29 @@ GO
 CREATE TABLE [dbo].[Groups]
 (
     [Id] INT NOT NULL PRIMARY KEY IDENTITY(1,1),
+    [PrimaryMentorId] INT NOT NULL,
+    [SecondaryMentorId] INT NULL,
     [DirectionId] INT NOT NULL,
-    [LevelId] INT NOT NULL,
+    [LevelId] INT NULL,
     CONSTRAINT FK_Direction_Group FOREIGN KEY ([DirectionId]) REFERENCES [dbo].[DanceDirections]([Id]),
-    CONSTRAINT FK_Level_Group FOREIGN KEY ([LevelId]) REFERENCES [dbo].[SkillLevels]([Id])
+    CONSTRAINT FK_Level_Group FOREIGN KEY ([LevelId]) REFERENCES [dbo].[SkillLevels]([Id]),
+    CONSTRAINT FK_PrimMentor_Group FOREIGN KEY ([PrimaryMentorId]) REFERENCES [dbo].[Users]([Id]),
+    CONSTRAINT FK_SecMentor_Group FOREIGN KEY ([SecondaryMentorId]) REFERENCES [dbo].[Users]([Id])
 );
 GO
 
 -- Insert rows into table 'Groups' in schema '[dbo]'
 INSERT INTO [dbo].[Groups]
-    (DirectionId, LevelId )
+    (PrimaryMentorId, SecondaryMentorId, DirectionId, LevelId )
 VALUES
-    (1, 1),
-    (1, 2),
-    (1, 3),
-    (2, 1),
-    (2, 2),
-    (2, 3),
-    (3, 1),
-    (3, 2),
-    (3, 3)
+    (/*prima*/1, /*sec*/2, /*dir*/1, /*level*/2),
+    (/*prima*/1, /*sec*/2, /*dir*/1, /*level*/4),
+    (/*prima*/5, /*sec*/6, /*dir*/2, /*level*/2),
+    (/*prima*/5, /*sec*/6, /*dir*/2, /*level*/4),
+    (/*prima*/3, /*sec*/4, /*dir*/3, /*level*/1),
+    (/*prima*/3, /*sec*/4, /*dir*/3, /*level*/2),
+    (/*prima*/3, /*sec*/4, /*dir*/3, /*level*/3),
+    (/*prima*/9, /*sec*/null, /*dir*/4,/*level*/null)
 GO
 
 -- Create a new table called '[UserGroups]' in schema '[dbo]'
@@ -288,16 +297,9 @@ CREATE TABLE [dbo].[UserGroups]
 );
 GO
 
-INSERT INTO [dbo].[UserGroups]
-    (UserId, GroupId)
-VALUES
-    (1, 1),
-    (2, 1)
-GO
+DECLARE @salsaLaCount INT = 10;
 
-DECLARE @salsaLaCount INT = 7;
-
-WHILE @salsaLaCount <= 14
+WHILE @salsaLaCount <= 17
 BEGIN
     INSERT INTO [dbo].[UserGroups]
         ( UserId, GroupId )
@@ -307,17 +309,9 @@ BEGIN
 END;
 GO
 
+DECLARE @salsaLaCount INT = 18;
 
-INSERT INTO [dbo].[UserGroups]
-    (UserId, GroupId)
-VALUES
-    (3, 2),
-    (4, 2)
-GO
-
-DECLARE @salsaLaCount INT = 15;
-
-WHILE @salsaLaCount <= 21
+WHILE @salsaLaCount <= 25
 BEGIN
     INSERT INTO [dbo].[UserGroups]
         ( UserId, GroupId )
@@ -327,16 +321,9 @@ BEGIN
 END;
 GO
 
-INSERT INTO [dbo].[UserGroups]
-    (UserId, GroupId)
-VALUES
-    (5, 3),
-    (6, 3)
-GO
+DECLARE @salsaLaCount INT = 23;
 
-DECLARE @salsaLaCount INT = 22;
-
-WHILE @salsaLaCount <= 28
+WHILE @salsaLaCount <= 31
 BEGIN
     INSERT INTO [dbo].[UserGroups]
         ( UserId, GroupId )
@@ -356,11 +343,11 @@ GO
 
 -- Insert rows into table 'LessonTypes' in schema '[dbo]'
 INSERT INTO [dbo].[LessonTypes]
-(  LessonTypeName )
+    ( LessonTypeName )
 VALUES
-( N'Індивідуальне' ),
-( N'Парне'),
-( N'Групове' )
+    ( N'Індивідуальне' ),
+    ( N'Парне'),
+    ( N'Групове' )
 GO
 
 -- Create a new table called '[Lessons]' in schema '[dbo]'
@@ -369,10 +356,21 @@ CREATE TABLE [dbo].[Lessons]
     [Id] INT NOT NULL PRIMARY KEY IDENTITY(1,1),
     [Date] DATETIME NOT NULL,
     [Room] INT NOT NULL,
-    [LessonTypeId] INT NOT NULL,
+    [LessonTypeId] INT NULL,
     [GroupId] INT NULL,
     CONSTRAINT FK_LessonType_Lesson FOREIGN KEY ([LessonTypeId]) REFERENCES [dbo].[LessonTypes]([Id]),
     CONSTRAINT FK_Group_Lesson FOREIGN KEY ([GroupId]) REFERENCES [dbo].[Groups]([Id])
+);
+GO
+
+-- Create the table in the specified schema
+CREATE TABLE [dbo].[Attendances]
+(
+    [Id] INT NOT NULL PRIMARY KEY IDENTITY(1,1), -- Primary Key column
+    [LessonId] INT NOT NULL,
+    [PresntStudentId] INT NOT NULL,
+    CONSTRAINT FK_Lesson_Attendances FOREIGN KEY ([LessonId]) REFERENCES [dbo].[Lessons]([Id]),
+    CONSTRAINT FK_User_Attendances FOREIGN KEY ([PresntStudentId]) REFERENCES [dbo].[Users]([Id])
 );
 GO
 
@@ -387,7 +385,7 @@ GO
 -- Create a new table called '[Payments]' in schema '[dbo]'
 CREATE TABLE [dbo].[Payments]
 (
-    [Id] INT NOT NULL PRIMARY KEY IDENTITY(1,1),    
+    [Id] INT NOT NULL PRIMARY KEY IDENTITY(1,1),
     [Date] DATETIME NOT NULL,
     [TotalSum] MONEY NOT NULL,
     [UserSenderId] INT NOT NULL,

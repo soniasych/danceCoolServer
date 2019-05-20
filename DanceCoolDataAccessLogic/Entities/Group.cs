@@ -7,17 +7,21 @@ namespace DanceCoolDataAccessLogic.Entities
     {
         public Group()
         {
-            Lesson = new HashSet<Lesson>();
-            UserGroup = new HashSet<UserGroup>();
+            Lessons = new HashSet<Lesson>();
+            UserGroups = new HashSet<UserGroup>();
         }
 
         public int Id { get; set; }
+        public int PrimaryMentorId { get; set; }
+        public int? SecondaryMentorId { get; set; }
         public int DirectionId { get; set; }
-        public int LevelId { get; set; }
+        public int? LevelId { get; set; }
 
         public virtual DanceDirection Direction { get; set; }
         public virtual SkillLevel Level { get; set; }
-        public virtual ICollection<Lesson> Lesson { get; set; }
-        public virtual ICollection<UserGroup> UserGroup { get; set; }
+        public virtual User PrimaryMentor { get; set; }
+        public virtual User SecondaryMentor { get; set; }
+        public virtual ICollection<Lesson> Lessons { get; set; }
+        public virtual ICollection<UserGroup> UserGroups { get; set; }
     }
 }

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace DanceCoolDataAccessLogic.Entities
+﻿namespace DanceCoolDataAccessLogic.Entities
 {
     public partial class UserRole
     {

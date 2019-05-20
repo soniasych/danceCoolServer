@@ -7,12 +7,12 @@ namespace DanceCoolDataAccessLogic.Entities
     {
         public LessonType()
         {
-            Lesson = new HashSet<Lesson>();
+            Lessons = new HashSet<Lesson>();
         }
 
         public int Id { get; set; }
         public string LessonTypeName { get; set; }
 
-        public virtual ICollection<Lesson> Lesson { get; set; }
+        public virtual ICollection<Lesson> Lessons { get; set; }
     }
 }
