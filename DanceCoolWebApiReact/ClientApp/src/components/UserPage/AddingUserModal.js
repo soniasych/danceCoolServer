@@ -2,8 +2,7 @@ import React from 'react';
 import {
     Modal,
     ModalHeader,
-    ModalBody,
-    ModalFooter
+    ModalBody
 } from 'reactstrap';
 import Axios from 'axios';
 
@@ -22,7 +21,6 @@ export class AddingUserModal extends React.Component {
         this.onLastNameInputChanged = this.onLastNameInputChanged.bind(this);
         this.onPhonNumberInputChanged = this.onPhonNumberInputChanged.bind(this);
         this.onAddStudentButtonClickHandler = this.onAddStudentButtonClickHandler.bind(this);
-        this.closeAddingStudenModalHandler = this.closeAddingStudenModalHandler.bind(this);
     }
 
     onFirtsNameInputChanged = event => {
@@ -35,13 +33,7 @@ export class AddingUserModal extends React.Component {
 
     onPhonNumberInputChanged = event => {
         this.setState({ studentPhoneNumber: event.target.value });
-    }
-
-    closeAddingStudenModalHandler = event => {
-        this.setState({
-            addingStudentModalVisible: false
-        });
-    }
+    }    
 
     onAddStudentButtonClickHandler = event => {
         if (this.state.studentFirstName >= 1 &&
@@ -67,38 +59,25 @@ export class AddingUserModal extends React.Component {
                 isOpen={this.props.addingStudentModalVisible}>
                 <ModalHeader>Додавання нового студента</ModalHeader>
                 <ModalBody>
-                    <div className="form-row">
-                        <div className="form-group col-md-4">
-                            <input
-                                type="text"
-                                value={this.state.studentFirstName}
-                                onChange={this.onFirtsNameInputChanged}
-                                className="form-control"
-                                required />
+                    <form className="needs-validation" noValidate>
+                        <div className="form-row">
+                            <div className="col-md-4 mb-3">
+                                <label for="validationDefault01">Ім'я</label>
+                                <input type="text" className="form-control" id="validationDefault01" required value={this.state.studentFirstName} />
+                            </div>
+                            <div className="col-md-4 mb-3">
+                                <label for="validationDefault02">Прізвище</label>
+                                <input type="text" className="form-control" id="validationDefault02" required value={this.state.studentLastName}/>
+                            </div>
+                            <div className="col-md-4 mb-3">
+                                <label for="validationDefaultUsername">Номер телефону</label>
+                                <input type="text" className="form-control" id="validationDefaultUsername" required value={this.state.studentPhoneNumber} />
+                            </div>
                         </div>
-                        <div className="form-group col-md-4">
-                            <input
-                                type="text"
-                                value={this.state.studentLastName}
-                                onChange={this.onLastNameInputChanged}
-                                className="form-control"
-                                id="newstudentFirstName"
-                                required />
-                        </div>
-                        <div className="form-group col-md-4">
-                            <input
-                                type="text"
-                                value={this.state.studentPhoneNumber}
-                                onChange={this.onPhonNumberInputChanged}
-                                className="form-control"
-                                id="newstudentFirstName"
-                                required />
-                        </div>
-                    </div>
-                </ModalBody>
-                <ModalFooter>
-
-                </ModalFooter>
+                        <button className="btn btn-primary" type="submit" onSubmit={this.onAddStudentButtonClickHandler}>Додати студента</button>
+                        <button className="btn btn-secondary" type="button" onClick={this.props.closeModal}>Закрити</button>
+                    </form>                    
+                </ModalBody>                
             </Modal>
         );
     }

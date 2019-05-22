@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Axios from "axios";
-import { AddingUserModal } from './AddingUserModal/AddingUserModal';
+import UsersList from './UsersList';
+import { AddingUserModal } from './AddingUserModal';
 
 export class ManagingUsersPage extends Component {
 
@@ -12,8 +13,7 @@ export class ManagingUsersPage extends Component {
       loading: true,
       addingStudentModalVisible: false
     };
-    this.AddingStudenModalHandler = this.AddingStudenModalHandler.bind(AddingUserModal);
-    
+    this.AddingStudenModalHandler = this.AddingStudenModalHandler.bind(AddingUserModal);    
   }
 
   componentDidMount() {
@@ -33,30 +33,7 @@ export class ManagingUsersPage extends Component {
         }
       }
     );
-  };
-
-  static renderUsersList(students) {
-    return (
-      <table className="table table-sm">
-        <thead>
-          <tr>
-            <th>Ім'я</th>
-            <th>Прізвище</th>
-            <th>Нормер телефону</th>
-          </tr>
-        </thead>
-        <tbody>
-          {students.map(student => (
-            <tr key={student.id}>
-              <td>{student.firstName}</td>
-              <td>{student.lastName}</td>
-              <td>{student.phoneNumber}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    );
-  }
+  };  
 
   AddingStudenModalHandler = event => {
     if(this.state.addingStudentModalVisible===false){
@@ -69,7 +46,6 @@ export class ManagingUsersPage extends Component {
   }  
 
   render() {
-    let studentsTable = ManagingUsersPage.renderUsersList(this.state.students);
     let visingStatus = this.state.addingStudentModalVisible;
     return (
       <div>
@@ -100,7 +76,7 @@ export class ManagingUsersPage extends Component {
           closeModal={this.AddingStudenModalHandler}
           />
         <br />
-        {studentsTable}
+        <UsersList students={this.state.students}/>
       </div>
     );
   }
