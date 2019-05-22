@@ -7,12 +7,12 @@ namespace DanceCoolDataAccessLogic.Entities
     {
         public Role()
         {
-            UserRole = new HashSet<UserRole>();
+            UserRoles = new HashSet<UserRole>();
         }
 
         public int Id { get; set; }
         public string RoleName { get; set; }
 
-        public virtual ICollection<UserRole> UserRole { get; set; }
+        public virtual ICollection<UserRole> UserRoles { get; set; }
     }
 }

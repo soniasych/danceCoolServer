@@ -7,12 +7,12 @@ namespace DanceCoolDataAccessLogic.Entities
     {
         public Abonement()
         {
-            Payment = new HashSet<Payment>();
+            Payments = new HashSet<Payment>();
         }
 
         public int Id { get; set; }
         public string AbonementName { get; set; }
 
-        public virtual ICollection<Payment> Payment { get; set; }
+        public virtual ICollection<Payment> Payments { get; set; }
     }
 }

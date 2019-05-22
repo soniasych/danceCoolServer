@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel;
 using DanceCoolDataAccessLogic.Entities;
 using DanceCoolDataAccessLogic.UnitOfWork;
 using DanceCoolDTO;
@@ -13,15 +12,16 @@ namespace DanceCoolBusinessLogic.Services
 
         }
 
-        public void AddUser(UserDTO userDTO)
+        public void AddUser(NewUserDTO userDTO)
         {
-            var user = UserDTOToUserModel(userDTO);
-            db.Users.AddUser(user);
+            var user = NewUserDTOToUserModel(userDTO);
+            db.Users.AddEntity(user);
+            db.Save();
         }
        
-        public void AddUserToGroup(UserDTO user, GroupDTO group)
+        public void AddUserToGroup(int userId, int groupId)
         {
-            db.UserGroups.AddUserToGroup(user.Id, group.GroupId);
+            db.UserGroups.AddUserToGroup(userId, groupId);
         }
 
         public IEnumerable<UserDTO> GetAllUsers()
@@ -110,13 +110,12 @@ namespace DanceCoolBusinessLogic.Services
                     userModel.LastName,
                     userModel.PhoneNumber);
 
-        private User UserDTOToUserModel(UserDTO userDto) =>
+        private User NewUserDTOToUserModel(NewUserDTO userDto) =>
             new User
             {
                 FirstName = userDto.FirstName,
                 LastName = userDto.LastName,
                 PhoneNumber = userDto.PhoneNumber 
             };
-
     }
 }

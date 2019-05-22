@@ -14,6 +14,7 @@ namespace DanceCoolDataAccessLogic.Entities
         }
 
         public virtual DbSet<Abonement> Abonements { get; set; }
+        public virtual DbSet<Attendance> Attendances { get; set; }
         public virtual DbSet<DanceDirection> DanceDirections { get; set; }
         public virtual DbSet<Group> Groups { get; set; }
         public virtual DbSet<LessonType> LessonTypes { get; set; }
@@ -31,7 +32,6 @@ namespace DanceCoolDataAccessLogic.Entities
             if (!optionsBuilder.IsConfigured)
             {
                 optionsBuilder.UseSqlServer("Server=ARCH;Database=DanceCool;Trusted_Connection=True;");
-
             }
         }
 
@@ -48,6 +48,21 @@ namespace DanceCoolDataAccessLogic.Entities
                     .HasMaxLength(50);
             });
 
+            modelBuilder.Entity<Attendance>(entity =>
+            {
+                entity.HasOne(d => d.Lesson)
+                    .WithMany(p => p.Attendances)
+                    .HasForeignKey(d => d.LessonId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Lesson_Attendances");
+
+                entity.HasOne(d => d.PresntStudent)
+                    .WithMany(p => p.Attendances)
+                    .HasForeignKey(d => d.PresntStudentId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_User_Attendances");
+            });
+
             modelBuilder.Entity<DanceDirection>(entity =>
             {
                 entity.Property(e => e.Name)
@@ -58,16 +73,26 @@ namespace DanceCoolDataAccessLogic.Entities
             modelBuilder.Entity<Group>(entity =>
             {
                 entity.HasOne(d => d.Direction)
-                    .WithMany(p => p.Group)
+                    .WithMany(p => p.Groups)
                     .HasForeignKey(d => d.DirectionId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Direction_Group");
 
                 entity.HasOne(d => d.Level)
-                    .WithMany(p => p.Group)
+                    .WithMany(p => p.Groups)
                     .HasForeignKey(d => d.LevelId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Level_Group");
+
+                entity.HasOne(d => d.PrimaryMentor)
+                    .WithMany(p => p.GroupsPrimaryMentor)
+                    .HasForeignKey(d => d.PrimaryMentorId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_PrimMentor_Group");
+
+                entity.HasOne(d => d.SecondaryMentor)
+                    .WithMany(p => p.GroupsSecondaryMentor)
+                    .HasForeignKey(d => d.SecondaryMentorId)
+                    .HasConstraintName("FK_SecMentor_Group");
             });
 
             modelBuilder.Entity<LessonType>(entity =>
@@ -82,14 +107,13 @@ namespace DanceCoolDataAccessLogic.Entities
                 entity.Property(e => e.Date).HasColumnType("datetime");
 
                 entity.HasOne(d => d.Group)
-                    .WithMany(p => p.Lesson)
+                    .WithMany(p => p.Lessons)
                     .HasForeignKey(d => d.GroupId)
                     .HasConstraintName("FK_Group_Lesson");
 
                 entity.HasOne(d => d.LessonType)
-                    .WithMany(p => p.Lesson)
+                    .WithMany(p => p.Lessons)
                     .HasForeignKey(d => d.LessonTypeId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_LessonType_Lesson");
             });
 
@@ -100,19 +124,19 @@ namespace DanceCoolDataAccessLogic.Entities
                 entity.Property(e => e.TotalSum).HasColumnType("money");
 
                 entity.HasOne(d => d.Abonement)
-                    .WithMany(p => p.Payment)
+                    .WithMany(p => p.Payments)
                     .HasForeignKey(d => d.AbonementId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Abonement_Payment");
 
                 entity.HasOne(d => d.UserReceiver)
-                    .WithMany(p => p.PaymentUserReceiver)
+                    .WithMany(p => p.PaymentsUserReceiver)
                     .HasForeignKey(d => d.UserReceiverId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_UserReceiver_Payment");
 
                 entity.HasOne(d => d.UserSender)
-                    .WithMany(p => p.PaymentUserSender)
+                    .WithMany(p => p.PaymentsUserSender)
                     .HasForeignKey(d => d.UserSenderId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_UserSender_Payment");
@@ -156,13 +180,13 @@ namespace DanceCoolDataAccessLogic.Entities
             modelBuilder.Entity<UserGroup>(entity =>
             {
                 entity.HasOne(d => d.Group)
-                    .WithMany(p => p.UserGroup)
+                    .WithMany(p => p.UserGroups)
                     .HasForeignKey(d => d.GroupId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Group_UserGroup");
 
                 entity.HasOne(d => d.User)
-                    .WithMany(p => p.UserGroup)
+                    .WithMany(p => p.UserGroups)
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_User_UserGroup");
@@ -171,13 +195,13 @@ namespace DanceCoolDataAccessLogic.Entities
             modelBuilder.Entity<UserRole>(entity =>
             {
                 entity.HasOne(d => d.Role)
-                    .WithMany(p => p.UserRole)
+                    .WithMany(p => p.UserRoles)
                     .HasForeignKey(d => d.RoleId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Role_UserRole");
 
                 entity.HasOne(d => d.User)
-                    .WithMany(p => p.UserRole)
+                    .WithMany(p => p.UserRoles)
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_User_UserRole");

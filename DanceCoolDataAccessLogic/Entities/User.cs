@@ -7,11 +7,14 @@ namespace DanceCoolDataAccessLogic.Entities
     {
         public User()
         {
-            PaymentUserReceiver = new HashSet<Payment>();
-            PaymentUserSender = new HashSet<Payment>();
+            Attendances = new HashSet<Attendance>();
+            GroupsPrimaryMentor = new HashSet<Group>();
+            GroupsSecondaryMentor = new HashSet<Group>();
+            PaymentsUserReceiver = new HashSet<Payment>();
+            PaymentsUserSender = new HashSet<Payment>();
             UserCredentials = new HashSet<UserCredentials>();
-            UserGroup = new HashSet<UserGroup>();
-            UserRole = new HashSet<UserRole>();
+            UserGroups = new HashSet<UserGroup>();
+            UserRoles = new HashSet<UserRole>();
         }
 
         public int Id { get; set; }
@@ -19,10 +22,13 @@ namespace DanceCoolDataAccessLogic.Entities
         public string LastName { get; set; }
         public string PhoneNumber { get; set; }
 
-        public virtual ICollection<Payment> PaymentUserReceiver { get; set; }
-        public virtual ICollection<Payment> PaymentUserSender { get; set; }
+        public virtual ICollection<Attendance> Attendances { get; set; }
+        public virtual ICollection<Group> GroupsPrimaryMentor { get; set; }
+        public virtual ICollection<Group> GroupsSecondaryMentor { get; set; }
+        public virtual ICollection<Payment> PaymentsUserReceiver { get; set; }
+        public virtual ICollection<Payment> PaymentsUserSender { get; set; }
         public virtual ICollection<UserCredentials> UserCredentials { get; set; }
-        public virtual ICollection<UserGroup> UserGroup { get; set; }
-        public virtual ICollection<UserRole> UserRole { get; set; }
+        public virtual ICollection<UserGroup> UserGroups { get; set; }
+        public virtual ICollection<UserRole> UserRoles { get; set; }
     }
 }

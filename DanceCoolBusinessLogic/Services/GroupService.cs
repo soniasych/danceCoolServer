@@ -63,11 +63,15 @@ namespace DanceCoolBusinessLogic.Services
         {
             var level = db.SkillLevels.GetSkillLevelById(groupModel.LevelId);
             var directions = db.DanceDirections.GetDanceDirectionById(groupModel.DirectionId);
+            var primaryMentor = db.Users.GetUserById(groupModel.PrimaryMentorId);
+            var secondaryMentor = groupModel.SecondaryMentorId == null ? null : db.Users.GetUserById(groupModel.SecondaryMentorId.Value);
 
             return new GroupDTO(
                 groupModel.Id,
                 directions.Name,
-                level.Name);
+                $"{primaryMentor.FirstName} {primaryMentor.LastName}",
+                secondaryMentor == null ? null : $"{secondaryMentor.FirstName} {secondaryMentor.LastName}",
+                level?.Name);
         }
     }
 }
