@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Axios from "axios";
 import UsersList from './UsersList';
-import { AddingUserModal } from './AddingUserModal';
+import AddingUserModal from './AddingNewUserModal';
 
 export class ManagingUsersPage extends Component {
 
@@ -13,7 +13,7 @@ export class ManagingUsersPage extends Component {
       loading: true,
       addingStudentModalVisible: false
     };
-    this.AddingStudenModalHandler = this.AddingStudenModalHandler.bind(AddingUserModal);    
+    this.AddingStudenModalHandler = this.AddingStudenModalHandler.bind(AddingUserModal);
   }
 
   componentDidMount() {
@@ -33,17 +33,17 @@ export class ManagingUsersPage extends Component {
         }
       }
     );
-  };  
+  };
 
   AddingStudenModalHandler = event => {
-    if(this.state.addingStudentModalVisible===false){
+    if (this.state.addingStudentModalVisible === false) {
       this.setState({ addingStudentModalVisible: true });
     }
-    else{
+    else {
       this.setState({ addingStudentModalVisible: false });
     }
-     
-  }  
+
+  }
 
   render() {
     let visingStatus = this.state.addingStudentModalVisible;
@@ -66,22 +66,22 @@ export class ManagingUsersPage extends Component {
             onChange={this.handleSearchChange.bind(this)}
           />
           <span>
-          <button
-          className="btn btn-primary"
-          onClick={this.AddingStudenModalHandler}>
-          Додати нового студента</button>
+            <button
+              className="btn btn-primary"
+              onClick={this.AddingStudenModalHandler}>
+              Додати нового студента</button>
           </span>
-          </div>                 
-          <AddingUserModal addingStudentModalVisible={this.state.addingStudentModalVisible}
+        </div>
+        <AddingUserModal addingStudentModalVisible={visingStatus}
           closeModal={this.AddingStudenModalHandler}
-          />
+        />
         <br />
-        <UsersList students={this.state.students}/>
+        <UsersList students={this.state.students} />
       </div>
     );
   }
-  
-  
+
+
   async populateAllStudents() {
     const responce = await Axios.get("api/users");
     const data = await responce.data;
