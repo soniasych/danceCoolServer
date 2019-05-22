@@ -33,6 +33,14 @@ namespace danceCoolWebApi.Controllers
             return _groupService.GetGroupById(id);
         }
 
+        [HttpGet]
+        [Route("api/groups/{id}/students/notingroup")]
+        public IEnumerable<UserDTO> GetStudentsNotInCurrentGroup(int groupId)
+        {
+            return _groupService.GetStudentsNotInCurrentGroup(groupId);
+        }
+
+
         //// POST: api/Groups
         //[HttpPost]
         //public void Post([FromBody] string value)

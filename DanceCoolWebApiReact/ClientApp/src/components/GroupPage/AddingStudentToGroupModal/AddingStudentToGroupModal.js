@@ -5,10 +5,9 @@ import {
     ModalBody,
     ModalFooter
 } from 'reactstrap';
-import {
-    Tabs,
-    Tab
-} from 'react-bootstrap'
+import { Tabs, Tab } from 'react-bootstrap'
+import {AddNewUserForm} from '../../common/AddNewUserForm'
+
 
 const AddingStudentToGroupModal = (props) => {
     return (<Modal
@@ -20,7 +19,7 @@ const AddingStudentToGroupModal = (props) => {
         <ModalBody>
             <Tabs>
                 <Tab eventKey="AddNew" title="Add new student">
-                    <div>Adding new</div>
+                    <AddNewUserForm/>
                 </Tab>
                 <Tab eventKey="AddExisting" title="Add existing student">
                     <table className="table table-sm">

@@ -45,6 +45,15 @@ namespace DanceCoolDataAccessLogic.Repositories
             return Context.Users.Where(user => studentsIdArray.Contains(user.Id));
         }
 
+        public IEnumerable<User> GetStudentsNotInGroup(int groupId)
+        {
+            var usersInGroupArray = Context.UserGroups.Where(ug => ug.GroupId != groupId)
+                .Select(user => user.UserId)
+                .ToArray();
+
+            return Context.Users.Where(user => usersInGroupArray.Contains(user.Id));             
+        }
+
         public IEnumerable<User> GetMentors()
         {
             var mentorsIdArray = Context.UserRoles.Where(ur => ur.RoleId == 2)
@@ -56,7 +65,7 @@ namespace DanceCoolDataAccessLogic.Repositories
 
         public IEnumerable<User> Search(string key)
         {
-            return Context.Users.Where(user => user.FirstName.Contains(key.ToLower()));
+            return Context.Users.Where(user => user.LastName.Contains(key.ToLower()));
         }
     }
 }

@@ -59,6 +59,26 @@ namespace DanceCoolBusinessLogic.Services
             db.Groups.ChangeGroupLevel(groupId, targetLevelId);
         }
 
+        public IEnumerable<UserDTO> GetStudentsNotInCurrentGroup(int groupId)
+        {
+            var studentsNotInCurrentGroup = db.Users.GetStudentsNotInGroup(groupId);
+            if (studentsNotInCurrentGroup == null)
+            {
+                return null;
+            }
+            var dtos = new List<UserDTO>();
+
+            foreach (var student in studentsNotInCurrentGroup)
+            {
+                dtos.Add(new UserDTO(student.Id,
+                    student.FirstName,
+                    student.LastName,
+                    student.PhoneNumber));
+            }
+
+            return dtos;
+        }
+
         private GroupDTO GroupModelToGroupDTO(Group groupModel)
         {
             var level = db.SkillLevels.GetSkillLevelById(groupModel.LevelId);
