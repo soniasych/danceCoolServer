@@ -20,14 +20,18 @@ export class AddNewUserForm extends Component {
 
     onFirtsNameInputChanged = event => {
         this.setState({ studentFirstName: event.target.value });
+        console.log(this.state.studentLastName);
     }
 
     onLastNameInputChanged = event => {
         this.setState({ studentLastName: event.target.value });
+        console.log(this.state.studentLastName);
+        
     }
 
     onPhonNumberInputChanged = event => {
         this.setState({ studentPhoneNumber: event.target.value });
+        console.log(this.state.studentLastName);
     }
 
     onAddStudentButtonClickHandler = event => {
@@ -36,13 +40,13 @@ export class AddNewUserForm extends Component {
             this.state.studentPhoneNumber >= 1) {
             this.addStudent();
         }
-        const addedStudent = {
+        let addedStudent = {
             firstName: this.state.studentFirstName,
             lastName: this.state.studentLastName,
             phoneNumber: this.state.studentPhoneNumber
         };
-        Axios.post('api/users/', addedStudent);
-        event.preventDefault();
+        Axios.post('api/users/', addedStudent).then(console.log(addedStudent));       
+        
     }
 
     render() {
@@ -73,7 +77,7 @@ export class AddNewUserForm extends Component {
                         onChange={this.onPhonNumberInputChanged} />
                 </div>
             </div>
-            <button className="btn btn-primary" type="submit" onSubmit={this.onAddStudentButtonClickHandler}>Додати студента</button>
+            <button className="btn btn-primary" type="button" onClick={this.onAddStudentButtonClickHandler}>Додати студента</button>
         </form>);
     }
 }
