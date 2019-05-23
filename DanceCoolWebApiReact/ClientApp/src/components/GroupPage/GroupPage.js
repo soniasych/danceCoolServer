@@ -11,18 +11,20 @@ export class GroupPage extends Component {
         super(props);
         this.state = {
             group: {},
-            allStudetns: [],
             groupStudents: [],
+            studentsNotInGroup:[],
             addingStudentToGroupModalVisible: false
         }
         this.AddingStudenToGroupModalHandler = this.AddingStudenToGroupModalHandler.bind(AddingStudentToGroupModal);
         this.onAddNewStudentButtonClickHandler = this.onAddNewStudentButtonClickHandler.bind(AddingStudentToGroupModal);
+        this.onChooseStudentNotInGroup = this.onChooseStudentNotInGroup.bind(AddingStudentToGroupModal);
+
     }
 
     componentDidMount() {
         this.populateCurrentGroupData();
         this.populateCurrentGroupStudentsData();
-        this.populateStudentsData();
+        //this.populateStudentsNotInCurrentGroup();
     }
 
     AddingStudenToGroupModalHandler = event => {
@@ -32,6 +34,10 @@ export class GroupPage extends Component {
         else {
             this.setState({ addingStudentToGroupModalVisible: false });
         }
+    }
+
+    onChooseStudentNotInGroup = event =>{
+        this.populateStudentsNotInCurrentGroup();
     }
 
     onAddNewStudentButtonClickHandler = event => {
@@ -63,7 +69,8 @@ export class GroupPage extends Component {
                 <GroupStudentsList groupStudents={this.state.groupStudents} />
                 <AddingStudentToGroupModal visible={this.state.addingStudentToGroupModalVisible}
                     close={this.AddingStudenToGroupModalHandler}
-                    allStudents={this.state.allStudetns}
+                    selectStudentsNotInGroupTab={this.onChooseStudentNotInGroup}
+                    studentsNotInGroup={this.state.studentsNotInGroup}
                     addNewStudent={this.onAddNewStudentButtonClickHandler} />
             </div>
         );
@@ -75,11 +82,12 @@ export class GroupPage extends Component {
         const data = await responce.data;
         this.setState({ group: data });
     }
-
-    async populateStudentsData() {
-        const responce = await Axios.get(`api/students`);
-        const data = await responce.data;
-        this.setState({ allStudetns: data });
+    
+    async populateStudentsNotInCurrentGroup(){
+        const id = this.props.match.params.id;
+        const response = await Axios.get(`api/groups/${id}/students/notingroup`);
+        const data = await response.data;
+        this.setState({ studentsNotInGroup: data });
     }
 
     async populateCurrentGroupStudentsData() {

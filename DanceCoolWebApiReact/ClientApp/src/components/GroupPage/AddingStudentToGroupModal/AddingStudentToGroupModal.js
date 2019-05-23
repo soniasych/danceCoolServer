@@ -21,7 +21,7 @@ const AddingStudentToGroupModal = (props) => {
                 <Tab eventKey="AddNew" title="Add new student">
                     <AddNewUserForm/>
                 </Tab>
-                <Tab eventKey="AddExisting" title="Add existing student">
+                <Tab onClick={props.selectStudentsNotInGroupTab} eventKey="AddExisting" title="Add existing student">
                     <table className="table table-sm">
                         <thead>
                             <tr>
@@ -30,7 +30,7 @@ const AddingStudentToGroupModal = (props) => {
                             </tr>
                         </thead>
                         <tbody>
-                            {props.allStudents.map(student => (
+                            {props.studentsNotInGroup.map(student => (
                                 <tr key={student.id}>
                                     <td>{student.firstName}</td>
                                     <td>{student.lastName}</td>

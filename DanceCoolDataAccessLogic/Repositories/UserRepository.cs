@@ -47,11 +47,12 @@ namespace DanceCoolDataAccessLogic.Repositories
 
         public IEnumerable<User> GetStudentsNotInGroup(int groupId)
         {
+            var students = GetStudents();
             var usersInGroupArray = Context.UserGroups.Where(ug => ug.GroupId != groupId)
-                .Select(user => user.UserId)
+                .Select(ug => ug.UserId)
                 .ToArray();
 
-            return Context.Users.Where(user => usersInGroupArray.Contains(user.Id));             
+            return students.Where(user => usersInGroupArray.Contains(user.Id));             
         }
 
         public IEnumerable<User> GetMentors()
