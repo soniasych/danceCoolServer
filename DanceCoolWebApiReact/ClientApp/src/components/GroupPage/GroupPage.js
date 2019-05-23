@@ -12,19 +12,17 @@ export class GroupPage extends Component {
         this.state = {
             group: {},
             groupStudents: [],
-            studentsNotInGroup:[],
+            studentsNotInGroup: [],
             addingStudentToGroupModalVisible: false
         }
         this.AddingStudenToGroupModalHandler = this.AddingStudenToGroupModalHandler.bind(AddingStudentToGroupModal);
         this.onAddNewStudentButtonClickHandler = this.onAddNewStudentButtonClickHandler.bind(AddingStudentToGroupModal);
         this.onChooseStudentNotInGroup = this.onChooseStudentNotInGroup.bind(AddingStudentToGroupModal);
-
     }
 
     componentDidMount() {
         this.populateCurrentGroupData();
         this.populateCurrentGroupStudentsData();
-        //this.populateStudentsNotInCurrentGroup();
     }
 
     AddingStudenToGroupModalHandler = event => {
@@ -36,8 +34,10 @@ export class GroupPage extends Component {
         }
     }
 
-    onChooseStudentNotInGroup = event =>{
-        this.populateStudentsNotInCurrentGroup();
+    onChooseStudentNotInGroup = (key) => {
+        if (key === 'AddExisting') {
+            this.populateStudentsNotInCurrentGroup();
+        }
     }
 
     onAddNewStudentButtonClickHandler = event => {
@@ -82,8 +82,8 @@ export class GroupPage extends Component {
         const data = await responce.data;
         this.setState({ group: data });
     }
-    
-    async populateStudentsNotInCurrentGroup(){
+
+    async populateStudentsNotInCurrentGroup() {
         const id = this.props.match.params.id;
         const response = await Axios.get(`api/groups/${id}/students/notingroup`);
         const data = await response.data;

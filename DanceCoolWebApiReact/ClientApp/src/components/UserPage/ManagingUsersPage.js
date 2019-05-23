@@ -83,7 +83,7 @@ export class ManagingUsersPage extends Component {
 
 
   async populateAllStudents() {
-    const responce = await Axios.get("api/users");
+      const responce = await Axios.get("api/users", {timeout: 2000});
     const data = await responce.data;
     this.setState({ students: data, loading: false });
   }

@@ -1,4 +1,5 @@
-﻿using DanceCoolDataAccessLogic.Entities;
+﻿using DanceCoolDataAccessLogic.EfStructures.Context;
+using DanceCoolDataAccessLogic.EfStructures.Entities;
 using DanceCoolDataAccessLogic.Repositories;
 using DanceCoolDataAccessLogic.Repositories.Interfaces;
 

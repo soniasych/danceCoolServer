@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using DanceCoolDataAccessLogic.Entities;
+using DanceCoolDataAccessLogic.EfStructures.Context;
+using DanceCoolDataAccessLogic.EfStructures.Entities;
 using DanceCoolDataAccessLogic.Repositories.Interfaces;
 
 namespace DanceCoolDataAccessLogic.Repositories

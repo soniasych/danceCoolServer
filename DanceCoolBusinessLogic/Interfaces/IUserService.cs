@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
-using DanceCoolDataAccessLogic.Entities;
+using DanceCoolDataAccessLogic.EfStructures.Context;
+using DanceCoolDataAccessLogic.EfStructures.Entities;
 using DanceCoolDTO;
 
 namespace DanceCoolBusinessLogic.Services

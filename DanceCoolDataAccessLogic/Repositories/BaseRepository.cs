@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using DanceCoolDataAccessLogic.Entities;
+using DanceCoolDataAccessLogic.EfStructures.Context;
 using DanceCoolDataAccessLogic.Repositories.Interfaces;
 
 namespace DanceCoolDataAccessLogic.Repositories

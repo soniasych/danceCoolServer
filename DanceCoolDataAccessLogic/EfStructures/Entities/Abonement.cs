@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DanceCoolDataAccessLogic.Entities
+namespace DanceCoolDataAccessLogic.EfStructures.Entities
 {
     public partial class Abonement
     {
@@ -11,8 +13,11 @@ namespace DanceCoolDataAccessLogic.Entities
         }
 
         public int Id { get; set; }
+        [Required]
+        [StringLength(50)]
         public string AbonementName { get; set; }
 
+        [InverseProperty("Abonement")]
         public virtual ICollection<Payment> Payments { get; set; }
     }
 }

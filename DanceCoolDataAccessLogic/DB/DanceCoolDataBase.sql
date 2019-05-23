@@ -368,9 +368,9 @@ CREATE TABLE [dbo].[Attendances]
 (
     [Id] INT NOT NULL PRIMARY KEY IDENTITY(1,1), -- Primary Key column
     [LessonId] INT NOT NULL,
-    [PresntStudentId] INT NOT NULL,
+    [PresentStudentId] INT NOT NULL,
     CONSTRAINT FK_Lesson_Attendances FOREIGN KEY ([LessonId]) REFERENCES [dbo].[Lessons]([Id]),
-    CONSTRAINT FK_User_Attendances FOREIGN KEY ([PresntStudentId]) REFERENCES [dbo].[Users]([Id])
+    CONSTRAINT FK_User_Attendances FOREIGN KEY ([PresentStudentId]) REFERENCES [dbo].[Users]([Id])
 );
 GO
 

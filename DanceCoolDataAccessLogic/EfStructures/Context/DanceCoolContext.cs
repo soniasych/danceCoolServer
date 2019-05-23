@@ -1,6 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DanceCoolDataAccessLogic.EfStructures.Entities;
+using Microsoft.EntityFrameworkCore;
 
-namespace DanceCoolDataAccessLogic.Entities
+namespace DanceCoolDataAccessLogic.EfStructures.Context
 {
     public partial class DanceCoolContext : DbContext
     {
@@ -17,7 +18,6 @@ namespace DanceCoolDataAccessLogic.Entities
         public virtual DbSet<Attendance> Attendances { get; set; }
         public virtual DbSet<DanceDirection> DanceDirections { get; set; }
         public virtual DbSet<Group> Groups { get; set; }
-        public virtual DbSet<LessonType> LessonTypes { get; set; }
         public virtual DbSet<Lesson> Lessons { get; set; }
         public virtual DbSet<Payment> Payments { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
@@ -42,10 +42,6 @@ namespace DanceCoolDataAccessLogic.Entities
             modelBuilder.Entity<Abonement>(entity =>
             {
                 entity.Property(e => e.Id).ValueGeneratedNever();
-
-                entity.Property(e => e.AbonementName)
-                    .IsRequired()
-                    .HasMaxLength(50);
             });
 
             modelBuilder.Entity<Attendance>(entity =>
@@ -56,18 +52,11 @@ namespace DanceCoolDataAccessLogic.Entities
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Lesson_Attendances");
 
-                entity.HasOne(d => d.PresntStudent)
+                entity.HasOne(d => d.PresentStudent)
                     .WithMany(p => p.Attendances)
-                    .HasForeignKey(d => d.PresntStudentId)
+                    .HasForeignKey(d => d.PresentStudentId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_User_Attendances");
-            });
-
-            modelBuilder.Entity<DanceDirection>(entity =>
-            {
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasMaxLength(50);
             });
 
             modelBuilder.Entity<Group>(entity =>
@@ -95,34 +84,16 @@ namespace DanceCoolDataAccessLogic.Entities
                     .HasConstraintName("FK_SecMentor_Group");
             });
 
-            modelBuilder.Entity<LessonType>(entity =>
-            {
-                entity.Property(e => e.LessonTypeName)
-                    .IsRequired()
-                    .HasMaxLength(50);
-            });
-
             modelBuilder.Entity<Lesson>(entity =>
             {
-                entity.Property(e => e.Date).HasColumnType("datetime");
-
                 entity.HasOne(d => d.Group)
                     .WithMany(p => p.Lessons)
                     .HasForeignKey(d => d.GroupId)
                     .HasConstraintName("FK_Group_Lesson");
-
-                entity.HasOne(d => d.LessonType)
-                    .WithMany(p => p.Lessons)
-                    .HasForeignKey(d => d.LessonTypeId)
-                    .HasConstraintName("FK_LessonType_Lesson");
             });
 
             modelBuilder.Entity<Payment>(entity =>
             {
-                entity.Property(e => e.Date).HasColumnType("datetime");
-
-                entity.Property(e => e.TotalSum).HasColumnType("money");
-
                 entity.HasOne(d => d.Abonement)
                     .WithMany(p => p.Payments)
                     .HasForeignKey(d => d.AbonementId)
@@ -142,34 +113,8 @@ namespace DanceCoolDataAccessLogic.Entities
                     .HasConstraintName("FK_UserSender_Payment");
             });
 
-            modelBuilder.Entity<Role>(entity =>
-            {
-                entity.Property(e => e.RoleName)
-                    .IsRequired()
-                    .HasMaxLength(50);
-            });
-
-            modelBuilder.Entity<SkillLevel>(entity =>
-            {
-                entity.Property(e => e.Description)
-                    .IsRequired()
-                    .HasMaxLength(1024);
-
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasMaxLength(50);
-            });
-
             modelBuilder.Entity<UserCredentials>(entity =>
             {
-                entity.Property(e => e.Email)
-                    .IsRequired()
-                    .HasMaxLength(254);
-
-                entity.Property(e => e.Password)
-                    .IsRequired()
-                    .HasColumnType("text");
-
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.UserCredentials)
                     .HasForeignKey(d => d.UserId)
@@ -209,17 +154,7 @@ namespace DanceCoolDataAccessLogic.Entities
 
             modelBuilder.Entity<User>(entity =>
             {
-                entity.Property(e => e.FirstName)
-                    .IsRequired()
-                    .HasMaxLength(512);
-
-                entity.Property(e => e.LastName)
-                    .IsRequired()
-                    .HasMaxLength(512);
-
-                entity.Property(e => e.PhoneNumber)
-                    .HasMaxLength(17)
-                    .IsUnicode(false);
+                entity.Property(e => e.PhoneNumber).IsUnicode(false);
             });
         }
     }
