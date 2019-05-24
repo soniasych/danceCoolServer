@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using DanceCoolDataAccessLogic.EfStructures.Context;
 using DanceCoolDataAccessLogic.EfStructures.Entities;
 using DanceCoolDataAccessLogic.UnitOfWork;
 using DanceCoolDTO;
@@ -80,19 +79,15 @@ namespace DanceCoolBusinessLogic.Services
             return dtos;
         }
 
-        private GroupDTO GroupModelToGroupDTO(Group groupModel)
-        {
-            var level = db.SkillLevels.GetSkillLevelById(groupModel.LevelId);
-            var directions = db.DanceDirections.GetDanceDirectionById(groupModel.DirectionId);
-            var primaryMentor = db.Users.GetUserById(groupModel.PrimaryMentorId);
-            var secondaryMentor = groupModel.SecondaryMentorId == null ? null : db.Users.GetUserById(groupModel.SecondaryMentorId.Value);
-
-            return new GroupDTO(
+        private GroupDTO GroupModelToGroupDTO(Group groupModel) => new GroupDTO(
                 groupModel.Id,
-                directions.Name,
-                $"{primaryMentor.FirstName} {primaryMentor.LastName}",
-                secondaryMentor == null ? null : $"{secondaryMentor.FirstName} {secondaryMentor.LastName}",
-                level?.Name);
-        }
+                groupModel.Direction.Name,
+                $"{groupModel.PrimaryMentor.FirstName} {groupModel.PrimaryMentor.LastName}",
+                groupModel.SecondaryMentor
+                == null 
+                ? null 
+                : $"{groupModel.SecondaryMentor.FirstName} {groupModel.SecondaryMentor.LastName}",
+                groupModel.Level?.Name);
+        
     }
 }

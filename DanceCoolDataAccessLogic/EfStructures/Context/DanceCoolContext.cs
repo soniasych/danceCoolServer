@@ -1,10 +1,9 @@
-﻿using System;
+﻿using DanceCoolDataAccessLogic.EfStructures.Entities;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace DanceCoolDataAccessLogic.EfStructures.Entities
+namespace DanceCoolDataAccessLogic.EfStructures.Context
 {
-    public partial class DancecoolContext : DbContext
+    public partial class DanceCoolContext : DbContext
     {
         public virtual DbSet<Abonement> Abonements { get; set; }
         public virtual DbSet<Attendance> Attendances { get; set; }
@@ -19,7 +18,7 @@ namespace DanceCoolDataAccessLogic.EfStructures.Entities
         public virtual DbSet<UserGroup> UserGroups { get; set; }
         public virtual DbSet<UserRole> UserRoles { get; set; }
 
-        public DancecoolContext(DbContextOptions<DancecoolContext> options) : base(options)
+        public DanceCoolContext(DbContextOptions<DanceCoolContext> options) : base(options)
         {
         }
 
@@ -27,7 +26,6 @@ namespace DanceCoolDataAccessLogic.EfStructures.Entities
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
                 optionsBuilder.UseSqlServer("Data Source=XPS15\\SQLEXPRESS;Initial Catalog=DanceCool;Integrated Security=True");
             }
         }
