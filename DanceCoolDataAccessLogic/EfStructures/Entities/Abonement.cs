@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DanceCoolDataAccessLogic.EfStructures.Entities
 {
+    [Table("Abonements")]
     public partial class Abonement
     {
         public Abonement()

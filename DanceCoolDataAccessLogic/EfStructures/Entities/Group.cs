@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DanceCoolDataAccessLogic.EfStructures.Entities
@@ -26,10 +24,10 @@ namespace DanceCoolDataAccessLogic.EfStructures.Entities
         [InverseProperty("Groups")]
         public virtual SkillLevel Level { get; set; }
         [ForeignKey("PrimaryMentorId")]
-        [InverseProperty("GroupsPrimaryMentor")]
+        [InverseProperty("GroupPrimaryMentors")]
         public virtual User PrimaryMentor { get; set; }
         [ForeignKey("SecondaryMentorId")]
-        [InverseProperty("GroupsSecondaryMentor")]
+        [InverseProperty("GroupSecondaryMentors")]
         public virtual User SecondaryMentor { get; set; }
         [InverseProperty("Group")]
         public virtual ICollection<Lesson> Lessons { get; set; }

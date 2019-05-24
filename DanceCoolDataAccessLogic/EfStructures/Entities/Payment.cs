@@ -20,10 +20,10 @@ namespace DanceCoolDataAccessLogic.EfStructures.Entities
         [InverseProperty("Payments")]
         public virtual Abonement Abonement { get; set; }
         [ForeignKey("UserReceiverId")]
-        [InverseProperty("PaymentsUserReceiver")]
+        [InverseProperty("PaymentUserReceivers")]
         public virtual User UserReceiver { get; set; }
         [ForeignKey("UserSenderId")]
-        [InverseProperty("PaymentsUserSender")]
+        [InverseProperty("PaymentUserSenders")]
         public virtual User UserSender { get; set; }
     }
 }

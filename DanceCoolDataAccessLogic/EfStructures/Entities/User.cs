@@ -1,20 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DanceCoolDataAccessLogic.EfStructures.Entities
 {
+    [Table("Users")]
     public partial class User
     {
         public User()
         {
             Attendances = new HashSet<Attendance>();
-            GroupsPrimaryMentor = new HashSet<Group>();
-            GroupsSecondaryMentor = new HashSet<Group>();
-            PaymentsUserReceiver = new HashSet<Payment>();
-            PaymentsUserSender = new HashSet<Payment>();
-            UserCredentials = new HashSet<UserCredentials>();
+            GroupPrimaryMentors = new HashSet<Group>();
+            GroupSecondaryMentors = new HashSet<Group>();
+            PaymentUserReceivers = new HashSet<Payment>();
+            PaymentUserSenders = new HashSet<Payment>();
+            UserCredentials = new HashSet<UserCredential>();
             UserGroups = new HashSet<UserGroup>();
             UserRoles = new HashSet<UserRole>();
         }
@@ -32,15 +32,15 @@ namespace DanceCoolDataAccessLogic.EfStructures.Entities
         [InverseProperty("PresentStudent")]
         public virtual ICollection<Attendance> Attendances { get; set; }
         [InverseProperty("PrimaryMentor")]
-        public virtual ICollection<Group> GroupsPrimaryMentor { get; set; }
+        public virtual ICollection<Group> GroupPrimaryMentors { get; set; }
         [InverseProperty("SecondaryMentor")]
-        public virtual ICollection<Group> GroupsSecondaryMentor { get; set; }
+        public virtual ICollection<Group> GroupSecondaryMentors { get; set; }
         [InverseProperty("UserReceiver")]
-        public virtual ICollection<Payment> PaymentsUserReceiver { get; set; }
+        public virtual ICollection<Payment> PaymentUserReceivers { get; set; }
         [InverseProperty("UserSender")]
-        public virtual ICollection<Payment> PaymentsUserSender { get; set; }
+        public virtual ICollection<Payment> PaymentUserSenders { get; set; }
         [InverseProperty("User")]
-        public virtual ICollection<UserCredentials> UserCredentials { get; set; }
+        public virtual ICollection<UserCredential> UserCredentials { get; set; }
         [InverseProperty("User")]
         public virtual ICollection<UserGroup> UserGroups { get; set; }
         [InverseProperty("User")]

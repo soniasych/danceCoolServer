@@ -5,15 +5,6 @@ namespace DanceCoolDataAccessLogic.EfStructures.Context
 {
     public partial class DanceCoolContext : DbContext
     {
-        public DanceCoolContext()
-        {
-        }
-
-        public DanceCoolContext(DbContextOptions<DanceCoolContext> options)
-            : base(options)
-        {
-        }
-
         public virtual DbSet<Abonement> Abonements { get; set; }
         public virtual DbSet<Attendance> Attendances { get; set; }
         public virtual DbSet<DanceDirection> DanceDirections { get; set; }
@@ -22,22 +13,26 @@ namespace DanceCoolDataAccessLogic.EfStructures.Context
         public virtual DbSet<Payment> Payments { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<SkillLevel> SkillLevels { get; set; }
-        public virtual DbSet<UserCredentials> UserCredentials { get; set; }
+        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<UserCredential> UserCredentials { get; set; }
         public virtual DbSet<UserGroup> UserGroups { get; set; }
         public virtual DbSet<UserRole> UserRoles { get; set; }
-        public virtual DbSet<User> Users { get; set; }
+
+        public DanceCoolContext(DbContextOptions<DanceCoolContext> options) : base(options)
+        {
+        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=ARCH;Database=DanceCool;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer("Data Source=XPS15\\SQLEXPRESS;Initial Catalog=DanceCool;Integrated Security=True");
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasAnnotation("ProductVersion", "2.2.4-servicing-10062");
+            modelBuilder.HasAnnotation("ProductVersion", "2.2.0-rtm-35687");
 
             modelBuilder.Entity<Abonement>(entity =>
             {
@@ -49,6 +44,7 @@ namespace DanceCoolDataAccessLogic.EfStructures.Context
                 entity.HasOne(d => d.Lesson)
                     .WithMany(p => p.Attendances)
                     .HasForeignKey(d => d.LessonId)
+                    .HasPrincipalKey(d =>d.Id)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Lesson_Attendances");
 
@@ -64,22 +60,24 @@ namespace DanceCoolDataAccessLogic.EfStructures.Context
                 entity.HasOne(d => d.Direction)
                     .WithMany(p => p.Groups)
                     .HasForeignKey(d => d.DirectionId)
+                    .HasPrincipalKey(d => d.Id)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Direction_Group");
 
                 entity.HasOne(d => d.Level)
                     .WithMany(p => p.Groups)
                     .HasForeignKey(d => d.LevelId)
+                    .HasPrincipalKey(d => d.Id)
                     .HasConstraintName("FK_Level_Group");
 
                 entity.HasOne(d => d.PrimaryMentor)
-                    .WithMany(p => p.GroupsPrimaryMentor)
+                    .WithMany(p => p.GroupPrimaryMentors)
                     .HasForeignKey(d => d.PrimaryMentorId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_PrimMentor_Group");
 
                 entity.HasOne(d => d.SecondaryMentor)
-                    .WithMany(p => p.GroupsSecondaryMentor)
+                    .WithMany(p => p.GroupSecondaryMentors)
                     .HasForeignKey(d => d.SecondaryMentorId)
                     .HasConstraintName("FK_SecMentor_Group");
             });
@@ -90,6 +88,11 @@ namespace DanceCoolDataAccessLogic.EfStructures.Context
                     .WithMany(p => p.Lessons)
                     .HasForeignKey(d => d.GroupId)
                     .HasConstraintName("FK_Group_Lesson");
+
+                entity.HasOne(d => d.LessonType)
+                    .WithMany(p => p.Lessons)
+                    .HasForeignKey(d => d.LessonTypeId)
+                    .HasConstraintName("FK_LessonType_Lesson");
             });
 
             modelBuilder.Entity<Payment>(entity =>
@@ -101,19 +104,24 @@ namespace DanceCoolDataAccessLogic.EfStructures.Context
                     .HasConstraintName("FK_Abonement_Payment");
 
                 entity.HasOne(d => d.UserReceiver)
-                    .WithMany(p => p.PaymentsUserReceiver)
+                    .WithMany(p => p.PaymentUserReceivers)
                     .HasForeignKey(d => d.UserReceiverId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_UserReceiver_Payment");
 
                 entity.HasOne(d => d.UserSender)
-                    .WithMany(p => p.PaymentsUserSender)
+                    .WithMany(p => p.PaymentUserSenders)
                     .HasForeignKey(d => d.UserSenderId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_UserSender_Payment");
             });
 
-            modelBuilder.Entity<UserCredentials>(entity =>
+            modelBuilder.Entity<User>(entity =>
+            {
+                entity.Property(e => e.PhoneNumber).IsUnicode(false);
+            });
+
+            modelBuilder.Entity<UserCredential>(entity =>
             {
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.UserCredentials)
@@ -124,6 +132,8 @@ namespace DanceCoolDataAccessLogic.EfStructures.Context
 
             modelBuilder.Entity<UserGroup>(entity =>
             {
+                entity.HasKey(ug => new { ug.GroupId, ug.UserId });
+
                 entity.HasOne(d => d.Group)
                     .WithMany(p => p.UserGroups)
                     .HasForeignKey(d => d.GroupId)
@@ -139,6 +149,8 @@ namespace DanceCoolDataAccessLogic.EfStructures.Context
 
             modelBuilder.Entity<UserRole>(entity =>
             {
+                entity.HasKey(ur => new { ur.RoleId, ur.UserId });
+
                 entity.HasOne(d => d.Role)
                     .WithMany(p => p.UserRoles)
                     .HasForeignKey(d => d.RoleId)
@@ -152,10 +164,9 @@ namespace DanceCoolDataAccessLogic.EfStructures.Context
                     .HasConstraintName("FK_User_UserRole");
             });
 
-            modelBuilder.Entity<User>(entity =>
-            {
-                entity.Property(e => e.PhoneNumber).IsUnicode(false);
-            });
+            OnModelCreatingExt(modelBuilder);
         }
+
+        partial void OnModelCreatingExt(ModelBuilder modelBuilder);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DanceCoolDataAccessLogic.EfStructures.Entities
@@ -21,6 +22,9 @@ namespace DanceCoolDataAccessLogic.EfStructures.Entities
         [ForeignKey("GroupId")]
         [InverseProperty("Lessons")]
         public virtual Group Group { get; set; }
+        [ForeignKey("LessonTypeId")]
+        [InverseProperty("Lessons")]
+        public virtual LessonType LessonType { get; set; }
         [InverseProperty("Lesson")]
         public virtual ICollection<Attendance> Attendances { get; set; }
     }

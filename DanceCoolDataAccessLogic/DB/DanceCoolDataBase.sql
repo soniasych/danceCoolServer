@@ -341,15 +341,6 @@ CREATE TABLE [dbo].[LessonTypes]
 );
 GO
 
--- Insert rows into table 'LessonTypes' in schema '[dbo]'
-INSERT INTO [dbo].[LessonTypes]
-    ( LessonTypeName )
-VALUES
-    ( N'Індивідуальне' ),
-    ( N'Парне'),
-    ( N'Групове' )
-GO
-
 -- Create a new table called '[Lessons]' in schema '[dbo]'
 CREATE TABLE [dbo].[Lessons]
 (

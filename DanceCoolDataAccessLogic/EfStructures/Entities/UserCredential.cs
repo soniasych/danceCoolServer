@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DanceCoolDataAccessLogic.EfStructures.Entities
 {
-    public partial class UserCredentials
+    public partial class UserCredential
     {
         public int Id { get; set; }
         public int UserId { get; set; }

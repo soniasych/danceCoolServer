@@ -6,23 +6,23 @@ using System.Linq;
 
 namespace DanceCoolDataAccessLogic.Repositories
 {
-    class UserCredentialsRepository : BaseRepository<UserCredentials>, IUserCredentialsRepository
+    class UserCredentialsRepository : BaseRepository<UserCredential>, IUserCredentialsRepository
     {
         public UserCredentialsRepository(DanceCoolContext context) : base(context)
         {
         }
 
-        public IEnumerable<UserCredentials> GetAllUserCredentials()
+        public IEnumerable<UserCredential> GetAllUserCredentials()
         {
             return Context.UserCredentials;
         }
 
-        public UserCredentials GetUserCredentialsById(int id)
+        public UserCredential GetUserCredentialsById(int id)
         {
             return Context.UserCredentials.Find(id);
         }
 
-        public UserCredentials GetUserCredentialsByUserId(int userId)
+        public UserCredential GetUserCredentialsByUserId(int userId)
         {
             return Context.UserCredentials.First(ucreds => ucreds.UserId == userId);
         }
