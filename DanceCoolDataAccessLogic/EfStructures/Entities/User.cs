@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DanceCoolDataAccessLogic.EfStructures.Entities
 {
-    [Table("Users")]
     public partial class User
     {
         public User()
@@ -14,7 +14,6 @@ namespace DanceCoolDataAccessLogic.EfStructures.Entities
             GroupSecondaryMentors = new HashSet<Group>();
             PaymentUserReceivers = new HashSet<Payment>();
             PaymentUserSenders = new HashSet<Payment>();
-            UserCredentials = new HashSet<UserCredential>();
             UserGroups = new HashSet<UserGroup>();
             UserRoles = new HashSet<UserRole>();
         }
@@ -29,6 +28,8 @@ namespace DanceCoolDataAccessLogic.EfStructures.Entities
         [StringLength(17)]
         public string PhoneNumber { get; set; }
 
+        [InverseProperty("User")]
+        public virtual UserCredential UserCredential { get; set; }
         [InverseProperty("PresentStudent")]
         public virtual ICollection<Attendance> Attendances { get; set; }
         [InverseProperty("PrimaryMentor")]
@@ -39,8 +40,6 @@ namespace DanceCoolDataAccessLogic.EfStructures.Entities
         public virtual ICollection<Payment> PaymentUserReceivers { get; set; }
         [InverseProperty("UserSender")]
         public virtual ICollection<Payment> PaymentUserSenders { get; set; }
-        [InverseProperty("User")]
-        public virtual ICollection<UserCredential> UserCredentials { get; set; }
         [InverseProperty("User")]
         public virtual ICollection<UserGroup> UserGroups { get; set; }
         [InverseProperty("User")]

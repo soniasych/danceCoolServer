@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DanceCoolDataAccessLogic.EfStructures.Entities
@@ -17,7 +15,7 @@ namespace DanceCoolDataAccessLogic.EfStructures.Entities
         public string Password { get; set; }
 
         [ForeignKey("UserId")]
-        [InverseProperty("UserCredentials")]
+        [InverseProperty("UserCredential")]
         public virtual User User { get; set; }
     }
 }

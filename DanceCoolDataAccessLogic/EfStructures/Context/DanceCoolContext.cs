@@ -1,9 +1,10 @@
-﻿using DanceCoolDataAccessLogic.EfStructures.Entities;
+﻿using System;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace DanceCoolDataAccessLogic.EfStructures.Context
+namespace DanceCoolDataAccessLogic.EfStructures.Entities
 {
-    public partial class DanceCoolContext : DbContext
+    public partial class DancecoolContext : DbContext
     {
         public virtual DbSet<Abonement> Abonements { get; set; }
         public virtual DbSet<Attendance> Attendances { get; set; }
@@ -18,7 +19,7 @@ namespace DanceCoolDataAccessLogic.EfStructures.Context
         public virtual DbSet<UserGroup> UserGroups { get; set; }
         public virtual DbSet<UserRole> UserRoles { get; set; }
 
-        public DanceCoolContext(DbContextOptions<DanceCoolContext> options) : base(options)
+        public DancecoolContext(DbContextOptions<DancecoolContext> options) : base(options)
         {
         }
 
@@ -26,6 +27,7 @@ namespace DanceCoolDataAccessLogic.EfStructures.Context
         {
             if (!optionsBuilder.IsConfigured)
             {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
                 optionsBuilder.UseSqlServer("Data Source=XPS15\\SQLEXPRESS;Initial Catalog=DanceCool;Integrated Security=True");
             }
         }
@@ -44,7 +46,6 @@ namespace DanceCoolDataAccessLogic.EfStructures.Context
                 entity.HasOne(d => d.Lesson)
                     .WithMany(p => p.Attendances)
                     .HasForeignKey(d => d.LessonId)
-                    .HasPrincipalKey(d =>d.Id)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Lesson_Attendances");
 
@@ -60,14 +61,12 @@ namespace DanceCoolDataAccessLogic.EfStructures.Context
                 entity.HasOne(d => d.Direction)
                     .WithMany(p => p.Groups)
                     .HasForeignKey(d => d.DirectionId)
-                    .HasPrincipalKey(d => d.Id)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Direction_Group");
 
                 entity.HasOne(d => d.Level)
                     .WithMany(p => p.Groups)
                     .HasForeignKey(d => d.LevelId)
-                    .HasPrincipalKey(d => d.Id)
                     .HasConstraintName("FK_Level_Group");
 
                 entity.HasOne(d => d.PrimaryMentor)
@@ -88,11 +87,6 @@ namespace DanceCoolDataAccessLogic.EfStructures.Context
                     .WithMany(p => p.Lessons)
                     .HasForeignKey(d => d.GroupId)
                     .HasConstraintName("FK_Group_Lesson");
-
-                entity.HasOne(d => d.LessonType)
-                    .WithMany(p => p.Lessons)
-                    .HasForeignKey(d => d.LessonTypeId)
-                    .HasConstraintName("FK_LessonType_Lesson");
             });
 
             modelBuilder.Entity<Payment>(entity =>
@@ -118,22 +112,32 @@ namespace DanceCoolDataAccessLogic.EfStructures.Context
 
             modelBuilder.Entity<User>(entity =>
             {
+                entity.HasIndex(e => e.PhoneNumber)
+                    .HasName("UQ__Users__85FB4E3804482B70")
+                    .IsUnique();
+
                 entity.Property(e => e.PhoneNumber).IsUnicode(false);
             });
 
             modelBuilder.Entity<UserCredential>(entity =>
             {
+                entity.HasIndex(e => e.Email)
+                    .HasName("UQ__UserCred__A9D105343F37EE7B")
+                    .IsUnique();
+
+                entity.HasIndex(e => e.UserId)
+                    .HasName("UQ__UserCred__1788CC4D371431A8")
+                    .IsUnique();
+
                 entity.HasOne(d => d.User)
-                    .WithMany(p => p.UserCredentials)
-                    .HasForeignKey(d => d.UserId)
+                    .WithOne(p => p.UserCredential)
+                    .HasForeignKey<UserCredential>(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_User_UserCredentials");
             });
 
             modelBuilder.Entity<UserGroup>(entity =>
             {
-                entity.HasKey(ug => new { ug.GroupId, ug.UserId });
-
                 entity.HasOne(d => d.Group)
                     .WithMany(p => p.UserGroups)
                     .HasForeignKey(d => d.GroupId)
@@ -149,8 +153,6 @@ namespace DanceCoolDataAccessLogic.EfStructures.Context
 
             modelBuilder.Entity<UserRole>(entity =>
             {
-                entity.HasKey(ur => new { ur.RoleId, ur.UserId });
-
                 entity.HasOne(d => d.Role)
                     .WithMany(p => p.UserRoles)
                     .HasForeignKey(d => d.RoleId)

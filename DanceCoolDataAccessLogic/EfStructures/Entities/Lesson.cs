@@ -16,15 +16,11 @@ namespace DanceCoolDataAccessLogic.EfStructures.Entities
         [Column(TypeName = "datetime")]
         public DateTime Date { get; set; }
         public int Room { get; set; }
-        public int? LessonTypeId { get; set; }
         public int? GroupId { get; set; }
 
         [ForeignKey("GroupId")]
         [InverseProperty("Lessons")]
         public virtual Group Group { get; set; }
-        [ForeignKey("LessonTypeId")]
-        [InverseProperty("Lessons")]
-        public virtual LessonType LessonType { get; set; }
         [InverseProperty("Lesson")]
         public virtual ICollection<Attendance> Attendances { get; set; }
     }

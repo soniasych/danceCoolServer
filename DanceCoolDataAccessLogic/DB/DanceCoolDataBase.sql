@@ -58,9 +58,6 @@ GO
 IF OBJECT_ID('[dbo].[Lessons]', 'U') IS NOT NULL
 DROP TABLE [dbo].[Lessons]
 GO
-IF OBJECT_ID('[dbo].[LessonTypes]', 'U') IS NOT NULL
-DROP TABLE [dbo].[LessonTypes]
-GO
 IF OBJECT_ID('[dbo].[UserGroups]', 'U') IS NOT NULL
 DROP TABLE [dbo].[UserGroups]
 GO
@@ -109,7 +106,7 @@ CREATE TABLE [dbo].[Users]
     [Id] INT NOT NULL PRIMARY KEY IDENTITY(1,1),
     [FirstName] NVARCHAR(512) NOT NULL,
     [LastName] NVARCHAR(512) NOT NULL,
-    [PhoneNumber] VARCHAR(17) NULL
+    [PhoneNumber] VARCHAR(17) NULL UNIQUE
 );
 GO
 
@@ -125,7 +122,7 @@ VALUES
     ( N'Мар''яна', N'Штокало', '+380774155782' ),--6
     ( N'Ігор', N'Коваль', '+380837451111' ),--7
     ( N'Анна', N'Данчук', '+380792884834' ),--8
-    ( N'Ольга', N'Коробчук', '+380792884834' )--9
+    ( N'Ольга', N'Коробчук', '+380792784834' )--9
 GO
 
 -- Insert Students into table 'User' in schema '[dbo]'
@@ -160,8 +157,8 @@ GO
 CREATE TABLE [dbo].[UserCredentials]
 (
     [Id] INT NOT NULL PRIMARY KEY IDENTITY(1,1),
-    [UserId] INT NOT NULL,
-    [Email] NVARCHAR(254) NOT NULL,
+    [UserId] INT NOT NULL UNIQUE,
+    [Email] NVARCHAR(254) NOT NULL UNIQUE,
     [Password] TEXT NOT NULL,
     CONSTRAINT FK_User_UserCredentials FOREIGN KEY ([UserId]) REFERENCES [dbo].[Users]([Id])
 );
@@ -333,23 +330,13 @@ BEGIN
 END;
 GO
 
--- Create a new table called '[LessonTypes]' in schema '[dbo]'
-CREATE TABLE [dbo].[LessonTypes]
-(
-    [Id] INT NOT NULL PRIMARY KEY IDENTITY(1,1),
-    [LessonTypeName] NVARCHAR(50) NOT NULL
-);
-GO
-
 -- Create a new table called '[Lessons]' in schema '[dbo]'
 CREATE TABLE [dbo].[Lessons]
 (
     [Id] INT NOT NULL PRIMARY KEY IDENTITY(1,1),
     [Date] DATETIME NOT NULL,
     [Room] INT NOT NULL,
-    [LessonTypeId] INT NULL,
     [GroupId] INT NULL,
-    CONSTRAINT FK_LessonType_Lesson FOREIGN KEY ([LessonTypeId]) REFERENCES [dbo].[LessonTypes]([Id]),
     CONSTRAINT FK_Group_Lesson FOREIGN KEY ([GroupId]) REFERENCES [dbo].[Groups]([Id])
 );
 GO
