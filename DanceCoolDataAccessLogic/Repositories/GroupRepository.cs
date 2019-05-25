@@ -67,7 +67,6 @@ namespace DanceCoolDataAccessLogic.Repositories
             var groupModel = GetGroupById(groupId);
             groupModel.LevelId = levelId;
             Context.SaveChanges();
-
         }
     }
 }

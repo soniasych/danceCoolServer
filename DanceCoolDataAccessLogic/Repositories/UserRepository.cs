@@ -3,7 +3,6 @@ using System.Linq;
 using DanceCoolDataAccessLogic.EfStructures.Context;
 using DanceCoolDataAccessLogic.EfStructures.Entities;
 using DanceCoolDataAccessLogic.Repositories.Interfaces;
-using Microsoft.EntityFrameworkCore;
 
 namespace DanceCoolDataAccessLogic.Repositories
 {
@@ -37,19 +36,25 @@ namespace DanceCoolDataAccessLogic.Repositories
 
         public IEnumerable<User> GetStudents()
         {
-            return Context.Users.Include(u => u.UserRoles.Where(ur => ur.RoleId == 1)).ToList();
+            return Context.Users.Where(user => user.UserRoles.
+                    Any(ur => ur.RoleId == 1))
+                .ToList();
         }
 
         public IEnumerable<User> GetStudentsNotInGroup(int groupId)
         {
-            return Context.Users
-                .Where(user => user.UserGroups.Any(ug => ug.GroupId != groupId) || user.UserGroups.Count == 0)
+            var students = GetStudents();
+            return students.Where(user => user.UserGroups.
+                    Any(ug => ug.GroupId != groupId) 
+                    || user.UserGroups.Count == 0)
                 .ToList();
         }
 
         public IEnumerable<User> GetMentors()
         {
-            return Context.Users.Include(u => u.UserRoles.Where(ur => ur.RoleId == 2)).ToList();
+            return Context.Users.Where(user => user.UserRoles.
+                    Any(ur => ur.RoleId == 2))
+                .ToList();
         }
 
         public IEnumerable<User> Search(string key)
