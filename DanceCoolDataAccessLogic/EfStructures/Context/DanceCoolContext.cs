@@ -26,7 +26,7 @@ namespace DanceCoolDataAccessLogic.EfStructures.Context
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Data Source=XPS15\\SQLEXPRESS;Initial Catalog=DanceCool;Integrated Security=True");
+                optionsBuilder.UseSqlServer("Data Source=ARCH;Initial Catalog=DanceCool;Integrated Security=True");
             }
         }
 

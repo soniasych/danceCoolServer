@@ -54,11 +54,7 @@ namespace DanceCoolDataAccessLogic.Repositories
 
         public IEnumerable<Group> GetGroupsByUserId(int userId)
         {
-            var groupsWithUSerArray = Context.UserGroups.Where(ug => ug.UserId == userId)
-                .Select(ug => ug.Id)
-                .ToArray();
-
-            return Context.Groups.Where(group => groupsWithUSerArray.Contains(group.Id));
+            return Context.Groups.Where(group => group.UserGroups.Any(ug => ug.UserId == userId));
         }
 
         public void AddGroup(Group group)

@@ -20,7 +20,7 @@ namespace DanceCoolDataAccessLogic.Repositories
 
         public IEnumerable<User> GetAllUsers()
         {
-            return Context.Users;
+            return Context.Users.ToList();
         }
 
         public User GetUserById(int userId)
@@ -30,37 +30,26 @@ namespace DanceCoolDataAccessLogic.Repositories
 
         public IEnumerable<User> GetUsersByGroupId(int groupId)
         {
-            var usersInGroupArray = Context.UserGroups.Where(ug => ug.GroupId == groupId)
-                .Select(user => user.UserId)
-                .ToArray();
-
-            var usersInGroup = Context.Users.Where(user => usersInGroupArray.Contains(user.Id));
-            return usersInGroup;
+            return Context.Users
+                .Where(user => user.UserGroups.Any(ug => ug.GroupId == groupId) || user.UserGroups.Count == 0)
+                .ToList();
         }
 
         public IEnumerable<User> GetStudents()
         {
-            var students = Context.Users.Include(u => u.UserRoles.Where(ur => ur.RoleId == 1)).ToList();
-            return students;
+            return Context.Users.Include(u => u.UserRoles.Where(ur => ur.RoleId == 1)).ToList();
         }
 
         public IEnumerable<User> GetStudentsNotInGroup(int groupId)
         {
-            var students = GetStudents();
-            var usersInGroupArray = Context.UserGroups.Where(ug => ug.GroupId != groupId)
-                .Select(ug => ug.UserId)
-                .ToArray();
-
-            return students.Where(user => usersInGroupArray.Contains(user.Id));
+            return Context.Users
+                .Where(user => user.UserGroups.Any(ug => ug.GroupId != groupId) || user.UserGroups.Count == 0)
+                .ToList();
         }
 
         public IEnumerable<User> GetMentors()
         {
-            var mentorsIdArray = Context.UserRoles.Where(ur => ur.RoleId == 2)
-                .Select(ur => ur.UserId)
-                .ToArray();
-
-            return Context.Users.Where(user => mentorsIdArray.Contains(user.Id));
+            return Context.Users.Include(u => u.UserRoles.Where(ur => ur.RoleId == 2)).ToList();
         }
 
         public IEnumerable<User> Search(string key)
