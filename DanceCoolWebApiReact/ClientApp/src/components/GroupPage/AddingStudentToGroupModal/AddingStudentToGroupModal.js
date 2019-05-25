@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {
     Modal,
     ModalHeader,
@@ -9,42 +9,51 @@ import { Tabs, Tab } from 'react-bootstrap'
 import { AddNewUserForm } from '../../common/AddNewUserForm'
 
 
-const AddingStudentToGroupModal = (props) => {
-    return (<Modal
-        isOpen={props.visible}
-        className="modal-dialog modal-lg">
-        <ModalHeader>
-            <h5 >Додати студента до групи</h5>
-        </ModalHeader>
-        <ModalBody>
-            <Tabs onSelect={props.selectStudentsNotInGroupTab}>
-                <Tab eventKey="AddNew" title="Додати нового">
-                    <AddNewUserForm />
-                </Tab>
-                <Tab eventKey="AddExisting" title="Наявні студенти">
-                    <table className="table table-sm">
-                        <thead>
-                            <tr>
-                                <th>Ім'я</th>
-                                <th>Прізвище</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {props.studentsNotInGroup.map(student => (
-                                <tr key={student.id}>
-                                    <td>{student.firstName}</td>
-                                    <td>{student.lastName}</td>
+export class AddingStudentToGroupModal extends Component {
+
+    constructor(props) {
+        super(props);
+
+
+    }
+
+    render() {
+        return (<Modal
+            isOpen={this.props.visible}
+            className="modal-dialog modal-lg" >
+            <ModalHeader>
+                <h5 >Додати студента до групи</h5>
+            </ModalHeader>
+            <ModalBody>
+                <Tabs onSelect={this.props.selectStudentsNotInGroupTab}>
+                    <Tab eventKey="AddNew" title="Додати нового">
+                        <AddNewUserForm />
+                    </Tab>
+                    <Tab eventKey="AddExisting" title="Наявні студенти">
+                        <table className="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Ім'я</th>
+                                    <th>Прізвище</th>
                                 </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </Tab>
-            </Tabs>
-        </ModalBody>
-        <ModalFooter>
-            <button onClick={props.close} className="btn btn-primary">Close</button>
-        </ModalFooter>
-    </Modal>);
+                            </thead>
+                            <tbody>
+                                {this.props.studentsNotInGroup.map(student => (
+                                    <tr key={student.id} onClick={() => console.log(student)}>
+                                        <td>{student.firstName}</td>
+                                        <td>{student.lastName}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </Tab>
+                </Tabs>
+            </ModalBody>
+            <ModalFooter>
+                <button onClick={this.props.close} className="btn btn-primary">Close</button>
+            </ModalFooter>
+        </Modal>);
+    }
 }
 
 export default AddingStudentToGroupModal;

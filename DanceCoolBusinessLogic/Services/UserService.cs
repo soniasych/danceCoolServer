@@ -61,7 +61,7 @@ namespace DanceCoolBusinessLogic.Services
 
         public IEnumerable<UserDTO> GetUsersFromGroup(int groupId)
         {           
-            var userModelsInGroup = db.Users.GetUsersByGroupId(groupId);
+            var userModelsInGroup = db.Users.GetStudentsByGroupId(groupId);
             
             if (userModelsInGroup == null)
             {

@@ -3,6 +3,7 @@ using System.Linq;
 using DanceCoolDataAccessLogic.EfStructures.Context;
 using DanceCoolDataAccessLogic.EfStructures.Entities;
 using DanceCoolDataAccessLogic.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace DanceCoolDataAccessLogic.Repositories
 {
@@ -27,18 +28,18 @@ namespace DanceCoolDataAccessLogic.Repositories
             return Context.Users.Find(userId);
         }
 
-        public IEnumerable<User> GetUsersByGroupId(int groupId)
+        public IEnumerable<User> GetStudentsByGroupId(int groupId)
         {
-            return Context.Users
-                .Where(user => user.UserGroups.Any(ug => ug.GroupId == groupId) || user.UserGroups.Count == 0)
-                .ToList();
+            var students = GetStudents();
+            return students
+                .Where(user => user.UserGroups.Any(ug => ug.GroupId == groupId));
         }
 
         public IEnumerable<User> GetStudents()
         {
-            return Context.Users.Where(user => user.UserRoles.
-                    Any(ur => ur.RoleId == 1))
-                .ToList();
+            var students = Context.Users
+                .Where(user => user.UserRoles.Any(ur => ur.RoleId == 1)).Include(user => user.UserGroups);
+            return students;
         }
 
         public IEnumerable<User> GetStudentsNotInGroup(int groupId)
@@ -46,15 +47,13 @@ namespace DanceCoolDataAccessLogic.Repositories
             var students = GetStudents();
             return students.Where(user => user.UserGroups.
                     Any(ug => ug.GroupId != groupId) 
-                    || user.UserGroups.Count == 0)
-                .ToList();
+                    || user.UserGroups.Count == 0);
         }
 
         public IEnumerable<User> GetMentors()
         {
             return Context.Users.Where(user => user.UserRoles.
-                    Any(ur => ur.RoleId == 2))
-                .ToList();
+                    Any(ur => ur.RoleId == 2));
         }
 
         public IEnumerable<User> Search(string key)
