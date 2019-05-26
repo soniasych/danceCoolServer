@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using DanceCoolDataAccessLogic.Entities;
+using DanceCoolDataAccessLogic.EfStructures.Context;
+using DanceCoolDataAccessLogic.EfStructures.Entities;
 using DanceCoolDataAccessLogic.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 

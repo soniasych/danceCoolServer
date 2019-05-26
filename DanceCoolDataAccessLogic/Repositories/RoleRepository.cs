@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using DanceCoolDataAccessLogic.Entities;
+using DanceCoolDataAccessLogic.EfStructures.Context;
+using DanceCoolDataAccessLogic.EfStructures.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace DanceCoolDataAccessLogic.Repositories.Interfaces

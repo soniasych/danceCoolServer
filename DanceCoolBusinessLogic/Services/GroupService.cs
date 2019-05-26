@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using DanceCoolDataAccessLogic.Entities;
+using DanceCoolDataAccessLogic.EfStructures.Entities;
 using DanceCoolDataAccessLogic.UnitOfWork;
 using DanceCoolDTO;
 
@@ -59,19 +59,35 @@ namespace DanceCoolBusinessLogic.Services
             db.Groups.ChangeGroupLevel(groupId, targetLevelId);
         }
 
-        private GroupDTO GroupModelToGroupDTO(Group groupModel)
+        public IEnumerable<UserDTO> GetStudentsNotInCurrentGroup(int groupId)
         {
-            var level = db.SkillLevels.GetSkillLevelById(groupModel.LevelId);
-            var directions = db.DanceDirections.GetDanceDirectionById(groupModel.DirectionId);
-            var primaryMentor = db.Users.GetUserById(groupModel.PrimaryMentorId);
-            var secondaryMentor = groupModel.SecondaryMentorId == null ? null : db.Users.GetUserById(groupModel.SecondaryMentorId.Value);
+            var studentsNotInCurrentGroup = db.Users.GetStudentsNotInGroup(groupId);
+            if (studentsNotInCurrentGroup == null)
+            {
+                return null;
+            }
+            var dtos = new List<UserDTO>();
 
-            return new GroupDTO(
-                groupModel.Id,
-                directions.Name,
-                $"{primaryMentor.FirstName} {primaryMentor.LastName}",
-                secondaryMentor == null ? null : $"{secondaryMentor.FirstName} {secondaryMentor.LastName}",
-                level?.Name);
+            foreach (var student in studentsNotInCurrentGroup)
+            {
+                dtos.Add(new UserDTO(student.Id,
+                    student.FirstName,
+                    student.LastName,
+                    student.PhoneNumber));
+            }
+
+            return dtos;
         }
+
+        private GroupDTO GroupModelToGroupDTO(Group groupModel) => new GroupDTO(
+                groupModel.Id,
+                groupModel.Direction.Name,
+                $"{groupModel.PrimaryMentor.FirstName} {groupModel.PrimaryMentor.LastName}",
+                groupModel.SecondaryMentor
+                == null 
+                ? null 
+                : $"{groupModel.SecondaryMentor.FirstName} {groupModel.SecondaryMentor.LastName}",
+                groupModel.Level?.Name);
+        
     }
 }

@@ -1,4 +1,4 @@
-﻿using DanceCoolDataAccessLogic.Entities;
+﻿using DanceCoolDataAccessLogic.EfStructures.Context;
 using DanceCoolDataAccessLogic.Repositories;
 using DanceCoolDataAccessLogic.Repositories.Interfaces;
 
@@ -52,7 +52,6 @@ namespace DanceCoolDataAccessLogic.UnitOfWork
         {
             _context.SaveChanges();
         }
-
 
         public void Dispose()
         {

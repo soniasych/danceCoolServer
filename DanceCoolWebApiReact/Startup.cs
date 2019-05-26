@@ -1,5 +1,5 @@
 using DanceCoolBusinessLogic.Services;
-using DanceCoolDataAccessLogic.Entities;
+using DanceCoolDataAccessLogic.EfStructures.Context;
 using DanceCoolDataAccessLogic.UnitOfWork;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DanceCoolDataAccessLogic.Entities
+namespace DanceCoolDataAccessLogic.EfStructures.Entities
 {
     public partial class Lesson
     {
@@ -11,13 +13,15 @@ namespace DanceCoolDataAccessLogic.Entities
         }
 
         public int Id { get; set; }
+        [Column(TypeName = "datetime")]
         public DateTime Date { get; set; }
         public int Room { get; set; }
-        public int? LessonTypeId { get; set; }
         public int? GroupId { get; set; }
 
+        [ForeignKey("GroupId")]
+        [InverseProperty("Lessons")]
         public virtual Group Group { get; set; }
-        public virtual LessonType LessonType { get; set; }
+        [InverseProperty("Lesson")]
         public virtual ICollection<Attendance> Attendances { get; set; }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using DanceCoolDataAccessLogic.Entities;
+using DanceCoolDataAccessLogic.EfStructures.Context;
+using DanceCoolDataAccessLogic.EfStructures.Entities;
 
 namespace DanceCoolDataAccessLogic.Repositories.Interfaces
 {
@@ -8,9 +9,10 @@ namespace DanceCoolDataAccessLogic.Repositories.Interfaces
     {
         IEnumerable<User> GetAllUsers();
         User GetUserById(int userId);
-        IEnumerable<User> GetUsersByGroupId(int groupId);
+        IEnumerable<User> GetStudentsByGroupId(int groupId);
         IEnumerable<User> GetStudents();
         void AddUserRange(IEnumerable<User> users);
         IEnumerable<User> Search(string key);
+        IEnumerable<User> GetStudentsNotInGroup(int groupId);
     }
 }

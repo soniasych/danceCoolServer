@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using DanceCoolDataAccessLogic.Entities;
+using DanceCoolDataAccessLogic.EfStructures.Context;
+using DanceCoolDataAccessLogic.EfStructures.Entities;
 using DanceCoolDataAccessLogic.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace DanceCoolDataAccessLogic.Repositories
 {
@@ -18,7 +20,7 @@ namespace DanceCoolDataAccessLogic.Repositories
 
         public IEnumerable<User> GetAllUsers()
         {
-            return Context.Users;
+            return Context.Users.ToList();
         }
 
         public User GetUserById(int userId)
@@ -26,37 +28,37 @@ namespace DanceCoolDataAccessLogic.Repositories
             return Context.Users.Find(userId);
         }
 
-        public IEnumerable<User> GetUsersByGroupId(int groupId)
+        public IEnumerable<User> GetStudentsByGroupId(int groupId)
         {
-            var usersInGroupArray = Context.UserGroups.Where(ug => ug.GroupId == groupId)
-                .Select(user => user.UserId)
-                .ToArray();
-
-            var usersInGroup = Context.Users.Where(user => usersInGroupArray.Contains(user.Id));
-            return usersInGroup;
+            var students = GetStudents();
+            return students
+                .Where(user => user.UserGroups.Any(ug => ug.GroupId == groupId));
         }
 
         public IEnumerable<User> GetStudents()
         {
-            var studentsIdArray = Context.UserRoles.Where(ur => ur.RoleId == 1)
-                .Select(ur => ur.UserId)
-                .ToArray();
+            var students = Context.Users
+                .Where(user => user.UserRoles.Any(ur => ur.RoleId == 1)).Include(user => user.UserGroups);
+            return students;
+        }
 
-            return Context.Users.Where(user => studentsIdArray.Contains(user.Id));
+        public IEnumerable<User> GetStudentsNotInGroup(int groupId)
+        {
+            var students = GetStudents();
+            return students.Where(user => user.UserGroups.
+                    Any(ug => ug.GroupId != groupId) 
+                    || user.UserGroups.Count == 0);
         }
 
         public IEnumerable<User> GetMentors()
         {
-            var mentorsIdArray = Context.UserRoles.Where(ur => ur.RoleId == 2)
-                .Select(ur => ur.UserId)
-                .ToArray();
-
-            return Context.Users.Where(user => mentorsIdArray.Contains(user.Id));
+            return Context.Users.Where(user => user.UserRoles.
+                    Any(ur => ur.RoleId == 2));
         }
 
         public IEnumerable<User> Search(string key)
         {
-            return Context.Users.Where(user => user.FirstName.Contains(key.ToLower()));
+            return Context.Users.Where(user => user.LastName.Contains(key.ToLower()));
         }
     }
 }

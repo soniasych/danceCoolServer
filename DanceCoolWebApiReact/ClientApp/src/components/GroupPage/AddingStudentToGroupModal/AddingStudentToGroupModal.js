@@ -1,51 +1,75 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {
     Modal,
     ModalHeader,
     ModalBody,
     ModalFooter
 } from 'reactstrap';
-import {
-    Tabs,
-    Tab
-} from 'react-bootstrap'
+import { Tabs, Tab } from 'react-bootstrap';
+import { AddNewUserForm } from '../../common/AddNewUserForm';
+import ReactTable from 'react-table';
 
-const AddingStudentToGroupModal = (props) => {
-    return (<Modal
-        isOpen={props.visible}
-        className="modal-dialog modal-lg">
-        <ModalHeader>
-            <h5 >Додати студента до групи</h5>
-        </ModalHeader>
-        <ModalBody>
-            <Tabs>
-                <Tab eventKey="AddNew" title="Add new student">
-                    <div>Adding new</div>
-                </Tab>
-                <Tab eventKey="AddExisting" title="Add existing student">
-                    <table className="table table-sm">
-                        <thead>
-                            <tr>
-                                <th>Ім'я</th>
-                                <th>Прізвище</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {props.allStudents.map(student => (
-                                <tr key={student.id}>
-                                    <td>{student.firstName}</td>
-                                    <td>{student.lastName}</td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </Tab>
-            </Tabs>
-        </ModalBody>
-        <ModalFooter>
-            <button onClick={props.close} className="btn btn-primary">Close</button>
-        </ModalFooter>
-    </Modal>);
+
+export class AddingStudentToGroupModal extends Component {
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            selectedStudent: {},
+            isSelected: false
+        }
+        this.onSelectingStudent = this.onSelectingStudent.bind(this);
+    }
+
+
+
+    onSelectingStudent = (student)=> {
+        this.setState({ selectedStudent: student });
+        console.log(this.state.student);
+    }
+
+    render() {
+        const data = this.props.studentsNotInGroup;
+        return (<Modal
+            isOpen={this.props.visible}
+            className="modal-dialog modal-lg" >
+            <ModalHeader>
+                Додати студента до групи
+            </ModalHeader>
+            <ModalBody>
+                <Tabs onSelect={this.props.selectStudentsNotInGroupTab}>
+                    <Tab eventKey="AddNew" title="Додати нового">
+                        <AddNewUserForm />
+                    </Tab>
+                    <Tab eventKey="AddExisting" title="Наявні студенти">
+                        <ReactTable
+                        className="-striped -highlight"
+                        data={data}
+                        columns={[
+                            {
+                                Header: 'Id',
+                                id: "id",
+                                accessor: d => d.id
+                            },{
+                                Header: 'FirstName',
+                                accessor: 'firstName'
+                            },{
+                                Header: 'LastName',
+                                accessor: 'lastName'
+                            },{
+                                Header: 'PhoneNumber',
+                                accessor: 'phoneNumber'
+                            }
+                        ]}/>
+                    </Tab>
+                </Tabs>
+            </ModalBody>
+            <ModalFooter>
+                <button onClick={this.props.close} className="btn btn-primary">Close</button>
+            </ModalFooter>
+        </Modal>);
+    }
 }
 
 export default AddingStudentToGroupModal;

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
-using DanceCoolDataAccessLogic.Entities;
+using DanceCoolDataAccessLogic.EfStructures.Context;
+using DanceCoolDataAccessLogic.EfStructures.Entities;
 using DanceCoolDataAccessLogic.UnitOfWork;
 using DanceCoolDTO;
 
@@ -22,6 +23,11 @@ namespace DanceCoolBusinessLogic.Services
         public void AddUserToGroup(int userId, int groupId)
         {
             db.UserGroups.AddUserToGroup(userId, groupId);
+        }
+
+        public IEnumerable<User> GetAllUserModels()
+        {
+            return db.Users.GetAllUsers();
         }
 
         public IEnumerable<UserDTO> GetAllUsers()
@@ -55,7 +61,7 @@ namespace DanceCoolBusinessLogic.Services
 
         public IEnumerable<UserDTO> GetUsersFromGroup(int groupId)
         {           
-            var userModelsInGroup = db.Users.GetUsersByGroupId(groupId);
+            var userModelsInGroup = db.Users.GetStudentsByGroupId(groupId);
             
             if (userModelsInGroup == null)
             {

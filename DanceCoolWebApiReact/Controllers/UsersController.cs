@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using DanceCoolBusinessLogic.Services;
+using DanceCoolDataAccessLogic.EfStructures.Entities;
 using DanceCoolDTO;
 using Microsoft.AspNetCore.Mvc;
 
@@ -22,6 +23,13 @@ namespace DanceCoolWebApiReact.Controllers
         public IEnumerable<UserDTO> GetAllUsers()
         {
             return _userService.GetAllUsers();
+        }
+
+        [HttpGet]
+        [Route("api/user-models")]
+        public IEnumerable<User> GetAllUserModels()
+        {
+            return _userService.GetAllUserModels();
         }
 
         //GET: api/students

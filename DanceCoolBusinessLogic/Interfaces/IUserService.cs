@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
-using DanceCoolDataAccessLogic.Entities;
+using DanceCoolDataAccessLogic.EfStructures.Context;
+using DanceCoolDataAccessLogic.EfStructures.Entities;
 using DanceCoolDTO;
 
 namespace DanceCoolBusinessLogic.Services
@@ -13,5 +14,6 @@ namespace DanceCoolBusinessLogic.Services
         void AddUser(NewUserDTO userDTO);
         void AddUserToGroup(int userId, int groupId);
         IEnumerable<UserDTO> Search(string key);
+        IEnumerable<User> GetAllUserModels();
     }
 }

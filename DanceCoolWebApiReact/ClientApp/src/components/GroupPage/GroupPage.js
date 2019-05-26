@@ -10,19 +10,21 @@ export class GroupPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            student: {},
             group: {},
-            allStudetns: [],
+            selectedStudents: [],
             groupStudents: [],
+            studentsNotInGroup: [],
             addingStudentToGroupModalVisible: false
         }
         this.AddingStudenToGroupModalHandler = this.AddingStudenToGroupModalHandler.bind(AddingStudentToGroupModal);
         this.onAddNewStudentButtonClickHandler = this.onAddNewStudentButtonClickHandler.bind(AddingStudentToGroupModal);
+        this.onChooseStudentNotInGroupTab = this.onChooseStudentNotInGroupTab.bind(AddingStudentToGroupModal);
     }
 
     componentDidMount() {
         this.populateCurrentGroupData();
         this.populateCurrentGroupStudentsData();
-        this.populateStudentsData();
     }
 
     AddingStudenToGroupModalHandler = event => {
@@ -31,6 +33,11 @@ export class GroupPage extends Component {
         }
         else {
             this.setState({ addingStudentToGroupModalVisible: false });
+        }
+    }
+    onChooseStudentNotInGroupTab = (key) => {
+        if (key === 'AddExisting') {
+            this.populateStudentsNotInCurrentGroup();
         }
     }
 
@@ -63,8 +70,10 @@ export class GroupPage extends Component {
                 <GroupStudentsList groupStudents={this.state.groupStudents} />
                 <AddingStudentToGroupModal visible={this.state.addingStudentToGroupModalVisible}
                     close={this.AddingStudenToGroupModalHandler}
-                    allStudents={this.state.allStudetns}
-                    addNewStudent={this.onAddNewStudentButtonClickHandler} />
+                    selectStudentsNotInGroupTab={this.onChooseStudentNotInGroupTab}
+                    studentsNotInGroup={this.state.studentsNotInGroup}
+                    addNewStudent={this.onAddNewStudentButtonClickHandler}
+                />
             </div>
         );
     }
@@ -76,17 +85,17 @@ export class GroupPage extends Component {
         this.setState({ group: data });
     }
 
-    async populateStudentsData() {
-        const responce = await Axios.get(`api/students`);
-        const data = await responce.data;
-        this.setState({ allStudetns: data });
+    async populateStudentsNotInCurrentGroup() {
+        const id = this.props.match.params.id;
+        const response = await Axios.get(`api/groups/${id}/students/notingroup`);
+        const data = await response.data;
+        this.setState({ studentsNotInGroup: data });
     }
 
     async populateCurrentGroupStudentsData() {
         const id = this.props.match.params.id;
         const responce = await Axios.get(`api/groups/${id}/users/`);
         const data = await responce.data;
-        console.log(data);
         this.setState({ groupStudents: data });
     }
 }
