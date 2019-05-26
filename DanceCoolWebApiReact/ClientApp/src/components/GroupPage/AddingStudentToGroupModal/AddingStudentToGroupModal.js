@@ -7,6 +7,7 @@ import {
 } from 'reactstrap';
 import { Tabs, Tab } from 'react-bootstrap';
 import { AddNewUserForm } from '../../common/AddNewUserForm';
+import ExistingSudentsTable from './ExistingSudentsTable';
 import ReactTable from 'react-table';
 
 
@@ -22,9 +23,7 @@ export class AddingStudentToGroupModal extends Component {
         this.onSelectingStudent = this.onSelectingStudent.bind(this);
     }
 
-
-
-    onSelectingStudent = (student)=> {
+    onSelectingStudent = (student) => {
         this.setState({ selectedStudent: student });
         console.log(this.state.student);
     }
@@ -43,25 +42,7 @@ export class AddingStudentToGroupModal extends Component {
                         <AddNewUserForm />
                     </Tab>
                     <Tab eventKey="AddExisting" title="Наявні студенти">
-                        <ReactTable
-                        className="-striped -highlight"
-                        data={data}
-                        columns={[
-                            {
-                                Header: 'Id',
-                                id: "id",
-                                accessor: d => d.id
-                            },{
-                                Header: 'FirstName',
-                                accessor: 'firstName'
-                            },{
-                                Header: 'LastName',
-                                accessor: 'lastName'
-                            },{
-                                Header: 'PhoneNumber',
-                                accessor: 'phoneNumber'
-                            }
-                        ]}/>
+                        <ExistingSudentsTable existingStudents={this.props.studentsNotInGroup}/>
                     </Tab>
                 </Tabs>
             </ModalBody>
