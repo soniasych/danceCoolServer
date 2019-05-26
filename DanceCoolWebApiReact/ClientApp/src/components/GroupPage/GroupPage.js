@@ -19,8 +19,7 @@ export class GroupPage extends Component {
         }
         this.AddingStudenToGroupModalHandler = this.AddingStudenToGroupModalHandler.bind(AddingStudentToGroupModal);
         this.onAddNewStudentButtonClickHandler = this.onAddNewStudentButtonClickHandler.bind(AddingStudentToGroupModal);
-        this.onChooseStudentNotInGroup = this.onChooseStudentNotInGroup.bind(AddingStudentToGroupModal);
-        this.onTableRowClicked = this.onTableRowClicked.bind(AddingStudentToGroupModal);
+        this.onChooseStudentNotInGroupTab = this.onChooseStudentNotInGroupTab.bind(AddingStudentToGroupModal);
     }
 
     componentDidMount() {
@@ -36,7 +35,7 @@ export class GroupPage extends Component {
             this.setState({ addingStudentToGroupModalVisible: false });
         }
     }
-    onChooseStudentNotInGroup = (key) => {
+    onChooseStudentNotInGroupTab = (key) => {
         if (key === 'AddExisting') {
             this.populateStudentsNotInCurrentGroup();
         }
@@ -60,10 +59,6 @@ export class GroupPage extends Component {
         event.preventDefault();
     }
 
-    onTableRowClicked = (event) => {
-        backgroundColor: 'red';
-    }
-
     render() {
         return (
             <div>
@@ -75,7 +70,7 @@ export class GroupPage extends Component {
                 <GroupStudentsList groupStudents={this.state.groupStudents} />
                 <AddingStudentToGroupModal visible={this.state.addingStudentToGroupModalVisible}
                     close={this.AddingStudenToGroupModalHandler}
-                    selectStudentsNotInGroupTab={this.onChooseStudentNotInGroup}
+                    selectStudentsNotInGroupTab={this.onChooseStudentNotInGroupTab}
                     studentsNotInGroup={this.state.studentsNotInGroup}
                     addNewStudent={this.onAddNewStudentButtonClickHandler}
                 />
@@ -101,7 +96,6 @@ export class GroupPage extends Component {
         const id = this.props.match.params.id;
         const responce = await Axios.get(`api/groups/${id}/users/`);
         const data = await responce.data;
-        console.log(data);
         this.setState({ groupStudents: data });
     }
 }

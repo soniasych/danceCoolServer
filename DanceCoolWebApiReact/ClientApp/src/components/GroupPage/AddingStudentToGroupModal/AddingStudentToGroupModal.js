@@ -5,8 +5,9 @@ import {
     ModalBody,
     ModalFooter
 } from 'reactstrap';
-import { Tabs, Tab } from 'react-bootstrap'
-import { AddNewUserForm } from '../../common/AddNewUserForm'
+import { Tabs, Tab } from 'react-bootstrap';
+import { AddNewUserForm } from '../../common/AddNewUserForm';
+import ReactTable from 'react-table';
 
 
 export class AddingStudentToGroupModal extends Component {
@@ -14,15 +15,27 @@ export class AddingStudentToGroupModal extends Component {
     constructor(props) {
         super(props);
 
+        this.state = {
+            selectedStudent: {},
+            isSelected: false
+        }
+        this.onSelectingStudent = this.onSelectingStudent.bind(this);
+    }
 
+
+
+    onSelectingStudent = (student)=> {
+        this.setState({ selectedStudent: student });
+        console.log(this.state.student);
     }
 
     render() {
+        const data = this.props.studentsNotInGroup;
         return (<Modal
             isOpen={this.props.visible}
             className="modal-dialog modal-lg" >
             <ModalHeader>
-                <h5 >Додати студента до групи</h5>
+                Додати студента до групи
             </ModalHeader>
             <ModalBody>
                 <Tabs onSelect={this.props.selectStudentsNotInGroupTab}>
@@ -30,22 +43,25 @@ export class AddingStudentToGroupModal extends Component {
                         <AddNewUserForm />
                     </Tab>
                     <Tab eventKey="AddExisting" title="Наявні студенти">
-                        <table className="table table-sm">
-                            <thead>
-                                <tr>
-                                    <th>Ім'я</th>
-                                    <th>Прізвище</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {this.props.studentsNotInGroup.map(student => (
-                                    <tr key={student.id} onClick={() => console.log(student)}>
-                                        <td>{student.firstName}</td>
-                                        <td>{student.lastName}</td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
+                        <ReactTable
+                        className="-striped -highlight"
+                        data={data}
+                        columns={[
+                            {
+                                Header: 'Id',
+                                id: "id",
+                                accessor: d => d.id
+                            },{
+                                Header: 'FirstName',
+                                accessor: 'firstName'
+                            },{
+                                Header: 'LastName',
+                                accessor: 'lastName'
+                            },{
+                                Header: 'PhoneNumber',
+                                accessor: 'phoneNumber'
+                            }
+                        ]}/>
                     </Tab>
                 </Tabs>
             </ModalBody>
