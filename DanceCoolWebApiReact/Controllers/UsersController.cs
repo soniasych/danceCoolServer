@@ -72,10 +72,10 @@ namespace DanceCoolWebApiReact.Controllers
         }
 
         [HttpPost]
-        [Route("api/group/{groupId}/user")]
-        public void AddStudentToGroup(int groupId, [FromBody] int studentId)
+        [Route("api/group/{id}/user/")]
+        public void AddStudentToGroup(int id, [FromBody] int studentId)
         {
-            _userService.AddUserToGroup(studentId, groupId);
+            _userService.AddUserToGroup(studentId, id);
         }
 
         //// PUT: api/Users/5

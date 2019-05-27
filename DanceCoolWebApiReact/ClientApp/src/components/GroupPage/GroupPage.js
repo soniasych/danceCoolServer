@@ -72,6 +72,7 @@ export class GroupPage extends Component {
                     selectStudentsNotInGroupTab={this.onChooseStudentNotInGroupTab}
                     studentsNotInGroup={this.state.studentsNotInGroup}
                     addNewStudent={this.onAddNewStudentButtonClickHandler}
+                    groupId={this.props.match.params.id}
                 />
             </div>
         );
