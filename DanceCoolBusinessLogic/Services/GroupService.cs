@@ -79,6 +79,26 @@ namespace DanceCoolBusinessLogic.Services
             return dtos;
         }
 
+        public IEnumerable<LessonDTO> GetLessons()
+        {
+            var lessons = db.Lessons.GetAllLessons();
+
+            var lessonDtos = new List<LessonDTO>();
+
+            foreach (var lessonModel in lessons)
+            {
+                lessonDtos.Add(LessonModelToDTO(lessonModel));
+            }
+            return lessonDtos;
+        }
+
+        private LessonDTO LessonModelToDTO(Lesson lessonModel) => new LessonDTO(
+            lessonModel.Id,
+            lessonModel.Date,
+            lessonModel.Room,
+            lessonModel.Group.ToString());
+        
+
         private GroupDTO GroupModelToGroupDTO(Group groupModel) => new GroupDTO(
                 groupModel.Id,
                 groupModel.Direction.Name,

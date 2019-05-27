@@ -10,15 +10,15 @@ namespace DanceCoolDataAccessLogic.EfStructures.Entities
         public int Id { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime Date { get; set; }
-        [Column(TypeName = "money")]
+        [Column(TypeName = "decimal(18, 0)")]
         public decimal TotalSum { get; set; }
         public int UserSenderId { get; set; }
         public int UserReceiverId { get; set; }
-        public int AbonementId { get; set; }
+        public int AbonnementId { get; set; }
 
-        [ForeignKey("AbonementId")]
+        [ForeignKey("AbonnementId")]
         [InverseProperty("Payments")]
-        public virtual Abonement Abonement { get; set; }
+        public virtual Abonnement Abonnement { get; set; }
         [ForeignKey("UserReceiverId")]
         [InverseProperty("PaymentUserReceivers")]
         public virtual User UserReceiver { get; set; }

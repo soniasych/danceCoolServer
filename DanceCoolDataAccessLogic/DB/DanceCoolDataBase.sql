@@ -335,10 +335,29 @@ CREATE TABLE [dbo].[Lessons]
 (
     [Id] INT NOT NULL PRIMARY KEY IDENTITY(1,1),
     [Date] DATETIME NOT NULL,
-    [Room] INT NOT NULL,
+    [Room] NVARCHAR(50) NOT NULL,
     [GroupId] INT NULL,
     CONSTRAINT FK_Group_Lesson FOREIGN KEY ([GroupId]) REFERENCES [dbo].[Groups]([Id])
 );
+GO
+
+-- Insert rows into table '[Lessons]' in schema '[dbo]'
+INSERT INTO [dbo].[Lessons]
+    ([Date], [Room], [GroupId])
+VALUES
+    ( '2019-05-27 19:00', N'Малий зал', 1),
+    ( '2019-05-24 21:00', N'Великий зал', 3),
+    ( '2019-05-23 21:00', N'Великий зал', 7),
+	( '2019-05-22 19:30', N'Малий зал', 4),
+	( '2019-05-21 20:30', N'Малий зал', 2),
+	( '2019-05-20 20:00', N'Малий зал', 5),
+	( '2019-05-18 19:00', N'Великий зал', 8),
+    ( '2019-05-17 21:00', N'Великий зал', 3),
+    ( '2019-05-16 21:00', N'Малий зал', 4),
+	( '2019-05-15 19:30', N'Малий зал', 6),
+	( '2019-05-14 20:30', N'Великий зал', 7),
+	( '2019-05-13 20:00', N'Малий зал', 2),
+	( '2019-05-12 20:00', N'Малий зал', 6)
 GO
 
 -- Create the table in the specified schema
@@ -346,18 +365,233 @@ CREATE TABLE [dbo].[Attendances]
 (
     [Id] INT NOT NULL PRIMARY KEY IDENTITY(1,1), -- Primary Key column
     [LessonId] INT NOT NULL,
+	[GroupId] INT NOT NULL,
     [PresentStudentId] INT NOT NULL,
     CONSTRAINT FK_Lesson_Attendances FOREIGN KEY ([LessonId]) REFERENCES [dbo].[Lessons]([Id]),
     CONSTRAINT FK_User_Attendances FOREIGN KEY ([PresentStudentId]) REFERENCES [dbo].[Users]([Id])
 );
 GO
 
--- Create a new table called '[Abonements]' in schema '[dbo]'
-CREATE TABLE [dbo].[Abonements]
+-- Insert rows into table '[Attendances]' in schema '[dbo]'
+INSERT INTO [dbo].[Attendances]
+    ([LessonId], [GroupId], [PresentStudentId])
+VALUES
+	--1
+	( 1, 3, 10),
+	( 1, 3, 13),
+	( 1, 3, 16),
+	( 1, 3, 18),
+	( 1, 3, 19),
+	( 1, 3, 22),
+	( 1, 3, 24),
+	( 1, 3, 25),
+	( 1, 3, 28),
+	( 1, 3, 29),
+	( 1, 3, 31),
+	--2
+	( 2, 1, 11),
+	( 2, 1, 12),
+	( 2, 1, 14),
+	( 2, 1, 15),
+	( 2, 1, 17),
+	( 2, 1, 19),
+	( 2, 1, 20),
+	( 2, 1, 23),
+	( 2, 1, 26),
+	( 2, 1, 29),
+	( 2, 1, 30),
+	( 2, 1, 31),
+	--3
+	( 3, 5, 10),
+	( 3, 5, 14),
+	( 3, 5, 16),
+	( 3, 5, 18),
+	( 3, 5, 20),
+	( 3, 5, 21),
+	( 3, 5, 22),
+	( 3, 5, 23),
+	( 3, 5, 24),
+	( 3, 5, 25),
+	( 3, 5, 27),
+	( 3, 5, 28),
+	( 3, 5, 29),
+	( 3, 5, 30),
+	--4
+	( 4, 7, 10),
+	( 4, 7, 11),
+	( 4, 7, 12),
+	( 4, 7, 13),
+	( 4, 7, 17),
+	( 4, 7, 21),
+	( 4, 7, 22),
+	( 4, 7, 24),
+	( 4, 7, 26),
+	( 4, 7, 28),
+	( 4, 7, 29),
+	( 4, 7, 30),
+	--5
+	( 5, 4, 10),
+	( 5, 4, 12),
+	( 5, 4, 13),
+	( 5, 4, 14),
+	( 5, 4, 16),
+	( 5, 4, 17),
+	( 5, 4, 24),
+	( 5, 4, 25),
+	( 5, 4, 26),
+	( 5, 4, 28),
+	( 5, 4, 29),
+	( 5, 4, 30),
+	( 5, 4, 31),
+	--6
+	( 6, 3, 10),
+	( 6, 3, 11),
+	( 6, 3, 12),
+	( 6, 3, 13),
+	( 6, 3, 14),
+	( 6, 3, 15),
+	( 6, 3, 16),
+	( 6, 3, 17),
+	( 6, 3, 18),
+	( 6, 3, 19),
+	( 6, 3, 20),
+	( 6, 3, 22),
+	( 6, 3, 25),
+	( 6, 3, 26),
+	( 6, 3, 28),
+	( 6, 3, 31),
+	--7
+	( 7, 1, 10),
+	( 7, 1, 13),
+	( 7, 1, 14),
+	( 7, 1, 15),
+	( 7, 1, 18),
+	( 7, 1, 20),
+	( 7, 1, 21),
+	( 7, 1, 25),
+	( 7, 1, 26),
+	( 7, 1, 27),
+	( 7, 1, 28),
+	( 7, 1, 29),
+	( 7, 1, 30),
+	--8
+	( 8, 8, 12),
+	( 8, 8, 13),
+	( 8, 8, 16),
+	( 8, 8, 17),
+	( 8, 8, 18),
+	( 8, 8, 19),
+	( 8, 8, 20),
+	( 8, 8, 22),
+	( 8, 8, 23),
+	( 8, 8, 24),
+	( 8, 8, 25),
+	( 8, 8, 28),
+	( 8, 8, 29),
+	( 8, 8, 31),
+	--9
+	( 9, 2, 11),
+	( 9, 2, 14),
+	( 9, 2, 15),
+	( 9, 2, 18),
+	( 9, 2, 21),
+	( 9, 2, 22),
+	( 9, 2, 23),
+	( 9, 2, 25),
+	( 9, 2, 28),
+	( 9, 2, 29),
+	( 9, 2, 30),
+	--10
+	( 10, 6, 10),
+	( 10, 6, 12),
+	( 10, 6, 13),
+	( 10, 6, 15),
+	( 10, 6, 16),
+	( 10, 6, 17),
+	( 10, 6, 20),
+	( 10, 6, 22),
+	( 10, 6, 24),
+	( 10, 6, 25),
+	( 10, 6, 26),
+	( 10, 6, 27),
+	( 10, 6, 30),
+	( 10, 6, 31),
+	--11
+	( 11, 4, 10),
+	( 11, 4, 11),
+	( 11, 4, 12),
+	( 11, 4, 13),
+	( 11, 4, 14),
+	( 11, 4, 15),
+	( 11, 4, 16),
+	( 11, 4, 17),
+	( 11, 4, 18),
+	( 11, 4, 19),
+	( 11, 4, 20),
+	( 11, 4, 21),
+	( 11, 4, 22),
+	( 11, 4, 23),
+	( 11, 4, 24),
+	( 11, 4, 25),
+	( 11, 4, 26),
+	( 11, 4, 27),
+	( 11, 4, 28),
+	( 11, 4, 29),
+	( 11, 4, 30),
+	( 11, 4, 31),
+	--12
+	( 12, 5, 10),
+	( 12, 5, 11),
+	( 12, 5, 12),
+	( 12, 5, 13),
+	( 12, 5, 15),
+	( 12, 5, 17),
+	( 12, 5, 19),
+	( 12, 5, 20),
+	( 12, 5, 21),
+	( 12, 5, 23),
+	( 12, 5, 26),
+	( 12, 5, 27),
+	( 12, 5, 30),
+	( 12, 5, 31),
+	--13
+	( 13, 7, 10),
+	( 13, 7, 11),
+	( 13, 7, 12),
+	( 13, 7, 14),
+	( 13, 7, 16),
+	( 13, 7, 18),
+	( 13, 7, 21),
+	( 13, 7, 22),
+	( 13, 7, 24),
+	( 13, 7, 27),
+	( 13, 7, 29),
+	( 13, 7, 30),
+	( 13, 7, 31)
+
+GO
+
+-- Create a new table called '[Abonnements]' in schema '[dbo]'
+CREATE TABLE [dbo].[Abonnements]
 (
     [Id] INT NOT NULL PRIMARY KEY,
-    [AbonementName] NVARCHAR(50) NOT NULL
+    [AbonnementName] NVARCHAR(50) NOT NULL,
+	[Price] DECIMAL NOT NULL
 );
+GO
+
+-- Insert rows into table 'Abonnements' in schema '[dbo]'
+INSERT INTO [dbo].[Abonnements]
+    ( [AbonnementName], [Price])
+VALUES
+	( N'разовий одинарний', 60),
+	( N'разовий парий', 50),
+    ( N'4-разовий одинарний', 200),
+	( N'4-разовий парий', 150),
+    ( N'8-разовий одинарний', 300),
+	( N'8-разовий парний', 250),
+    ( N'індивідуальний одинарний', 250),
+    ( N'індивідуальний парний', 175)
 GO
 
 -- Create a new table called '[Payments]' in schema '[dbo]'
@@ -365,12 +599,12 @@ CREATE TABLE [dbo].[Payments]
 (
     [Id] INT NOT NULL PRIMARY KEY IDENTITY(1,1),
     [Date] DATETIME NOT NULL,
-    [TotalSum] MONEY NOT NULL,
+    [TotalSum] DECIMAL NOT NULL,
     [UserSenderId] INT NOT NULL,
     [UserReceiverId] INT NOT NULL,
-    [AbonementId] INT NOT NULL,
+    [AbonnementId] INT NOT NULL,
     CONSTRAINT FK_UserSender_Payment FOREIGN KEY ([UserSenderId]) REFERENCES [dbo].[Users]([Id]),
     CONSTRAINT FK_UserReceiver_Payment FOREIGN KEY ([UserReceiverId]) REFERENCES [dbo].[Users]([Id]),
-    CONSTRAINT FK_Abonement_Payment FOREIGN KEY ([AbonementId]) REFERENCES [dbo].[Abonements]([Id])
+    CONSTRAINT FK_Abonement_Payment FOREIGN KEY ([AbonnementId]) REFERENCES [dbo].[Abonnements]([Id])
 );
 GO

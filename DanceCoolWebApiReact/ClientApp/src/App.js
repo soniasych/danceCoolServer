@@ -6,6 +6,7 @@ import { Groups } from './components/Main-Page/Group/Groups';
 import { GroupPage } from './components/GroupPage/GroupPage'
 import { ManagingUsersPage } from './components/UserPage/ManagingUsersPage';
 import { AdminPage } from './components/AdminPage';
+import { AttendancePage } from './components/AttendancePage/Attendances';
 
 export default class App extends Component {
   static displayName = App.name;
@@ -19,6 +20,7 @@ export default class App extends Component {
         <Route exact path='/groups/:id' component={GroupPage} />
         <Route exact path='/students/' component={ManagingUsersPage} />
         <Route exact path='/students/:id' component={ManagingUsersPage} />
+        <Route exact path='/attendances' component={AttendancePage} />
       </Layout>
     );
   }

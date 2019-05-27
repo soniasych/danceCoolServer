@@ -2,9 +2,10 @@
 using System.Threading.Tasks;
 using DanceCoolDataAccessLogic.EfStructures.Context;
 using DanceCoolDataAccessLogic.EfStructures.Entities;
+using DanceCoolDataAccessLogic.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace DanceCoolDataAccessLogic.Repositories.Interfaces
+namespace DanceCoolDataAccessLogic.Repositories
 {
     class RoleRepository : BaseRepository<Role>, IRoleRepository
     {
