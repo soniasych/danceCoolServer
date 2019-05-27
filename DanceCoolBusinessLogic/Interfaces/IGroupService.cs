@@ -15,5 +15,7 @@ namespace DanceCoolBusinessLogic.Services
         void ChangeGroupLevel(int groupId, int targetLevelId);
         IEnumerable<UserDTO> GetStudentsNotInCurrentGroup(int groupId);
         IEnumerable<LessonDTO> GetLessons();
+        IEnumerable<AttendanceDTO> GetPresentStudentsOnLesson(int lessonId);
+
     }
 }

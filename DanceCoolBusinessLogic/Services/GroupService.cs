@@ -97,7 +97,29 @@ namespace DanceCoolBusinessLogic.Services
             lessonModel.Date,
             lessonModel.Room,
             lessonModel.Group.ToString());
-        
+
+        private AttendanceDTO AttendanceModelToDTO(Attendance attendanceModel) => new AttendanceDTO(
+            attendanceModel.Id,
+            attendanceModel.Lesson.Id.ToString(),
+            attendanceModel.PresentStudent.Id);
+
+        public IEnumerable<AttendanceDTO> GetPresentStudentsOnLesson(int lessonId)
+        {
+            var attendance = db.Attendances.GetAllPresentStudentsOnLesson(lessonId);
+
+            if (attendance == null)
+            {
+                return null;
+            }
+
+            var attendanceDtos = new List<AttendanceDTO>();
+
+            foreach (var attendanceModel in attendance)
+            {
+                attendanceDtos.Add(AttendanceModelToDTO(attendanceModel));
+            }
+            return attendanceDtos;
+        }
 
         private GroupDTO GroupModelToGroupDTO(Group groupModel) => new GroupDTO(
                 groupModel.Id,

@@ -9,5 +9,6 @@ namespace DanceCoolDataAccessLogic.Repositories.Interfaces
     {
         IEnumerable<Attendance> GetAllAttendances();
         Attendance GetAttendanceById(int id);
+        IEnumerable<Attendance> GetAllPresentStudentsOnLesson(int lessonId);
     }
 }
