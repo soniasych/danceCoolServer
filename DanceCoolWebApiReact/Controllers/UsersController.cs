@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Net.Http;
 using DanceCoolBusinessLogic.Services;
 using DanceCoolDataAccessLogic.EfStructures.Entities;
 using DanceCoolDTO;
@@ -72,10 +73,14 @@ namespace DanceCoolWebApiReact.Controllers
         }
 
         [HttpPost]
-        [Route("api/group/{id}/user/")]
-        public void AddStudentToGroup(int id, [FromBody] int studentId)
+        [Route("api/group/{groupId}/user/")]
+        public void AddStudentToGroup([FromBody] NewUserGroupDTO newUserGroupDTO)
         {
-            _userService.AddUserToGroup(studentId, id);
+            if (newUserGroupDTO.UserId > 0 && newUserGroupDTO.GroupId > 0)
+            {
+                _userService.AddUserToGroup(newUserGroupDTO.UserId, newUserGroupDTO.GroupId);
+                Ok();
+            }
         }
 
         //// PUT: api/Users/5

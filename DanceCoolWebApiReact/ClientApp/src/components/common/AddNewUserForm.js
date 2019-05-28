@@ -26,7 +26,7 @@ export class AddNewUserForm extends Component {
     onLastNameInputChanged = event => {
         this.setState({ studentLastName: event.target.value });
         console.log(this.state.studentLastName);
-        
+
     }
 
     onPhonNumberInputChanged = event => {
@@ -45,8 +45,8 @@ export class AddNewUserForm extends Component {
             lastName: this.state.studentLastName,
             phoneNumber: this.state.studentPhoneNumber
         };
-        Axios.post('api/users/', addedStudent).then(console.log(addedStudent));       
-        
+        Axios.post('api/users/', addedStudent).then(console.log(addedStudent));
+
     }
 
     render() {

@@ -14,10 +14,19 @@ export class ExistingSudentsTable extends Component {
         this.addingStudentToGroup = this.addingStudentToGroup.bind(this);
     }
 
-    addingStudentToGroup(studentId) {
-        const id = this.props.groupId;
-        Axios.post(`api/group/${id}/user/`, studentId)
-            .then(response => console.log(studentId));
+    addingStudentToGroup = (event) => {
+        let studentId = this.state.selectedStudentId
+        const groupid = this.props.groupId;
+
+        let studentGroup = {
+            studentId: studentId,
+            groupid: groupid
+        }
+
+        console.log(this.state.selectedStudentId);
+        Axios.post(`api/group/${groupid}/user/`, studentGroup)
+            .then(response => console.log(this.state.selectedStudentId));
+        event.preventDefault();
     }
 
     onRowClick(studentId, student) {
@@ -61,13 +70,12 @@ export class ExistingSudentsTable extends Component {
                     }
                 </tbody>
             </table>
-            <br/>
+            <br />
             <button
-            onClick={() => {this.addingStudentToGroup(this.state.selectedStudentId)}}
-            type="button" 
-            disabled={!this.state.isStudentSelected} 
-            className="btn btn-success">Додати студента</button>
-            <button onClick={()=>console.log(this.props.groupId)}> la la land</button>
+                onClick={this.addingStudentToGroup}
+                type="button"
+                disabled={!this.state.isStudentSelected}
+                className="btn btn-success">Додати студента</button>
         </div>);
     }
 }
