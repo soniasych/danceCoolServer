@@ -30,10 +30,10 @@ namespace DanceCoolDataAccessLogic.Repositories
                 .Where(group => group.GroupId == groupId).ToList();
         }
 
-        public IEnumerable<Lesson> GetAllPresentStudentsOnLesson(int lessonId)
-        {
-            return Context.Lessons
-                .Include(l => l.Attendances);
-        }
+        //public IEnumerable<Lesson> GetAllPresentStudentsOnLesson(int lessonId)
+        //{
+        //    return Context.Lessons
+        //        .Include(l => l.Attendances);
+        //}
     }
 }

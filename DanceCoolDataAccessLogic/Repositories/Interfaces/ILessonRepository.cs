@@ -11,6 +11,6 @@ namespace DanceCoolDataAccessLogic.Repositories.Interfaces
         IEnumerable<Lesson> GetAllLessons();
         Lesson GetLessonById(int id);
         IEnumerable<Lesson> GetLessonByGroupId(int groupId);
-        IEnumerable<Lesson> GetAllPresentStudentsOnLesson(int lessonId);
+        //IEnumerable<Lesson> GetAllPresentStudentsOnLesson(int lessonId);
     }
 }
