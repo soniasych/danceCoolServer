@@ -9,7 +9,7 @@ namespace DanceCoolDataAccessLogic.Repositories
 {
     public class GroupRepository : BaseRepository<Group>, IGroupRepository
     {
-        public GroupRepository(DanceCoolContext context) : base(context)
+        public GroupRepository(DanceСoolContext context) : base(context)
         {
         }
 

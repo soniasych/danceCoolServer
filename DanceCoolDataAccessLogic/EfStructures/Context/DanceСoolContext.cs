@@ -1,11 +1,9 @@
-﻿using System;
-using DanceCoolDataAccessLogic.EfStructures.Entities;
+﻿using DanceCoolDataAccessLogic.EfStructures.Entities;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace DanceCoolDataAccessLogic.EfStructures.Context
 {
-    public partial class DanceCoolContext : DbContext
+    public partial class DanceСoolContext : DbContext
     {
         public virtual DbSet<Abonnement> Abonnements { get; set; }
         public virtual DbSet<Attendance> Attendances { get; set; }
@@ -18,9 +16,8 @@ namespace DanceCoolDataAccessLogic.EfStructures.Context
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserCredential> UserCredentials { get; set; }
         public virtual DbSet<UserGroup> UserGroups { get; set; }
-        public virtual DbSet<UserRole> UserRoles { get; set; }
 
-        public DanceCoolContext(DbContextOptions<DanceCoolContext> options) : base(options)
+        public DanceСoolContext(DbContextOptions<DanceСoolContext> options) : base(options)
         {
         }
 
@@ -28,8 +25,7 @@ namespace DanceCoolDataAccessLogic.EfStructures.Context
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Data Source=DESKTOP-MSSKMVD\\SQLEXPRESS;Initial Catalog=DanceCool;Integrated Security=True");
+                optionsBuilder.UseSqlServer("Data Source=XPS15\\SQLEXPRESS;Initial Catalog=DanceCool;Integrated Security=True");
             }
         }
 
@@ -109,27 +105,33 @@ namespace DanceCoolDataAccessLogic.EfStructures.Context
             modelBuilder.Entity<User>(entity =>
             {
                 entity.HasIndex(e => e.PhoneNumber)
-                    .HasName("UQ__Users__85FB4E38455863B8")
+                    .HasName("UQ__Users__85FB4E38B4B26030")
                     .IsUnique();
 
                 entity.Property(e => e.PhoneNumber).IsUnicode(false);
+
+                entity.HasOne(d => d.Role)
+                    .WithMany(p => p.Users)
+                    .HasForeignKey(d => d.RoleId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_User_UserCredentials");
             });
 
             modelBuilder.Entity<UserCredential>(entity =>
             {
                 entity.HasIndex(e => e.Email)
-                    .HasName("UQ__UserCred__A9D10534A65A6BA0")
+                    .HasName("UQ__UserCred__A9D10534290A7C03")
                     .IsUnique();
 
                 entity.HasIndex(e => e.UserId)
-                    .HasName("UQ__UserCred__1788CC4DBC863033")
+                    .HasName("UQ__UserCred__1788CC4DB0055F80")
                     .IsUnique();
 
                 entity.HasOne(d => d.User)
                     .WithOne(p => p.UserCredential)
                     .HasForeignKey<UserCredential>(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_User_UserCredentials");
+                    .HasConstraintName("FK_User_Roles");
             });
 
             modelBuilder.Entity<UserGroup>(entity =>
@@ -145,21 +147,6 @@ namespace DanceCoolDataAccessLogic.EfStructures.Context
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_User_UserGroup");
-            });
-
-            modelBuilder.Entity<UserRole>(entity =>
-            {
-                entity.HasOne(d => d.Role)
-                    .WithMany(p => p.UserRoles)
-                    .HasForeignKey(d => d.RoleId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Role_UserRole");
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.UserRoles)
-                    .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_User_UserRole");
             });
 
             OnModelCreatingExt(modelBuilder);

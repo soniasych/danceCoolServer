@@ -16,15 +16,15 @@ export class ExistingSudentsTable extends Component {
 
     addingStudentToGroup = (event) => {
         let studentId = this.state.selectedStudentId
-        const groupid = this.props.groupId;
+        const groupId = this.props.groupId;
 
         let studentGroup = {
-            studentId: studentId,
-            groupid: groupid
+            userId: studentId,
+            groupid: groupId
         }
 
         console.log(this.state.selectedStudentId);
-        Axios.post(`api/group/${groupid}/user/`, studentGroup)
+        Axios.post(`api/group/${groupId}/user/`, studentGroup)
             .then(response => console.log(this.state.selectedStudentId));
         event.preventDefault();
     }

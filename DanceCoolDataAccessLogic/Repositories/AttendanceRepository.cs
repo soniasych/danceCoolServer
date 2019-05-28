@@ -11,7 +11,7 @@ namespace DanceCoolDataAccessLogic.Repositories
 {
     public class AttendanceRepository : BaseRepository<Attendance>, IAttendanceRepository
     {
-        public AttendanceRepository(DanceCoolContext context) : base(context)
+        public AttendanceRepository(DanceСoolContext context) : base(context)
         {
         }
 

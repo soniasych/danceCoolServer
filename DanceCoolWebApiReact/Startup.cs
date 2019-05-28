@@ -23,7 +23,7 @@ namespace DanceCoolWebApiReact
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<DanceCoolContext>
+            services.AddDbContext<DanceÑoolContext>
                 (opt => opt.UseSqlServer(Configuration["Data:CommandAPIConnection:ConnectionString"]));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddTransient<IUnitOfWork, UnitOfWork>();

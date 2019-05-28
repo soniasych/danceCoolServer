@@ -8,7 +8,7 @@ namespace DanceCoolDataAccessLogic.Repositories
 {
     class UserCredentialsRepository : BaseRepository<UserCredential>, IUserCredentialsRepository
     {
-        public UserCredentialsRepository(DanceCoolContext context) : base(context)
+        public UserCredentialsRepository(DanceСoolContext context) : base(context)
         {
         }
 

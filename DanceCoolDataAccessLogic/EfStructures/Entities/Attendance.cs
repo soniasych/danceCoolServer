@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DanceCoolDataAccessLogic.EfStructures.Entities
 {
@@ -9,7 +6,6 @@ namespace DanceCoolDataAccessLogic.EfStructures.Entities
     {
         public int Id { get; set; }
         public int LessonId { get; set; }
-        public int GroupId { get; set; }
         public int PresentStudentId { get; set; }
 
         [ForeignKey("LessonId")]
