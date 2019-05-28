@@ -30,24 +30,27 @@ namespace DanceCoolDataAccessLogic.Repositories
 
         public IEnumerable<User> GetStudentsByGroupId(int groupId)
         {
-            var students = GetStudents();
-            return students
-                .Where(user => user.UserGroups.Any(ug => ug.GroupId == groupId));
+            var students = Context.Users
+                .Where(user => user.UserRoles.Any(ur => ur.RoleId == 1) && user.UserGroups.Any(ug => ug.GroupId == groupId));
+            return students;
         }
 
         public IEnumerable<User> GetStudents()
         {
+
             var students = Context.Users
-                .Where(user => user.UserRoles.Any(ur => ur.RoleId == 1)).Include(user => user.UserGroups);
+                .Where(user => user.UserRoles.Any(ur => ur.RoleId == 1));
             return students;
         }
 
         public IEnumerable<User> GetStudentsNotInGroup(int groupId)
         {
-            var students = GetStudents();
-            return students.Where(user => user.UserGroups.
-                    Any(ug => ug.GroupId != groupId) 
-                    || user.UserGroups.Count == 0);
+            var students = Context.Users
+                .Where(user => user.UserRoles.
+                    Any(ur => ur.RoleId == 1) 
+                        && (user.UserGroups.Any(ug => ug.GroupId != groupId) 
+                           || user.UserGroups.Count == 0));
+            return students;
         }
 
         public IEnumerable<User> GetMentors()

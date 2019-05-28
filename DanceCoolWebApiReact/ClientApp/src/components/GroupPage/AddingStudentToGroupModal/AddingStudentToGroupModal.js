@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {
     Modal,
     ModalHeader,
@@ -7,69 +7,32 @@ import {
 } from 'reactstrap';
 import { Tabs, Tab } from 'react-bootstrap';
 import { AddNewUserForm } from '../../common/AddNewUserForm';
-import ReactTable from 'react-table';
+import ExistingSudentsTable from './ExistingSudentsTable';
 
-
-export class AddingStudentToGroupModal extends Component {
-
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            selectedStudent: {},
-            isSelected: false
-        }
-        this.onSelectingStudent = this.onSelectingStudent.bind(this);
-    }
-
-
-
-    onSelectingStudent = (student)=> {
-        this.setState({ selectedStudent: student });
-        console.log(this.state.student);
-    }
-
-    render() {
-        const data = this.props.studentsNotInGroup;
-        return (<Modal
-            isOpen={this.props.visible}
-            className="modal-dialog modal-lg" >
-            <ModalHeader>
-                Додати студента до групи
+const AddingStudentToGroupModal = props => {
+        let groupId = props.groupId;
+    return (<Modal
+        isOpen={props.visible}
+        className="modal-dialog modal-lg" >
+        <ModalHeader>
+            Додати студента до групи
             </ModalHeader>
-            <ModalBody>
-                <Tabs onSelect={this.props.selectStudentsNotInGroupTab}>
-                    <Tab eventKey="AddNew" title="Додати нового">
-                        <AddNewUserForm />
-                    </Tab>
-                    <Tab eventKey="AddExisting" title="Наявні студенти">
-                        <ReactTable
-                        className="-striped -highlight"
-                        data={data}
-                        columns={[
-                            {
-                                Header: 'Id',
-                                id: "id",
-                                accessor: d => d.id
-                            },{
-                                Header: 'FirstName',
-                                accessor: 'firstName'
-                            },{
-                                Header: 'LastName',
-                                accessor: 'lastName'
-                            },{
-                                Header: 'PhoneNumber',
-                                accessor: 'phoneNumber'
-                            }
-                        ]}/>
-                    </Tab>
-                </Tabs>
-            </ModalBody>
-            <ModalFooter>
-                <button onClick={this.props.close} className="btn btn-primary">Close</button>
-            </ModalFooter>
-        </Modal>);
-    }
+        <ModalBody>
+            <Tabs onSelect={props.selectStudentsNotInGroupTab}>
+                <Tab eventKey="NewStudentForm" title="Додати нового">
+                    <AddNewUserForm />
+                </Tab>
+                <Tab eventKey="ExistingStudents" title="Наявні студенти">
+                    <ExistingSudentsTable existingStudents={props.studentsNotInGroup}
+                    groupId={groupId}
+                    />
+                </Tab>
+            </Tabs>
+        </ModalBody>
+        <ModalFooter>
+            <button onClick={props.close} className="btn btn-primary">Закрити</button>
+        </ModalFooter>
+    </Modal>);
 }
 
 export default AddingStudentToGroupModal;

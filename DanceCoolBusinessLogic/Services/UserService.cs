@@ -23,6 +23,7 @@ namespace DanceCoolBusinessLogic.Services
         public void AddUserToGroup(int userId, int groupId)
         {
             db.UserGroups.AddUserToGroup(userId, groupId);
+            db.Save();
         }
 
         public IEnumerable<User> GetAllUserModels()

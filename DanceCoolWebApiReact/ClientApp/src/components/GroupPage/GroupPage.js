@@ -12,7 +12,6 @@ export class GroupPage extends Component {
         this.state = {
             student: {},
             group: {},
-            selectedStudents: [],
             groupStudents: [],
             studentsNotInGroup: [],
             addingStudentToGroupModalVisible: false
@@ -36,7 +35,7 @@ export class GroupPage extends Component {
         }
     }
     onChooseStudentNotInGroupTab = (key) => {
-        if (key === 'AddExisting') {
+        if (key === 'ExistingStudents') {
             this.populateStudentsNotInCurrentGroup();
         }
     }
@@ -73,6 +72,7 @@ export class GroupPage extends Component {
                     selectStudentsNotInGroupTab={this.onChooseStudentNotInGroupTab}
                     studentsNotInGroup={this.state.studentsNotInGroup}
                     addNewStudent={this.onAddNewStudentButtonClickHandler}
+                    groupId={this.props.match.params.id}
                 />
             </div>
         );
