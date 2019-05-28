@@ -1,13 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DanceCoolDataAccessLogic.EfStructures.Entities
 {
-    [Table("Abonements")]
-    public partial class Abonement
+    public partial class Abonnement
     {
-        public Abonement()
+        public Abonnement()
         {
             Payments = new HashSet<Payment>();
         }
@@ -15,9 +15,11 @@ namespace DanceCoolDataAccessLogic.EfStructures.Entities
         public int Id { get; set; }
         [Required]
         [StringLength(50)]
-        public string AbonementName { get; set; }
+        public string AbonnementName { get; set; }
+        [Column(TypeName = "decimal(18, 0)")]
+        public decimal Price { get; set; }
 
-        [InverseProperty("Abonement")]
+        [InverseProperty("Abonnement")]
         public virtual ICollection<Payment> Payments { get; set; }
     }
 }

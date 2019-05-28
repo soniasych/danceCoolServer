@@ -13,6 +13,8 @@ namespace DanceCoolDataAccessLogic.UnitOfWork
         IUserRoleRepository UserRoles { get; }
         IUserRepository Users { get; }
         IUserGroupRepository UserGroups { get; }
+        ILessonRepository Lessons { get; }
+        IAttendanceRepository Attendances { get; }
 
         void Save();
     }

@@ -1,4 +1,5 @@
 "Server=ARCH;Database=DanceCool;Trusted_Connection=True"
 "Server=XPS15\\SQLEXPRESS;Database=DanceCool;Trusted_Connection=True"
+"Server=DESKTOP-MSSKMVD\\SQLEXPRESS;Database=DanceCool;Trusted_Connection=True"
 
 dotnet ef dbcontext scaffold "Server=ARCH;Database=DanceCool;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -d -c DanceCoolContext -o EfStructures\Entities --force

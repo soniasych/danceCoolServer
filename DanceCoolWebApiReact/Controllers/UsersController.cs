@@ -12,7 +12,6 @@ namespace DanceCoolWebApiReact.Controllers
     {
         private IUserService _userService;
 
-
         public UsersController(IUserService userService)
         {
             _userService = userService;
