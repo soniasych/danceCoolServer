@@ -15,10 +15,10 @@ namespace DanceCoolDataAccessLogic.EfStructures.Entities
             PaymentUserReceivers = new HashSet<Payment>();
             PaymentUserSenders = new HashSet<Payment>();
             UserGroups = new HashSet<UserGroup>();
-            UserRoles = new HashSet<UserRole>();
         }
 
         public int Id { get; set; }
+        public int RoleId { get; set; }
         [Required]
         [StringLength(512)]
         public string FirstName { get; set; }
@@ -28,6 +28,9 @@ namespace DanceCoolDataAccessLogic.EfStructures.Entities
         [StringLength(17)]
         public string PhoneNumber { get; set; }
 
+        [ForeignKey("RoleId")]
+        [InverseProperty("Users")]
+        public virtual Role Role { get; set; }
         [InverseProperty("User")]
         public virtual UserCredential UserCredential { get; set; }
         [InverseProperty("PresentStudent")]
@@ -42,7 +45,5 @@ namespace DanceCoolDataAccessLogic.EfStructures.Entities
         public virtual ICollection<Payment> PaymentUserSenders { get; set; }
         [InverseProperty("User")]
         public virtual ICollection<UserGroup> UserGroups { get; set; }
-        [InverseProperty("User")]
-        public virtual ICollection<UserRole> UserRoles { get; set; }
     }
 }

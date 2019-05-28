@@ -6,7 +6,7 @@ namespace DanceCoolDataAccessLogic.UnitOfWork
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private readonly DanceCoolContext _context;
+        private readonly DanceСoolContext _context;
         private bool disposed;
 
         private IUserRepository users;
@@ -15,12 +15,11 @@ namespace DanceCoolDataAccessLogic.UnitOfWork
         private IRoleRepository roles;
         private ISkillLevelRepository skillLevels;
         private IUserCredentialsRepository userCredentials;
-        private IUserRoleRepository userRoles;
         private IUserGroupRepository userGroups;
         private ILessonRepository lessons;
         private IAttendanceRepository attendances;
 
-        public UnitOfWork(DanceCoolContext context)
+        public UnitOfWork(DanceСoolContext context)
         {
             this._context = context;
             disposed = false;
@@ -42,10 +41,7 @@ namespace DanceCoolDataAccessLogic.UnitOfWork
             skillLevels ?? (skillLevels = new SkillLevelRepository(_context));
 
         public IUserCredentialsRepository UserCredentials =>
-            userCredentials ?? (userCredentials = new UserCredentialsRepository(_context));
-
-        public IUserRoleRepository UserRoles => 
-            userRoles ?? (userRoles = new UserRoleRepository(_context));
+            userCredentials ?? (userCredentials = new UserCredentialsRepository(_context));        
 
         public IUserGroupRepository UserGroups => 
             userGroups ?? (userGroups = new UserGroupRepository(_context));

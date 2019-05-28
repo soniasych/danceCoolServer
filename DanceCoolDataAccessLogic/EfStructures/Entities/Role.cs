@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -9,7 +8,7 @@ namespace DanceCoolDataAccessLogic.EfStructures.Entities
     {
         public Role()
         {
-            UserRoles = new HashSet<UserRole>();
+            Users = new HashSet<User>();
         }
 
         public int Id { get; set; }
@@ -18,6 +17,6 @@ namespace DanceCoolDataAccessLogic.EfStructures.Entities
         public string RoleName { get; set; }
 
         [InverseProperty("Role")]
-        public virtual ICollection<UserRole> UserRoles { get; set; }
+        public virtual ICollection<User> Users { get; set; }
     }
 }

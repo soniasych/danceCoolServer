@@ -6,7 +6,7 @@ namespace DanceCoolDataAccessLogic.Repositories
 {
     class UserGroupRepository : BaseRepository<UserGroup>, IUserGroupRepository 
     {
-        public UserGroupRepository(DanceCoolContext context) : base(context)
+        public UserGroupRepository(DanceСoolContext context) : base(context)
         {
         }
 

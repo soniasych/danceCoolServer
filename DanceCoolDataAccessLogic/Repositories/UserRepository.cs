@@ -9,7 +9,7 @@ namespace DanceCoolDataAccessLogic.Repositories
 {
     public class UserRepository : BaseRepository<User>, IUserRepository
     {
-        public UserRepository(DanceCoolContext context) : base(context)
+        public UserRepository(DanceСoolContext context) : base(context)
         {
         }
 
@@ -28,35 +28,37 @@ namespace DanceCoolDataAccessLogic.Repositories
             return Context.Users.Find(userId);
         }
 
-        public IEnumerable<User> GetStudentsByGroupId(int groupId)
-        {
-            var students = Context.Users
-                .Where(user => user.UserRoles.Any(ur => ur.RoleId == 1) && user.UserGroups.Any(ug => ug.GroupId == groupId));
-            return students;
-        }
-
         public IEnumerable<User> GetStudents()
         {
+            return Context.Users.
+                Include(user => user.Role)
+                .Where(user => user.RoleId == 1).ToList();
+        }
 
-            var students = Context.Users
-                .Where(user => user.UserRoles.Any(ur => ur.RoleId == 1));
-            return students;
+        public IEnumerable<User> GetStudentsByGroupId(int groupId)
+        {
+            var groupStudents = Context.Users
+                .Include(user => user.Role)
+                .Include(user => user.UserGroups).ThenInclude(ug => ug.Group)
+                .Where(user => user.RoleId == 1 && user.UserGroups.Any(ug => ug.GroupId == groupId))
+                .ToList();
+
+            return groupStudents;
         }
 
         public IEnumerable<User> GetStudentsNotInGroup(int groupId)
         {
-            var students = Context.Users
-                .Where(user => user.UserRoles.
-                    Any(ur => ur.RoleId == 1) 
-                        && (user.UserGroups.Any(ug => ug.GroupId != groupId) 
-                           || user.UserGroups.Count == 0));
-            return students;
+            var group = Context.Groups.Find(groupId);
+            int[] engagedStudentsIds = GetStudentsByGroupId(groupId).Select(student => student.Id).ToArray();
+            return Context.Users.Include(user => user.Role)
+                .Where(user => !engagedStudentsIds.Contains(user.Id) && user.RoleId == 1);
         }
 
         public IEnumerable<User> GetMentors()
         {
-            return Context.Users.Where(user => user.UserRoles.
-                    Any(ur => ur.RoleId == 2));
+            return null;
+            //return Context.Users.Where(user => user.UserRoles.
+            //        Any(ur => ur.RoleId == 2));
         }
 
         public IEnumerable<User> Search(string key)
