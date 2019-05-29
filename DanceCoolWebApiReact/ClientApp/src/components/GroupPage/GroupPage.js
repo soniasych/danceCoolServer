@@ -36,7 +36,9 @@ export class GroupPage extends Component {
     }
     onChooseStudentNotInGroupTab = (key) => {
         if (key === 'ExistingStudents') {
-            this.populateStudentsNotInCurrentGroup();
+            if (this.state.studentsNotInGroup.length < 1) {
+                this.populateStudentsNotInCurrentGroup();
+            }
         }
     }
 
