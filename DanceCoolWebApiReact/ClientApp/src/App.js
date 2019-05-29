@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router';
 import { Layout } from './components/Layout';
-import { Home } from './components/Main-Page/Home';
+import { Home } from './Home';
 import { Groups } from './components/Main-Page/Group/Groups';
 import { GroupPage } from './components/GroupPage/GroupPage'
 import { ManagingUsersPage } from './components/UserPage/ManagingUsersPage';
