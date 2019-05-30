@@ -299,7 +299,7 @@ CREATE TABLE [dbo].[Lessons]
 (
     [Id] INT NOT NULL PRIMARY KEY IDENTITY(1,1),
     [Date] DATETIME NOT NULL,
-    [Room] INT NOT NULL,
+    [Room] NVARCHAR(1024) NOT NULL,
     [GroupId] INT NULL,
     CONSTRAINT FK_Group_Lesson FOREIGN KEY ([GroupId]) REFERENCES [dbo].[Groups]([Id])
 );

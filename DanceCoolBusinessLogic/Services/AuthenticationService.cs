@@ -8,7 +8,7 @@ using DanceCoolDTO;
 
 namespace DanceCoolBusinessLogic.Services
 {
-    class AuthenticationService : BaseService, IAuthenticationService
+    public class AuthenticationService : BaseService, IAuthenticationService
     {
         public AuthenticationService(IUnitOfWork db) : base(db)
         {
@@ -23,7 +23,7 @@ namespace DanceCoolBusinessLogic.Services
                 throw new AppException($"Username \\ {newCredentials.Email} \\ is already taken");
 
             byte[] passwordHash, passwordSalt;
-            int existingUserId = -1;
+            int existingUserId;
 
             CreatePasswordHash(password, out passwordHash, out passwordSalt);
 
@@ -55,13 +55,7 @@ namespace DanceCoolBusinessLogic.Services
             return formedCredentials;
         }
 
-
-
-        private bool AddCredentialsToExistingUser(int existingUserId ,UserCredential credential)
-        {
-            db.UserCredentials.AddEntity(new UserCredential());
-            return true;
-        }
+        
 
         private static void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
         {
@@ -97,7 +91,6 @@ namespace DanceCoolBusinessLogic.Services
                 }
             }
             return true;
-        }        
-        
+        }
     }
 }

@@ -3,7 +3,7 @@ using DanceCoolDTO;
 
 namespace DanceCoolBusinessLogic.Interfaces
 {
-    interface IAuthenticationService
+    public interface IAuthenticationService
     {
         UserCredential RegisterUser(RegistrationUserIdentityDto newCredentials, string password);
     }

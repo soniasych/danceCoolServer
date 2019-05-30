@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using DanceCoolDTO;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DanceCoolWebApiReact.Controllers
@@ -8,5 +9,11 @@ namespace DanceCoolWebApiReact.Controllers
     [ApiController]
     public class AuthenticationController : ControllerBase
     {
+        [AllowAnonymous]
+        [HttpPost("register")]
+        public IActionResult Register([FromBody] RegistrationUserIdentityDto newCredsDto)
+        {
+            return Ok();
+        }
     }
 }
