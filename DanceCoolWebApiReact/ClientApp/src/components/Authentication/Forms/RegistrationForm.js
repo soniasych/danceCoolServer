@@ -1,38 +1,38 @@
 import React from 'react';
-import { Form, Button, Col } from 'react-bootstrap';
+import { Form, Col } from 'react-bootstrap';
 
 const RegistrationForm = (props) => {
     return (<Form>
         <Form.Row>
-            <Form.Group as={Col} controlId="formGridEmail">
-                <Form.Label>Email</Form.Label>
-                <Form.Control type="email" placeholder="Enter email" />
-            </Form.Group>
-
-            <Form.Group as={Col} controlId="formGridPassword">
-                <Form.Label>Пароль</Form.Label>
-                <Form.Control type="password" placeholder="Password" />
-            </Form.Group>
-        </Form.Row>
-
-        <Form.Row>
             <Form.Group as={Col} controlId="formGridFirstName">
                 <Form.Label>Ім'я</Form.Label>
-                <Form.Control type="text" placeholder="Ім'я" />
+                <Form.Control type="text" placeholder="Ім'я" onChange={props.FNChanged}></Form.Control>
             </Form.Group>
-            <Form.Group as={Col} controlId="formGridLastName">
-                <Form.Label>Прізвище</Form.Label>
-                <Form.Control type="text" placeholder="Прізвище" />
-            </Form.Group>
-            <Form.Group as={Col} controlId="formGridPhoneNumber">
-                <Form.Label>Номер телефону</Form.Label>
-                <Form.Control type="text" placeholder="Номер телефону" contentEditable="+380"/>
+            <Form.Group as={Col} controlId="formGridEmail" onChange={props.RegEmailChanged}>
+                <Form.Label>Email</Form.Label>
+                <Form.Control type="email" />
             </Form.Group>
         </Form.Row>
-
-        <Button variant="primary" type="submit">
-            Зареєструватися
-        </Button>
+        <Form.Row>
+        <Form.Group as={Col} controlId="formGridLastName">
+                <Form.Label>Прізвище</Form.Label>
+                <Form.Control type="text" placeholder="Прізвище" onChange={props.LNChanged} />
+            </Form.Group>
+            <Form.Group as={Col} controlId="formGridPassword">
+                <Form.Label>Пароль</Form.Label>
+                <Form.Control type="password" placeholder="Password" onChange={props.RegPasswordChanged} />
+            </Form.Group>
+        </Form.Row>
+        <Form.Row>
+            <Form.Group as={Col} controlId="formGridPhoneNumber">
+                <Form.Label>Номер телефону</Form.Label>
+                <Form.Control type="text" placeholder="Номер телефону" onChange={props.PhoneChanged}/>
+            </Form.Group>
+            <Form.Group as={Col} controlId="formGridConfirmPassword">
+                <Form.Label>Підтвердіть Пароль</Form.Label>
+                <Form.Control type="password" placeholder="Password" onChange={props.RegConfPasswordChanged}/>
+            </Form.Group>
+        </Form.Row>
     </Form>);
 
 }

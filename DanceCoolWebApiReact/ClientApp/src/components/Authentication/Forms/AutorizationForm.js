@@ -6,17 +6,13 @@ const AutorizationForm = (props) => {
         <Form>
             <Form.Group controlId="formBasicEmail">
                 <Form.Label>Email</Form.Label>
-                <Form.Control type="email" />
+                <Form.Control type="email" onChange={props.autEmailChanged}/>
             </Form.Group>
 
             <Form.Group controlId="formBasicPassword">
                 <Form.Label>Password</Form.Label>
-                <Form.Control type="password"/>
+                <Form.Control type="password" onChange={props.autPasswordChanged}/>
             </Form.Group>
-
-            <Button variant="primary" type="submit">
-                Увійти
-        </Button>
         </Form>
     );
 }
