@@ -26,7 +26,7 @@ const RegistrationForm = (props) => {
             </Form.Group>
             <Form.Group as={Col} controlId="formGridPhoneNumber">
                 <Form.Label>Номер телефону</Form.Label>
-                <Form.Control type="text" placeholder="Номер телефону" />
+                <Form.Control type="text" placeholder="Номер телефону" contentEditable="+380"/>
             </Form.Group>
         </Form.Row>
 

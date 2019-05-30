@@ -6,9 +6,9 @@ using System.Linq;
 
 namespace DanceCoolDataAccessLogic.Repositories
 {
-    class UserCredentialsRepository : BaseRepository<UserCredential>, IUserCredentialsRepository
+    public class UserCredentialsRepository : BaseRepository<UserCredential>, IUserCredentialsRepository
     {
-        public UserCredentialsRepository(DanceСoolContext context) : base(context)
+        public UserCredentialsRepository(DanceCoolContext context) : base(context)
         {
         }
 
@@ -26,5 +26,11 @@ namespace DanceCoolDataAccessLogic.Repositories
         {
             return Context.UserCredentials.First(ucreds => ucreds.UserId == userId);
         }
+
+        public bool IsEmailReserved(string checkedEmail)
+        {
+            return Context.UserCredentials.Any(credential => credential.Email == checkedEmail);
+        }
+
     }
 }

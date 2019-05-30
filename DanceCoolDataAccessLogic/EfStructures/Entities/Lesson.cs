@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DanceCoolDataAccessLogic.EfStructures.Entities
@@ -15,9 +14,7 @@ namespace DanceCoolDataAccessLogic.EfStructures.Entities
         public int Id { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime Date { get; set; }
-        [Required]
-        [StringLength(50)]
-        public string Room { get; set; }
+        public int Room { get; set; }
         public int? GroupId { get; set; }
 
         [ForeignKey("GroupId")]

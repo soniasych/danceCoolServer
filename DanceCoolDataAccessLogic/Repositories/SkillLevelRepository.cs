@@ -8,7 +8,7 @@ namespace DanceCoolDataAccessLogic.Repositories
 {
     class SkillLevelRepository : BaseRepository<SkillLevel>, ISkillLevelRepository
     {
-        public SkillLevelRepository(DanceСoolContext context) : base(context)
+        public SkillLevelRepository(DanceCoolContext context) : base(context)
         {
         }
 

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -18,7 +17,6 @@ namespace DanceCoolDataAccessLogic.EfStructures.Entities
         }
 
         public int Id { get; set; }
-        public int RoleId { get; set; }
         [Required]
         [StringLength(512)]
         public string FirstName { get; set; }
@@ -27,6 +25,7 @@ namespace DanceCoolDataAccessLogic.EfStructures.Entities
         public string LastName { get; set; }
         [StringLength(17)]
         public string PhoneNumber { get; set; }
+        public int RoleId { get; set; }
 
         [ForeignKey("RoleId")]
         [InverseProperty("Users")]

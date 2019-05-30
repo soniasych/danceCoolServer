@@ -9,9 +9,9 @@ namespace DanceCoolDataAccessLogic.Repositories
 {
     public class BaseRepository<TEntity> : IRepository<TEntity> where TEntity : class
     {
-        protected DanceСoolContext Context;
+        protected DanceCoolContext Context;
 
-        public BaseRepository(DanceСoolContext context)
+        public BaseRepository(DanceCoolContext context)
         {
             Context = context;
         }

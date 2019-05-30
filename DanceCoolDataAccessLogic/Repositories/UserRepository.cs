@@ -9,7 +9,7 @@ namespace DanceCoolDataAccessLogic.Repositories
 {
     public class UserRepository : BaseRepository<User>, IUserRepository
     {
-        public UserRepository(DanceСoolContext context) : base(context)
+        public UserRepository(DanceCoolContext context) : base(context)
         {
         }
 
@@ -26,6 +26,11 @@ namespace DanceCoolDataAccessLogic.Repositories
         public User GetUserById(int userId)
         {
             return Context.Users.Find(userId);
+        }
+
+        public User GetUserByPhoneNumber(string phoneNumber)
+        {
+            return Context.Users.FirstOrDefault(user => user.PhoneNumber == phoneNumber);
         }
 
         public IEnumerable<User> GetStudents()

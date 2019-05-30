@@ -9,7 +9,7 @@ namespace DanceCoolDataAccessLogic.Repositories
 {
     public class LessonRepository : BaseRepository<Lesson>, ILessonRepository
     {
-        public LessonRepository(DanceСoolContext context) : base(context)
+        public LessonRepository(DanceCoolContext context) : base(context)
         {
         }
 

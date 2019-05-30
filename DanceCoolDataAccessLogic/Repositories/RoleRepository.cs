@@ -9,7 +9,7 @@ namespace DanceCoolDataAccessLogic.Repositories
 {
     class RoleRepository : BaseRepository<Role>, IRoleRepository
     {
-        public RoleRepository(DanceСoolContext context) : base(context)
+        public RoleRepository(DanceCoolContext context) : base(context)
         {
         }
 
