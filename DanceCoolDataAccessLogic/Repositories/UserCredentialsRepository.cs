@@ -31,6 +31,9 @@ namespace DanceCoolDataAccessLogic.Repositories
         {
             return Context.UserCredentials.Any(credential => credential.Email == checkedEmail);
         }
-
+        public UserCredential GetCredentialsByEmail(string email)
+        {
+            return Context.UserCredentials.FirstOrDefault(credential => credential.Email == email);
+        }
     }
 }

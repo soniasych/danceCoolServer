@@ -55,7 +55,25 @@ namespace DanceCoolBusinessLogic.Services
             return formedCredentials;
         }
 
-        
+        public UserCredential Authenticate(string email, string password)
+        {
+            if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
+                return null;
+
+            var userCredentials = db.UserCredentials.GetCredentialsByEmail(email);
+
+            // check if username exists
+            if (userCredentials == null)
+                return null;
+
+            // check if password is correct
+            if (!VerifyPasswordHash(password, userCredentials.PasswordHash, userCredentials.PasswordSalt))
+                return null;
+
+            // authentication successful
+            return userCredentials;
+        }
+
 
         private static void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
         {

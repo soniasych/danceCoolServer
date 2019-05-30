@@ -9,5 +9,6 @@ namespace DanceCoolDataAccessLogic.Repositories.Interfaces
         UserCredential GetUserCredentialsById(int id);
         UserCredential GetUserCredentialsByUserId(int userId);
         bool IsEmailReserved(string checkedEmail);
+        UserCredential GetCredentialsByEmail(string email);
     }
 }
