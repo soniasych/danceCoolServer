@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router';
 import { Layout } from './components/Layout';
-import { GuestPage } from './components/Guest-Page/GuestPage';
+import { GuestPage } from './components/GuestComponent/GuestPage';
 import { GroupList } from './components/GroupPage/GroupList';
 import { GroupPage } from './components/GroupPage/GroupPage'
 import { ManagingUsersPage } from './components/UserPage/ManagingUsersPage';
 import { AdminPage } from './components/AdminPage';
 import { AttendancePage } from './components/AttendancePage/Attendances';
-import {Schedule} from './components/Guest-Page/Schedule';
+import Schedule from './components/GuestComponent/Schedule/Schedule';
+import AboutUs from './components/GuestComponent/AboutUs/AboutUs';
 
 export default class App extends Component {
   static displayName = App.name;
@@ -23,6 +24,7 @@ export default class App extends Component {
         <Route exact path='/students/:id' component={ManagingUsersPage} />
         <Route exact path='/attendances' component={AttendancePage} />
         <Route exact path='/schedule' component={Schedule}/>
+        <Route exact path='/aboutUs' component={AboutUs}/>
       </Layout>
     );
   }

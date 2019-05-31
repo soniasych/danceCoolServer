@@ -6,8 +6,7 @@ export class GuestPage extends Component {
   render() {
     return (
       <div>
-        <Carousel />
-        <TestingRedux/>
+        Here will be main page
       </div>
     );
   }
