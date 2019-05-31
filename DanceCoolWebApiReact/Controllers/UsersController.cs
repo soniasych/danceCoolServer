@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DanceCoolWebApiReact.Controllers
 {
+    /// <summary>
+    /// Controller for system users.
+    /// </summary>
     [ApiController]
     public class UsersController : ControllerBase
     {

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DanceCoolDataAccessLogic.EfStructures.Entities
@@ -13,8 +11,9 @@ namespace DanceCoolDataAccessLogic.EfStructures.Entities
         [StringLength(254)]
         public string Email { get; set; }
         [Required]
-        [Column(TypeName = "text")]
-        public string Password { get; set; }
+        public byte[] PasswordHash { get; set; }
+        [Required]
+        public byte[] PasswordSalt { get; set; }
 
         [ForeignKey("UserId")]
         [InverseProperty("UserCredential")]

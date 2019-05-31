@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using DanceCoolBusinessLogic.Services;
 using DanceCoolDTO;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace danceCoolWebApi.Controllers
@@ -9,15 +10,14 @@ namespace danceCoolWebApi.Controllers
     public class GroupsController : ControllerBase
     {
         private IGroupService _groupService;
-        private IUserService _userService;
 
-        public GroupsController(IGroupService groupService, IUserService userService)
+        public GroupsController(IGroupService groupService)
         {
             _groupService = groupService;
-            _userService = userService;
         }
 
         //GET: api/Groups
+        [Authorize]
         [HttpGet]
         [Route("api/groups")]
         public IEnumerable<GroupDTO> GetAllGroups()

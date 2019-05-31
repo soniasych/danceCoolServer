@@ -63,7 +63,7 @@ export class GroupPage extends Component {
     render() {
         return (
             <div>
-                <h1>Current Group Info</h1>
+                <h1>Інформація про поточну групу</h1>
                 <GroupTittle group={this.state.group} />
                 <br />
                 <button className="btn btn-primary"

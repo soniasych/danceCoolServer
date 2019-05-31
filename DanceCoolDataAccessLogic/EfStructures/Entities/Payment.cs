@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DanceCoolDataAccessLogic.EfStructures.Entities
@@ -10,7 +8,7 @@ namespace DanceCoolDataAccessLogic.EfStructures.Entities
         public int Id { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime Date { get; set; }
-        [Column(TypeName = "decimal(18, 0)")]
+        [Column(TypeName = "money")]
         public decimal TotalSum { get; set; }
         public int UserSenderId { get; set; }
         public int UserReceiverId { get; set; }

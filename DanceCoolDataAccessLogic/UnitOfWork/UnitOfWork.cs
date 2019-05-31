@@ -6,7 +6,7 @@ namespace DanceCoolDataAccessLogic.UnitOfWork
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private readonly DanceСoolContext _context;
+        private readonly DanceCoolContext _context;
         private bool disposed;
 
         private IUserRepository users;
@@ -19,7 +19,7 @@ namespace DanceCoolDataAccessLogic.UnitOfWork
         private ILessonRepository lessons;
         private IAttendanceRepository attendances;
 
-        public UnitOfWork(DanceСoolContext context)
+        public UnitOfWork(DanceCoolContext context)
         {
             this._context = context;
             disposed = false;

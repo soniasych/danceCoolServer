@@ -1,22 +1,22 @@
 import React from 'react';
-import { Form, Button } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
 
 const AutorizationForm = (props) => {
     return (
         <Form>
             <Form.Group controlId="formBasicEmail">
-                <Form.Label>Email</Form.Label>
-                <Form.Control type="email" />
+                <Form.Label>Електронна пошта</Form.Label>
+                <Form.Control
+                type="email"
+                onChange={props.autEmailChanged}/>
             </Form.Group>
 
             <Form.Group controlId="formBasicPassword">
-                <Form.Label>Password</Form.Label>
-                <Form.Control type="password"/>
+                <Form.Label>Пароль</Form.Label>
+                <Form.Control 
+                type="password" 
+                onChange={props.autPasswordChanged}/>
             </Form.Group>
-
-            <Button variant="primary" type="submit">
-                Увійти
-        </Button>
         </Form>
     );
 }
