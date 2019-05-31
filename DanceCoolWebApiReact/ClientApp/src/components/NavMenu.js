@@ -49,10 +49,19 @@ export class NavMenu extends Component {
                 <NavLink tag={Link} className="text-dark" to="/">Головна</NavLink>
                 </NavItem>
                 <NavItem>
-                  <NavLink tag={Link} className="text-dark" to="/aboutUs">Про нас</NavLink>
+                  <NavLink tag={Link} className="text-dark" to="/about-us">Про нас</NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink tag={Link} className="text-dark" to="/guest-group">Групи</NavLink>
                 </NavItem>
                 <NavItem>
                   <NavLink tag={Link} className="text-dark" to="/schedule">Розклад</NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink tag={Link} className="text-dark" to="/guest-mentors">Наставники</NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink tag={Link} className="text-dark" to="/guest-contacts">Контакти</NavLink>
                 </NavItem>
                 <NavItem>
                   <button className="btn btn-light" onClick={this.AuthenticationModalVisibilityHandler}>Увійти</button>
