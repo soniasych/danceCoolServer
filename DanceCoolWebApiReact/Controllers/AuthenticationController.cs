@@ -23,10 +23,10 @@ namespace DanceCoolWebApiReact.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPost("api/register")]
+        [HttpPost]
+        [Route("api/register")]
         public IActionResult Register([FromBody] RegistrationUserIdentityDto newCredsDto)
         {
-           
             try
             {
                 // save 
@@ -49,29 +49,24 @@ namespace DanceCoolWebApiReact.Controllers
             if (creds == null)
                 return BadRequest(new { message = "Username or password is incorrect" });
 
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(AuthOptions.KEY);
+            var now = DateTime.UtcNow;
 
-            var tokenDescriptor = new SecurityTokenDescriptor
+            // создаем JWT-токен
+            var jwt = new JwtSecurityToken(
+                    issuer: AuthOptions.ISSUER,
+                    audience: AuthOptions.AUDIENCE,
+                    notBefore: now,
+                    claims: creds.Claims,
+                    expires: now.Add(TimeSpan.FromMinutes(AuthOptions.LIFETIME)),
+                    signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
+            var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
+
+            var response = new
             {
-                Subject = new ClaimsIdentity(new Claim[]
-                {
-                    new Claim(ClaimTypes.Name, creds.Id.ToString())
-                }),
-                Expires = DateTime.UtcNow.AddHours(3),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+                access_token = encodedJwt,
+                name = creds.Name
             };
-
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            var tokenString = tokenHandler.WriteToken(token);
-
-            // return basic user info (without password) and token to store client side
-            return Ok(new
-            {
-                Id = creds.Id,
-                Username = creds.Email,
-                Token = tokenString
-            });
+            return Ok(response);
         }
     }
 }

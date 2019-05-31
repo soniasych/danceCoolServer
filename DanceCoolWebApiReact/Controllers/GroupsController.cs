@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using DanceCoolBusinessLogic.Services;
 using DanceCoolDTO;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace danceCoolWebApi.Controllers
@@ -18,6 +19,7 @@ namespace danceCoolWebApi.Controllers
         }
 
         //GET: api/Groups
+        [Authorize]
         [HttpGet]
         [Route("api/groups")]
         public IEnumerable<GroupDTO> GetAllGroups()
