@@ -26,7 +26,7 @@ export class ManagingUsersPage extends Component {
         searchQuery: this.search.value
       },
       () => {
-        if (this.state.searchQuery && this.state.searchQuery.length > 2) {
+        if (this.state.searchQuery && this.state.searchQuery.length >= 1) {
           this.searchUsers();
         } else {
           this.populateAllStudents();
@@ -83,7 +83,7 @@ export class ManagingUsersPage extends Component {
 
 
   async populateAllStudents() {
-      const responce = await Axios.get("api/users", {timeout: 2000});
+      const responce = await Axios.get("api/users", {timeout: 1000});
     const data = await responce.data;
     this.setState({ students: data, loading: false });
   }
