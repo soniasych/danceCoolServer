@@ -10,12 +10,10 @@ namespace danceCoolWebApi.Controllers
     public class GroupsController : ControllerBase
     {
         private IGroupService _groupService;
-        private IUserService _userService;
 
-        public GroupsController(IGroupService groupService, IUserService userService)
+        public GroupsController(IGroupService groupService)
         {
             _groupService = groupService;
-            _userService = userService;
         }
 
         //GET: api/Groups

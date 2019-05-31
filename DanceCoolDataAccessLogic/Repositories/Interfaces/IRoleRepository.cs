@@ -9,5 +9,6 @@ namespace DanceCoolDataAccessLogic.Repositories.Interfaces
     {
         IEnumerable<Role> GetAllRoles();
         Role GetRoleById(int id);
+        Role GetRoleByCredentails(string email);
     }
 }
