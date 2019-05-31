@@ -16,8 +16,7 @@ namespace danceCoolWebApi.Controllers
             _groupService = groupService;
         }
 
-        //GET: api/Groups
-        [Authorize]
+        //GET: api/Groups        
         [HttpGet]
         [Route("api/groups")]
         public IEnumerable<GroupDTO> GetAllGroups()

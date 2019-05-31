@@ -5,7 +5,6 @@ import AddingStudentToGroupModal from './AddingStudentToGroupModal/AddingStudent
 import Axios from 'axios';
 
 export class GroupPage extends Component {
-    static displayName = GroupPage.name;
 
     constructor(props) {
         super(props);

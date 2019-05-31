@@ -49,7 +49,7 @@ export class NavMenu extends Component {
                   <NavLink tag={Link} className="text-dark" to="/god-mode-on">Адміністрування</NavLink>
                 </NavItem>
                 <NavItem>
-                  <button className="btn btn-light" onClick={this.AuthenticationModalVisibilityHandler}>Авторизація/Реєстрація</button>
+                  <button className="btn btn-light" onClick={this.AuthenticationModalVisibilityHandler}>Увійти</button>
                 </NavItem>
               </ul>
             </Collapse>

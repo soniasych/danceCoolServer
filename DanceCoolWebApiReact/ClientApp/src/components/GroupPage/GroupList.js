@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import Axios from 'axios';
 import { Link } from 'react-router-dom';
 
-export class Groups extends Component {
-    static displayName = Groups.name;
+export class GroupList extends Component {
 
     constructor(props) {
         super(props);
@@ -36,7 +35,7 @@ export class Groups extends Component {
     }
 
     render() {
-        let content = Groups.renderGroupsElements(this.state.groups);
+        let content = GroupList.renderGroupsElements(this.state.groups);
         return (
             <div>
                 <h1>Активні групи</h1>
