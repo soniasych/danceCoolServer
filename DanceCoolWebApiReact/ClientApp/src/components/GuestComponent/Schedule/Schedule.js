@@ -1,9 +1,9 @@
 import React from 'react';
-import { Table } from 'react-bootstrap';
+import { Table, Container } from 'react-bootstrap';
 import './Schedule.css';
 
 const Schedule = () => {
-    return (<div>
+    return (<Container>
         <h4>Розклад занять станом на жовтень 2018 року</h4>
         <br />
         <Table bordered>
@@ -84,7 +84,7 @@ const Schedule = () => {
                 <li><span className="groupLevelName"> Advanced </span> - група займається від півтори року</li>
             </ul>
         </div>
-    </div>);
+    </Container>);
 }
 
 export default Schedule;
