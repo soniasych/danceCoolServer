@@ -13,6 +13,7 @@ import AboutUs from './components/GuestComponent/AboutUs/AboutUs';
 import GroupsGuestPage from './components/GuestComponent/GroupsGuest/GroupsGuestPage';
 import MentorsGuestPage from './components/GuestComponent/MentorsGuest/MentorsGuestPage';
 import ContactsGuestPage from './components/GuestComponent/ContactsGuest/ContactsGuestPage';
+import StudentProfile from './components/Profiles/StudentProfile/StudentProfile';
 
 export default class App extends Component {
   static displayName = App.name;
@@ -32,6 +33,7 @@ export default class App extends Component {
         <Route exact path='/students/' component={ManagingUsersPage} />
         <Route exact path='/students/:id' component={ManagingUsersPage} />
         <Route exact path='/attendances' component={AttendancePage} />
+        <Route exact path='/student-profile/1' component={StudentProfile}/>
       </Layout>
     );
   }
