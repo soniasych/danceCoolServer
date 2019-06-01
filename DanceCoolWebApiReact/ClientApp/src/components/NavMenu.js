@@ -37,7 +37,7 @@ export class NavMenu extends Component {
   render() {
     return (
       <div>
-        <Navbar className="navbar-expand-sm navbar-toggleable-sm ng-black border-bottom box-shadow mb-3" light>
+        <Navbar className="navbar-expand-sm navbar-toggleable-sm ng-black border-bottom box-shadow" dark>
           <Container>
             <NavbarBrand tag={Link} to="/">
               <img src={Logo} alt="LaSalsaLogo" />
