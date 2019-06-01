@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
-import {Carousel} from './Carousel';
-import { TestingRedux } from './TestingRedux';
+import { Jumbotron, Button, Container } from 'react-bootstrap';
+import './GuestPage.css';
+import Background from '../../assets/guestPageBackGround.jpg'
 
 export class GuestPage extends Component {
   render() {
     return (
-      <div>
-        Here will be main page
-      </div>
+   
+      <img src={Background} alt="Notebook" className="backGround"/>
+      
     );
   }
 }
