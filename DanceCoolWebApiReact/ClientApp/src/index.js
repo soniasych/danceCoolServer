@@ -1,9 +1,8 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore } from 'redux';
+import store from './_helpers/store'
 import { Provider } from 'react-redux';
-import reducer from './store/reducer';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
@@ -11,14 +10,12 @@ import registerServiceWorker from './registerServiceWorker';
 const baseUrl = document.getElementsByTagName('base')[0].getAttribute('href');
 const rootElement = document.getElementById('root');
 
-const store = createStore(reducer);
-
 ReactDOM.render(
-  <BrowserRouter basename={baseUrl}>
-    <Provider store={store}>
+  <Provider store={store}>
+    <BrowserRouter basename={baseUrl}>
       <App />
-    </Provider>
-  </BrowserRouter>,
+    </BrowserRouter>
+  </Provider>,
   rootElement);
 
 registerServiceWorker();
