@@ -9,7 +9,6 @@ import { AdminPage } from './components/AdminPage';
 import { AttendancePage } from './components/AttendancePage/Attendances';
 import Schedule from './components/GuestComponent/Schedule/Schedule';
 import AboutUs from './components/GuestComponent/AboutUs/AboutUs';
-import StudentProfile from './components/Profiles/StudentProfile/StudentProfile';
 
 export default class App extends Component {
   static displayName = App.name;
@@ -26,7 +25,6 @@ export default class App extends Component {
         <Route exact path='/attendances' component={AttendancePage} />
         <Route exact path='/schedule' component={Schedule}/>
         <Route exact path='/aboutUs' component={AboutUs}/>
-        <Route exact path='/student-profile/1' component={StudentProfile}/>
       </Layout>
     );
   }
