@@ -9,6 +9,7 @@ import './NavMenu.css';
 import AuthenticationModal from './Authentication/AuthenticationModal';
 import Logo from '../assets/lasalsa-logo.png';
 import { connect } from 'react-redux';
+import * as actionTypes from '../store/actions/rootActions';
 
 class NavMenu extends Component {
   static displayName = NavMenu.name;
@@ -44,7 +45,8 @@ class NavMenu extends Component {
 
   togglePopover() {
     if (this.state.popoverOpen === false) {
-      this.setState({ popoverOpen: true });
+      this.setState({ popoverOpen: true })
+      console.log(this.props.name);
     }
     else {
       this.setState({ popoverOpen: false });
@@ -81,14 +83,16 @@ class NavMenu extends Component {
                   <NavLink tag={Link} className="text-dark" to="/guest-contacts">Контакти</NavLink>
                 </NavItem>
                 <NavItem>
-                  {this.props.email !== null ?
+                  {this.props.name !== null ?
                     <div>
                       <Button id="Popover1" type="button" onClick={this.togglePopover}>
-                        Вітаємо, {this.props.email}
+                        Вітаємо, {this.props.name}
                       </Button>
                       <Popover placement="bottom" isOpen={this.state.popoverOpen} target="Popover1">
                         <PopoverHeader>La la Land</PopoverHeader>
-                        <PopoverBody>La la Land</PopoverBody>
+                        <PopoverBody>
+                          <div onClick={this.props.onLogOut}>Log out</div>
+                        </PopoverBody>
                       </Popover>
                     </div> :
                     <Button className="btn btn-light"
@@ -111,8 +115,16 @@ class NavMenu extends Component {
 
 const mapStateToProps = state => {
   return {
-    email: state.email
+    name: state.name
   };
 }
 
-export default connect(mapStateToProps)(NavMenu);
+const mapDispatchToProps = dispatch => {
+  return {
+    onAuthorize: (email, password) => dispatch({ type: actionTypes.AUTORIZE, email: email, password: password }),
+    onRegister: () => dispatch({ type: actionTypes.REGISTER }),
+    onLogOut: () => dispatch({ type: actionTypes.LOG_OUT })
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(NavMenu);

@@ -6,7 +6,7 @@ const initialState = autData ?
     {
         loggedIn: true,
         autData,
-        email: ''
+        name: ''
     } : {};
 
 const authReducer = (state = initialState, action) => {
@@ -16,15 +16,16 @@ const authReducer = (state = initialState, action) => {
             console.log(autData);
             return {
                 ...state,
-                email: autData.name
+                name: autData
             }
         case actionTypes.REGISTER:
             return {
                 autData
             }
-        case actionTypes.LOG_OF:
+        case actionTypes.LOG_OUT:
+            authenticationService.logout();
             return {
-                userFirstName: ''
+                name: ''
             }
         default:
             break;

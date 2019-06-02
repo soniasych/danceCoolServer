@@ -12,3 +12,8 @@ export const AutorizationService = (email, password) => {
             return autData.data;
         })
 }
+
+export const logout = () => {
+    // remove user from local storage to log user out
+    localStorage.removeItem('autData');
+}
