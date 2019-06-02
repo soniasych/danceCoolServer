@@ -9,21 +9,23 @@ import Axios from 'axios';
 import './AuthenticationModal.css';
 import AutorizationForm from './Forms/AutorizationForm';
 import RegistrationForm from './Forms/RegistrationForm';
+import { connect } from 'react-redux';
 
-export class AuthenticationModal extends Component {
+class AuthenticationModal extends Component {
   constructor(props) {
     super(props)
     this.state = {
       authenticationButtonText: 'Увійти',
-      activeTabKey:'SignInTab',
-      regFirstName:'',
-      regLastName:'',
-      regPhoneNumber:'',
-      regEmail:'',
-      regPassword:'',
-      regConfPassword:'',
-      autEmail:'',
-      autPassword:''
+      activeTabKey: 'SignInTab',
+      regFirstName: '',
+      regLastName: '',
+      regPhoneNumber: '',
+      regEmail: '',
+      regPassword: '',
+      regConfPassword: '',
+      autEmail: '',
+      autPassword: '',
+      accessToken: {}
     }
     this.onAuthenticationSelectTab = this.onAuthenticationSelectTab.bind(this);
 
@@ -40,49 +42,52 @@ export class AuthenticationModal extends Component {
   }
 
   onRegFNInput = event => {
-    this.setState({regFirstName: event.target.value});
+    this.setState({ regFirstName: event.target.value });
   }
   onRegLNInput = event => {
-    this.setState({regLastName: event.target.value});
+    this.setState({ regLastName: event.target.value });
   }
   onPhonNumberInput = event => {
-    this.setState({regPhoneNumber: event.target.value});
+    this.setState({ regPhoneNumber: event.target.value });
   }
   onRegEmailInput = event => {
-    this.setState({regEmail: event.target.value});
+    this.setState({ regEmail: event.target.value });
   }
   onRegPasswordInput = event => {
-    this.setState({regPassword: event.target.value});
+    this.setState({ regPassword: event.target.value });
   }
   onRegConfPasswordInput = event => {
-    this.setState({regConfPassword: event.target.value});
+    this.setState({ regConfPassword: event.target.value });
   }
 
   onAutEmailInput = event => {
-    this.setState({autEmail: event.target.value});
+    this.setState({ autEmail: event.target.value });
   }
-  
+
   onAutPasswordInput = event => {
-    this.setState({autPassword: event.target.value});
+    this.setState({ autPassword: event.target.value });
   }
 
   onAuthenticationSelectTab = (eventKey) => {
     if (eventKey === 'SignInTab') {
-      this.setState({ authenticationButtonText: 'Увійти',
-      activeTabKey: eventKey
-     });
+      this.setState({
+        authenticationButtonText: 'Увійти',
+        activeTabKey: eventKey
+      });
     }
     if (eventKey === 'SignUpTab') {
-      this.setState({ authenticationButtonText: 'Зареєструватися',
-      activeTabKey: eventKey });
+      this.setState({
+        authenticationButtonText: 'Зареєструватися',
+        activeTabKey: eventKey
+      });
     }
   }
 
-  registerRequest(event){
-    let registrationData ={
+  registerRequest(event) {
+    let registrationData = {
       firstName: this.state.regFirstName,
       lastName: this.state.regLastName,
-      email:this.state.regEmail,
+      email: this.state.regEmail,
       phoneNumber: this.state.regPhoneNumber,
       password: this.state.regPassword
     }
@@ -90,26 +95,28 @@ export class AuthenticationModal extends Component {
     event.preventDefault();
   }
 
-  autorizeRequest(event){
+  autorizeRequest = () => {
     let autorizationData = {
       email: this.state.autEmail,
       password: this.state.autPassword
     }
-    Axios.post('api/autorize', autorizationData);
-    event.preventDefault();
+    Axios.post('api/autorize', autorizationData)
+      .then((Response) => {
+        this.setState({ accessToken: Response.data });
+      });
   }
 
 
   render() {
     return (
       <Modal isOpen={this.props.visible}
-      className="my-modal">
+        className="my-modal">
         <ModalBody>
           <Tabs onSelect={this.onAuthenticationSelectTab}>
             <Tab eventKey="SignInTab" title="Авторизація">
-              <AutorizationForm 
-              autEmailChanged={this.onAutEmailInput}
-              autPasswordChanged={this.onAutPasswordInput} />
+              <AutorizationForm
+                autEmailChanged={this.onAutEmailInput}
+                autPasswordChanged={this.onAutPasswordInput} />
             </Tab>
             <Tab eventKey="SignUpTab" title="Реєстрація">
               <RegistrationForm submitButtonText={this.state.authenticationButtonText}
@@ -119,14 +126,14 @@ export class AuthenticationModal extends Component {
                 RegEmailChanged={this.onRegEmailInput}
                 RegPasswordChanged={this.onRegPasswordInput}
                 RegConfPasswordChanged={this.onRegConfPasswordInput}
-                 />
+              />
             </Tab>
           </Tabs>
         </ModalBody>
         <ModalFooter>
-          <Button variant="primary" 
-          type="submit" 
-          onClick={this.state.activeTabKey === 'SignInTab'? this.autorizeRequest : this.registerRequest }>
+          <Button variant="primary"
+            type="submit"
+            onClick={this.state.activeTabKey === 'SignInTab' ? this.autorizeRequest : this.registerRequest}>
             {this.state.authenticationButtonText}
           </Button>
           <Button variant="secondary"
@@ -138,3 +145,11 @@ export class AuthenticationModal extends Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+
+  };
+}
+
+export default connect(mapStateToProps)(AuthenticationModal);

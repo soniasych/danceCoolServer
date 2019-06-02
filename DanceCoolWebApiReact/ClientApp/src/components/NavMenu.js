@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { Collapse, Container, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink } from 'reactstrap';
+import { Collapse, Container, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink, Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import './NavMenu.css';
-import { AuthenticationModal } from './Authentication/AuthenticationModal';
-import Logo from '../assets/lasalsa-logo.png'
+import AuthenticationModal from './Authentication/AuthenticationModal';
+import Logo from '../assets/lasalsa-logo.png';
+import { connect } from 'react-redux';
 
-export class NavMenu extends Component {
+class NavMenu extends Component {
   static displayName = NavMenu.name;
 
   constructor(props) {
@@ -16,7 +17,7 @@ export class NavMenu extends Component {
     };
     this.AuthenticationMModalVisibilityHandler = this.AuthenticationModalVisibilityHandler.bind(AuthenticationModal);
     this.toggleNavbar = this.toggleNavbar.bind(this);
-    
+
   }
 
   toggleNavbar() {
@@ -45,8 +46,8 @@ export class NavMenu extends Component {
             <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
             <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={!this.state.collapsed} navbar>
               <ul className="navbar-nav flex-grow">
-              <NavItem>
-                <NavLink tag={Link} className="text-dark" to="/">Головна</NavLink>
+                <NavItem>
+                  <NavLink tag={Link} className="text-dark" to="/">Головна</NavLink>
                 </NavItem>
                 <NavItem>
                   <NavLink tag={Link} className="text-dark" to="/about-us">Про нас</NavLink>
@@ -64,7 +65,7 @@ export class NavMenu extends Component {
                   <NavLink tag={Link} className="text-dark" to="/guest-contacts">Контакти</NavLink>
                 </NavItem>
                 <NavItem>
-                  <button className="btn btn-light" onClick={this.AuthenticationModalVisibilityHandler}>Увійти</button>
+                  <Button className="btn btn-light" onClick={this.AuthenticationModalVisibilityHandler}>Увійти</Button>
                 </NavItem>
               </ul>
             </Collapse>
@@ -74,8 +75,17 @@ export class NavMenu extends Component {
           visible={this.state.authenticationModalVisible}
           close={this.AuthenticationModalVisibilityHandler}
           tabSwitching={this.onAuthenticationSelectTab}
-          authenticationButtonText={this.state.AuthenticationButtonText}/>
+          authenticationButtonText={this.state.AuthenticationButtonText} />
       </div>
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    userFirstName: state.userFirstName,
+    lastName: state.userLastName
+  };
+}
+
+export default connect(mapStateToProps)(NavMenu);
