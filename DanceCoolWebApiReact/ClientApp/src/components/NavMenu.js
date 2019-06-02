@@ -37,6 +37,7 @@ class NavMenu extends Component {
   AuthenticationModalVisibilityHandler = event => {
     if (this.state.authenticationModalVisible === false) {
       this.setState({ authenticationModalVisible: true });
+      console.log(this.props.authEmail);
     }
     else {
       this.setState({ authenticationModalVisible: false });
@@ -46,7 +47,7 @@ class NavMenu extends Component {
   togglePopover() {
     if (this.state.popoverOpen === false) {
       this.setState({ popoverOpen: true })
-      console.log(this.props.name);
+      console.log(this.props.authEmail);
     }
     else {
       this.setState({ popoverOpen: false });
@@ -83,8 +84,8 @@ class NavMenu extends Component {
                   <NavLink tag={Link} className="text-dark" to="/guest-contacts">Контакти</NavLink>
                 </NavItem>
                 <NavItem>
-                  {this.props.name !== null ?
-                    <div>
+                  {this.props.name === 'капуста' ?
+                    < div >
                       <Button id="Popover1" type="button" onClick={this.togglePopover}>
                         Вітаємо, {this.props.name}
                       </Button>
@@ -115,7 +116,7 @@ class NavMenu extends Component {
 
 const mapStateToProps = state => {
   return {
-    name: state.name
+    authEmail: state.authEmail
   };
 }
 

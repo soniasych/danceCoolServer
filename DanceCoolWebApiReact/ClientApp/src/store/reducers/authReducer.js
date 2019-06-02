@@ -1,26 +1,21 @@
 import * as actionTypes from '../actions/rootActions';
 import * as authenticationService from '../services/autService';
 
-let autData = JSON.parse(localStorage.getItem('autData'));
-const initialState = autData ?
-    {
-        loggedIn: true,
-        autData,
-        name: ''
-    } : {};
+let authData = JSON.parse(localStorage.getItem('authData'));
+const initialState =
+{
+    authEmail: ''
+}
 
 const authReducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.AUTORIZE:
             authenticationService.AutorizationService(action.email, action.password);
-            console.log(autData);
             return {
-                ...state,
-                name: autData
+                authEmail: authData.name
             }
         case actionTypes.REGISTER:
             return {
-                autData
             }
         case actionTypes.LOG_OUT:
             authenticationService.logout();

@@ -4,16 +4,12 @@ export const AutorizationService = (email, password) => {
     Axios.post('api/autorize', {
         email: email,
         password: password
-    })
-        .then(autData => {
-            if (autData && autData.data) {
-                localStorage.setItem('autData', JSON.stringify(autData.data));
-            }
-            return autData.data;
-        })
+    }).then(response => {
+        localStorage.setItem('user', JSON.stringify(response.data));
+    });
 }
 
 export const logout = () => {
     // remove user from local storage to log user out
-    localStorage.removeItem('autData');
+    localStorage.removeItem('user');
 }
