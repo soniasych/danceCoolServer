@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
-import { Collapse, Container, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink, Button } from 'reactstrap';
+import {
+  Collapse, Container, Button,
+  Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink,
+  Popover, PopoverHeader, PopoverBody
+} from 'reactstrap';
 import { Link } from 'react-router-dom';
 import './NavMenu.css';
 import AuthenticationModal from './Authentication/AuthenticationModal';
@@ -13,10 +17,13 @@ class NavMenu extends Component {
     super(props);
     this.state = {
       authenticationModalVisible: false,
-      collapsed: true
+      defaultModalTab: 'SignInTab',
+      collapsed: true,
+      popoverOpen: false
     };
     this.AuthenticationMModalVisibilityHandler = this.AuthenticationModalVisibilityHandler.bind(AuthenticationModal);
     this.toggleNavbar = this.toggleNavbar.bind(this);
+    this.togglePopover = this.togglePopover.bind(this);
 
   }
 
@@ -32,6 +39,15 @@ class NavMenu extends Component {
     }
     else {
       this.setState({ authenticationModalVisible: false });
+    }
+  }
+
+  togglePopover() {
+    if (this.state.popoverOpen === false) {
+      this.setState({ popoverOpen: true });
+    }
+    else {
+      this.setState({ popoverOpen: false });
     }
   }
 
@@ -65,7 +81,19 @@ class NavMenu extends Component {
                   <NavLink tag={Link} className="text-dark" to="/guest-contacts">Контакти</NavLink>
                 </NavItem>
                 <NavItem>
-                  <Button className="btn btn-light" onClick={this.AuthenticationModalVisibilityHandler}>Увійти</Button>
+                  {this.props.email !== null ?
+                    <div>
+                      <Button id="Popover1" type="button" onClick={this.togglePopover}>
+                        Вітаємо, {this.props.email}
+                      </Button>
+                      <Popover placement="bottom" isOpen={this.state.popoverOpen} target="Popover1">
+                        <PopoverHeader>La la Land</PopoverHeader>
+                        <PopoverBody>La la Land</PopoverBody>
+                      </Popover>
+                    </div> :
+                    <Button className="btn btn-light"
+                      onClick={this.AuthenticationModalVisibilityHandler}>Увійти</Button>
+                  }
                 </NavItem>
               </ul>
             </Collapse>
@@ -83,8 +111,7 @@ class NavMenu extends Component {
 
 const mapStateToProps = state => {
   return {
-    userFirstName: state.userFirstName,
-    lastName: state.userLastName
+    email: state.email
   };
 }
 

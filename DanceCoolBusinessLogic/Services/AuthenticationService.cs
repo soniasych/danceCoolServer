@@ -65,8 +65,7 @@ namespace DanceCoolBusinessLogic.Services
                 return null;
 
             var userCredentials = db.UserCredentials.GetCredentialsByEmail(email);
-            //For times when role authentication will be enabled
-            //var roleName = db.Roles.GetRoleByCredentails(email).RoleName;
+            var roleName = db.Roles.GetRoleByCredentails(email).RoleName;
 
             // check if username exists
             if (userCredentials == null)
@@ -79,8 +78,7 @@ namespace DanceCoolBusinessLogic.Services
             var claims = new List<Claim>
                 {
                     new Claim(ClaimsIdentity.DefaultNameClaimType, userCredentials.Email)
-                    //For times when role authentication will be enabled
-                    //,new Claim(ClaimsIdentity.DefaultNameClaimType, roleName)
+                    ,new Claim(ClaimsIdentity.DefaultNameClaimType, roleName)
                 };
             ClaimsIdentity claimsIdentity =
             new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType,

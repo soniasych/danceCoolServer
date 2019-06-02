@@ -10,6 +10,7 @@ import './AuthenticationModal.css';
 import AutorizationForm from './Forms/AutorizationForm';
 import RegistrationForm from './Forms/RegistrationForm';
 import { connect } from 'react-redux';
+import * as actionTypes from '../../store/actions/rootActions';
 
 class AuthenticationModal extends Component {
   constructor(props) {
@@ -24,8 +25,7 @@ class AuthenticationModal extends Component {
       regPassword: '',
       regConfPassword: '',
       autEmail: '',
-      autPassword: '',
-      accessToken: {}
+      autPassword: ''
     }
     this.onAuthenticationSelectTab = this.onAuthenticationSelectTab.bind(this);
 
@@ -106,7 +106,6 @@ class AuthenticationModal extends Component {
       });
   }
 
-
   render() {
     return (
       <Modal isOpen={this.props.visible}
@@ -133,11 +132,13 @@ class AuthenticationModal extends Component {
         <ModalFooter>
           <Button variant="primary"
             type="submit"
-            onClick={this.state.activeTabKey === 'SignInTab' ? this.autorizeRequest : this.registerRequest}>
+            onClick={this.state.activeTabKey === 'SignInTab' ?
+              () => this.props.onAuthorize(this.state.autEmail, this.state.autPassword) :
+              this.props.onRegister}>
             {this.state.authenticationButtonText}
           </Button>
           <Button variant="secondary"
-            onClick={this.props.close}>
+            onClick={(this.props.close)}>
             Закрити
           </Button>
         </ModalFooter>
@@ -146,10 +147,11 @@ class AuthenticationModal extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapDispatchToProps = dispatch => {
   return {
-
+    onAuthorize: (email, password) => dispatch({ type: actionTypes.AUTORIZE, email: email, password: password }),
+    onRegister: () => dispatch({ type: actionTypes.REGISTER })
   };
-}
+};
 
-export default connect(mapStateToProps)(AuthenticationModal);
+export default connect(null, mapDispatchToProps)(AuthenticationModal);
