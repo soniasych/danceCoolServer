@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Form } from 'react-bootstrap';
 
-class SignInForm extends Component {
+class LogInForm extends Component {
     constructor(props) {
         super(props);
 
@@ -14,6 +14,7 @@ class SignInForm extends Component {
                     <Form.Label>Електронна пошта</Form.Label>
                     <Form.Control
                         type="email"
+                        value="rgosling@mail.com"
                         onChange={this.props.autEmailChanged} />
                 </Form.Group>
 
@@ -28,4 +29,4 @@ class SignInForm extends Component {
     }
 }
 
-export default SignInForm;
+export default LogInForm;

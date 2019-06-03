@@ -5,9 +5,8 @@ import {
   , ModalBody
   , ModalFooter
 } from 'reactstrap';
-import Axios from 'axios';
 import './AuthenticationModal.css';
-import SignInForm from './Forms/SignInForm';
+import LogInForm from './Forms/LogInForm';
 import SignUpForm from './Forms/SignUpForm';
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions/index';
@@ -24,7 +23,7 @@ class AuthenticationModal extends Component {
       regEmail: '',
       regPassword: '',
       regConfPassword: '',
-      autEmail: 'gosling@mail.com',
+      autEmail: 'rgosling@mail.com',
       autPassword: 'LaLaLand'
     }
     this.onAuthenticationSelectTab = this.onAuthenticationSelectTab.bind(this);
@@ -35,8 +34,8 @@ class AuthenticationModal extends Component {
     this.onRegEmailInput = this.onRegEmailInput.bind(SignUpForm);
     this.onRegPasswordInput = this.onRegPasswordInput.bind(SignUpForm);
     this.onRegConfPasswordInput = this.onRegConfPasswordInput.bind(SignUpForm);
-    this.onAutEmailInput = this.onAutEmailInput.bind(SignInForm);
-    this.onAutPasswordInput = this.onAutPasswordInput.bind(SignInForm);
+    this.onAutEmailInput = this.onAutEmailInput.bind(LogInForm);
+    this.onAutPasswordInput = this.onAutPasswordInput.bind(LogInForm);
     this.onAuthenticateClick = this.onAuthenticateClick.bind(this);
   }
 
@@ -82,7 +81,7 @@ class AuthenticationModal extends Component {
     }
   }
 
-  onAuthenticateClick = (event) => {
+  onAuthenticateClick = () => {
     if (this.state.activeTabKey === 'SignInTab') {
       this.props.onSignIn(this.state.autEmail, this.state.autPassword);
     } else {
@@ -101,7 +100,7 @@ class AuthenticationModal extends Component {
         <ModalBody>
           <Tabs onSelect={this.onAuthenticationSelectTab}>
             <Tab eventKey="SignInTab" title="Авторизація">
-              <SignInForm
+              <LogInForm
                 autEmailChanged={this.onAutEmailInput}
                 autPasswordChanged={this.onAutPasswordInput} />
             </Tab>
@@ -119,7 +118,8 @@ class AuthenticationModal extends Component {
           </Tabs>
         </ModalBody>
         <ModalFooter>
-          <Button variant="primary"
+          <Button
+            variant="primary"
             type="submit"
             onClick={this.onAuthenticateClick}>
             {this.state.authenticationButtonText}
@@ -139,7 +139,7 @@ const mapDispatchToProps = dispatch => {
     onSignUp: (firstName, lastName, phoneNumber, email, password) =>
       dispatch(actions.SignUp(firstName, lastName, phoneNumber, email, password)),
     onSignIn: (email, password) =>
-      dispatch(actions.SignIn(email, password)),
+      dispatch(actions.LogIn(email, password)),
     //onLogout:()=>(logOut())
   };
 };

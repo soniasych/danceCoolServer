@@ -7,9 +7,9 @@ export {
     from './signUpActions';
 
 export {
-    SignIn,
-    SignInStart,
-    SignInSuccess,
-    SignInFailed
+    LogIn,
+    LogInStart,
+    LogInSuccess,
+    LogInFailed
 }
-    from './signInActions';
+    from './logInActions';
