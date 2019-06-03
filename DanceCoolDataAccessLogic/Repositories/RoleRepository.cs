@@ -3,7 +3,6 @@ using System.Linq;
 using DanceCoolDataAccessLogic.EfStructures.Context;
 using DanceCoolDataAccessLogic.EfStructures.Entities;
 using DanceCoolDataAccessLogic.Repositories.Interfaces;
-using Microsoft.EntityFrameworkCore;
 
 namespace DanceCoolDataAccessLogic.Repositories
 {
@@ -20,8 +19,12 @@ namespace DanceCoolDataAccessLogic.Repositories
         public Role GetRoleByCredentails(string email)
         {
             var credentials = Context.UserCredentials.FirstOrDefault(uc => uc.Email == email);
+            if (credentials == null)
+            {
+                return null;
+            }
             var user = Context.Users.Find(credentials.Id);
-            return Context.Roles.Find(user.RoleId);
+            return user == null ? null : Context.Roles.Find(user.RoleId);
         }
     }
 }

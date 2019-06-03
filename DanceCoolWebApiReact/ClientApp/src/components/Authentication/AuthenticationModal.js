@@ -9,7 +9,7 @@ import './AuthenticationModal.css';
 import LogInForm from './Forms/LogInForm';
 import SignUpForm from './Forms/SignUpForm';
 import { connect } from 'react-redux';
-import * as actions from '../../store/actions/index';
+import * as actionsTypes from '../../store/actions/index';
 
 class AuthenticationModal extends Component {
   constructor(props) {
@@ -137,10 +137,9 @@ class AuthenticationModal extends Component {
 const mapDispatchToProps = dispatch => {
   return {
     onSignUp: (firstName, lastName, phoneNumber, email, password) =>
-      dispatch(actions.SignUp(firstName, lastName, phoneNumber, email, password)),
+      dispatch(actionsTypes.SignUp(firstName, lastName, phoneNumber, email, password)),
     onSignIn: (email, password) =>
-      dispatch(actions.LogIn(email, password)),
-    //onLogout:()=>(logOut())
+      dispatch(actionsTypes.LogIn(email, password))
   };
 };
 

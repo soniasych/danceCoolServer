@@ -29,6 +29,13 @@ namespace DanceCoolWebApiReact.Controllers
         }
 
         [HttpGet]
+        [Route("api/userInfo")]
+        public RegistrationUserIdentityDto GetUserInfo(string email)
+        {
+            return null;
+        }
+
+        [HttpGet]
         [Route("api/user-models")]
         public IEnumerable<User> GetAllUserModels()
         {

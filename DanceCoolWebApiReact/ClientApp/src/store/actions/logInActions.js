@@ -1,11 +1,18 @@
 import * as actionTypes from './actionTypes';
 import axios from 'axios';
 
-export const gogOut = ()=>{
-    return{
-        type:actionTypes.LOG_OUT
+export const checkLogInTimeOut = (expirationTime) => {
+    return dispatch => {
+        setTimeout(() => {
+            dispatch(LogOut());
+        }, expirationTime);
     };
-    
+};
+
+export const LogOut = () => {
+    return {
+        type: actionTypes.LOG_OUT
+    };
 };
 
 export const LogInStart = () => {
@@ -14,11 +21,14 @@ export const LogInStart = () => {
     };
 };
 
-export const LogInSuccess = (email, access_token) => {
+export const LogInSuccess = (access_token, token_lifeTime, email, firstName, lastName) => {
     return {
         type: actionTypes.LOG_IN_SUCCESS,
+        access_token: access_token,
+        token_lifeTime: token_lifeTime,
         email: email,
-        access_token: access_token
+        firstName: firstName,
+        lastName: lastName
     };
 };
 
@@ -39,7 +49,13 @@ export const LogIn = (email, password) => {
         axios.post('api/autorize', logInData)
             .then(response => {
                 console.log(response);
-                dispatch(LogInSuccess(response.data.name, response.data.access_token));
+                dispatch(LogInSuccess(
+                    response.data.access_token,
+                    response.data.token_lifeTime,
+                    response.data.email,
+                    response.data.firstName,
+                    response.data.lastName));
+                dispatch(checkLogInTimeOut(response.data.token_lifeTime));
             })
             .catch(error => {
                 console.log(error);

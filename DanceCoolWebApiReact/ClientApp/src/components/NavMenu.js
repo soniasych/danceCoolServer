@@ -46,12 +46,10 @@ class NavMenu extends Component {
 
   togglePopover() {
     if (this.state.popoverOpen === false) {
-      this.setState({ popoverOpen: true })
-      console.log(this.props.email);
+      this.setState({ popoverOpen: true });
     }
     else {
       this.setState({ popoverOpen: false });
-      console.log(this.props.email);
     }
   }
 
@@ -88,12 +86,15 @@ class NavMenu extends Component {
                   {this.props.isLogedIn ?
                     < div >
                       <Button id="Popover1" type="button" onClick={this.togglePopover}>
-                        Вітаємо, {this.props.email}
+                        Вітаємо, {this.props.firstName} {this.props.lastName}
                       </Button>
                       <Popover placement="bottom" isOpen={this.state.popoverOpen} target="Popover1">
                         <PopoverHeader>La la Land</PopoverHeader>
                         <PopoverBody>
-                          <div onClick={this.props.onLogOut}>Log out</div>
+                          <Button className="btn btn-light"
+                            onClick={this.props.onLogout}>
+                              Вийти
+                          </Button>
                         </PopoverBody>
                       </Popover>
                     </div> :
@@ -119,7 +120,15 @@ const mapStateToProps = state =>{
   return{
       isLogedIn: state.logInReducer.access_token != null,
       email: state.logInReducer.email,
+      firstName: state.logInReducer.firstName,
+      lastName: state.logInReducer.lastName
   };
 };
 
-export default connect(mapStateToProps)(NavMenu);
+const mapDispatchToProps = dispatch => {
+  return {
+    onLogout: () => dispatch(actionTypes.LogOut())
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(NavMenu);

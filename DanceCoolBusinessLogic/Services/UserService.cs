@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using DanceCoolDataAccessLogic.EfStructures.Context;
 using DanceCoolDataAccessLogic.EfStructures.Entities;
 using DanceCoolDataAccessLogic.UnitOfWork;
 using DanceCoolDTO;
@@ -52,12 +51,13 @@ namespace DanceCoolBusinessLogic.Services
         public UserDTO GetUserById(int id)
         {
             var userModel = db.Users.GetUserById(id);
-            if (userModel == null)
-            {
-                return null;
-            }
+            return userModel == null ? null : UserModelToUserDTO(userModel);
+        }
 
-            return UserModelToUserDTO(userModel);
+        public UserDTO GetUserByEmail(string email)
+        {
+            var user = db.Users.GetUserByEmail(email);
+            return user == null ? null : UserModelToUserDTO(user);
         }
 
         public IEnumerable<UserDTO> GetUsersFromGroup(int groupId)

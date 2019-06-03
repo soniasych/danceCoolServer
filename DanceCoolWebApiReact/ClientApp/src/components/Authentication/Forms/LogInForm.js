@@ -1,32 +1,25 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Form } from 'react-bootstrap';
 
-class LogInForm extends Component {
-    constructor(props) {
-        super(props);
+const LogInForm = (props) => {
+    return (
+        <Form>
+            <Form.Group controlId="formBasicEmail">
+                <Form.Label>Електронна пошта</Form.Label>
+                <Form.Control
+                    type="email"
+                    value="gosling@mail.com"
+                    onChange={props.autEmailChanged} />
+            </Form.Group>
 
-    }
-
-    render() {
-        return (
-            <Form>
-                <Form.Group controlId="formBasicEmail">
-                    <Form.Label>Електронна пошта</Form.Label>
-                    <Form.Control
-                        type="email"
-                        value="gosling@mail.com"
-                        onChange={this.props.autEmailChanged} />
-                </Form.Group>
-
-                <Form.Group controlId="formBasicPassword">
-                    <Form.Label>Пароль</Form.Label>
-                    <Form.Control
-                        type="password"
-                        onChange={this.props.autPasswordChanged} />
-                </Form.Group>
-            </Form>
-        );
-    }
+            <Form.Group controlId="formBasicPassword">
+                <Form.Label>Пароль</Form.Label>
+                <Form.Control
+                    type="password"
+                    onChange={props.autPasswordChanged} />
+            </Form.Group>
+        </Form>
+    );
 }
 
 export default LogInForm;

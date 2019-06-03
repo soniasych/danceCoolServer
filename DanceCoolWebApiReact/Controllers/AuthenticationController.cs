@@ -3,11 +3,10 @@ using DanceCoolDTO;
 using System;
 using Microsoft.AspNetCore.Mvc;
 using System.IdentityModel.Tokens.Jwt;
-using System.Text;
 using Microsoft.IdentityModel.Tokens;
-using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using DanceCoolBusinessLogic.Helpers;
+using DanceCoolBusinessLogic.Services;
 
 namespace DanceCoolWebApiReact.Controllers
 {
@@ -16,10 +15,13 @@ namespace DanceCoolWebApiReact.Controllers
     public class AuthenticationController : ControllerBase
     {
         IAuthenticationService _authenticationService;
+        IUserService _userService;
 
-        public AuthenticationController(IAuthenticationService authenticationService)
+        public AuthenticationController(IAuthenticationService authenticationService, 
+                                        IUserService userService)
         {
             this._authenticationService = authenticationService;
+            this._userService = userService;
         }
 
         [AllowAnonymous]
@@ -45,6 +47,7 @@ namespace DanceCoolWebApiReact.Controllers
         public IActionResult Autorize([FromBody] AutorizationUserIdentityDto credsDto)
         {
             var creds = _authenticationService.Authenticate(credsDto.email, credsDto.password);
+            var user = _userService.GetUserByEmail(credsDto.email);
 
             if (creds == null)
                 return BadRequest(new { message = "Username or password is incorrect" });
@@ -64,7 +67,10 @@ namespace DanceCoolWebApiReact.Controllers
             var response = new
             {
                 access_token = encodedJwt,
-                name = creds.Name
+                token_lifeTime = 3600000,
+                email = creds.Name,
+                firstName = user.FirstName,
+                lastName = user.LastName
             };
             return Ok(response);
         }

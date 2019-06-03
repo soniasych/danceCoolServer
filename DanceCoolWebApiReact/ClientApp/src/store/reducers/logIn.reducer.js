@@ -2,8 +2,11 @@ import * as actionTypes from '../actions/actionTypes';
 import updateObject from '../helpers/updateObject';
 
 const initialState = {
-    email: null,
     access_token: null,
+    token_lifetime: null,
+    email: null,
+    firstName: null,
+    lastName: null,
     loading: false,
     error: null
 };
@@ -17,8 +20,11 @@ const logInStart = (state, action) => {
 
 const logInSuccess = (state, action) => {
     return updateObject(state, {
-        email: action.email,
         access_token: action.access_token,
+        token_lifetime: action.token_lifetime,
+        email: action.email,
+        firstName: action.firstName,
+        lastName: action.lastName,
         loading: false,
         error: null
     });
@@ -34,8 +40,10 @@ const logInFailed = (state, action) => {
 
 const logOut = (state, action)=>{
     return updateObject(state, {
-        token:null, 
-        email:null 
+        access_token: null,
+        email:null,
+        firstName: null,
+        lastName: null
     });
 }
 

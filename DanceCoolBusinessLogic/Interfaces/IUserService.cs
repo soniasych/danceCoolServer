@@ -14,5 +14,6 @@ namespace DanceCoolBusinessLogic.Services
         void AddUserToGroup(int userId, int groupId);
         IEnumerable<UserDTO> Search(string key);
         IEnumerable<User> GetAllUserModels();
+        UserDTO GetUserByEmail(string email);
     }
 }

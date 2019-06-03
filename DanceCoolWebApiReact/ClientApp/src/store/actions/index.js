@@ -8,6 +8,7 @@ export {
 
 export {
     LogIn,
+    LogOut,
     LogInStart,
     LogInSuccess,
     LogInFailed
