@@ -1,16 +1,23 @@
 import * as actionTypes from './actionTypes';
 import axios from 'axios';
 
+export const gogOut = ()=>{
+    return{
+        type:actionTypes.LOG_OUT
+    };
+    
+};
+
 export const LogInStart = () => {
     return {
         type: actionTypes.LOG_IN_START
     };
 };
 
-export const LogInSuccess = (name, access_token) => {
+export const LogInSuccess = (email, access_token) => {
     return {
         type: actionTypes.LOG_IN_SUCCESS,
-        email: name,
+        email: email,
         access_token: access_token
     };
 };

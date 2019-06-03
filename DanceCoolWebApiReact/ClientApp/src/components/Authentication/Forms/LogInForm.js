@@ -14,7 +14,7 @@ class LogInForm extends Component {
                     <Form.Label>Електронна пошта</Form.Label>
                     <Form.Control
                         type="email"
-                        value="rgosling@mail.com"
+                        value="gosling@mail.com"
                         onChange={this.props.autEmailChanged} />
                 </Form.Group>
 

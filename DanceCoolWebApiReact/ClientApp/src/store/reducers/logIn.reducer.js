@@ -32,15 +32,22 @@ const logInFailed = (state, action) => {
         });
 }
 
+const logOut = (state, action)=>{
+    return updateObject(state, {
+        token:null, 
+        email:null 
+    });
+}
+
 const logInReducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.LOG_IN_START: return logInStart(state, action);
         case actionTypes.LOG_IN_SUCCESS: return logInSuccess(state, action);
         case actionTypes.LOG_IN_FAILED: return logInFailed(state, action);
+        case actionTypes.LOG_OUT: return logOut(state, action);
         default:
             return state;
-    };
+    }
 };
-
 
 export default logInReducer;

@@ -47,11 +47,11 @@ class NavMenu extends Component {
   togglePopover() {
     if (this.state.popoverOpen === false) {
       this.setState({ popoverOpen: true })
-      console.log(this.props.authData);
+      console.log(this.props.email);
     }
     else {
       this.setState({ popoverOpen: false });
-      console.log(this.props.authData);
+      console.log(this.props.email);
     }
   }
 
@@ -85,10 +85,10 @@ class NavMenu extends Component {
                   <NavLink tag={Link} className="text-dark" to="/guest-contacts">Контакти</NavLink>
                 </NavItem>
                 <NavItem>
-                  {this.props.authData === "lalal" ?
+                  {this.props.isLogedIn ?
                     < div >
                       <Button id="Popover1" type="button" onClick={this.togglePopover}>
-                        Вітаємо, {this.props.authData}
+                        Вітаємо, {this.props.email}
                       </Button>
                       <Popover placement="bottom" isOpen={this.state.popoverOpen} target="Popover1">
                         <PopoverHeader>La la Land</PopoverHeader>
@@ -115,21 +115,11 @@ class NavMenu extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    authData: state.authData
-  };
-}
-
-const mapDispatchToProps = dispatch => {
-  return {
-    onSignUp: (firstName, lastName, phoneNumber, email, password) =>
-      dispatch(actionTypes.SignUp(firstName, lastName, phoneNumber, email, password)),
-    //onRegister: (firstName, lastName, phoneNumber, email, password) => 
-    //dispatch(register(firstName, lastName, phoneNumber, email, password)),
-    //onLogout:()=>(logOut())
+const mapStateToProps = state =>{
+  return{
+      isLogedIn: state.logInReducer.access_token != null,
+      email: state.logInReducer.email,
   };
 };
 
-
-export default connect(mapStateToProps, mapDispatchToProps)(NavMenu);
+export default connect(mapStateToProps)(NavMenu);

@@ -23,7 +23,7 @@ class AuthenticationModal extends Component {
       regEmail: '',
       regPassword: '',
       regConfPassword: '',
-      autEmail: 'rgosling@mail.com',
+      autEmail: 'gosling@mail.com',
       autPassword: 'LaLaLand'
     }
     this.onAuthenticationSelectTab = this.onAuthenticationSelectTab.bind(this);
