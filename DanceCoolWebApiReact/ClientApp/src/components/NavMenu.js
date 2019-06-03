@@ -123,11 +123,11 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onSignUp: (firstName, lastName, phoneNumber, email, password) => 
-      dispatch(actionTypes.onSignUp(email, password)),
+    onSignUp: (firstName, lastName, phoneNumber, email, password) =>
+      dispatch(actionTypes.SignUp(firstName, lastName, phoneNumber, email, password)),
     //onRegister: (firstName, lastName, phoneNumber, email, password) => 
-      //dispatch(register(firstName, lastName, phoneNumber, email, password)),
-      //onLogout:()=>(logOut())
+    //dispatch(register(firstName, lastName, phoneNumber, email, password)),
+    //onLogout:()=>(logOut())
   };
 };
 

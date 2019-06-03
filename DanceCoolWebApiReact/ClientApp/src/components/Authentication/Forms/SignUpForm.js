@@ -1,7 +1,7 @@
 import React from 'react';
 import { Form, Col } from 'react-bootstrap';
 
-const RegistrationForm = (props) => {
+const SignUpForm = (props) => {
     return (<Form>
         <Form.Row>
             <Form.Group as={Col} controlId="formGridFirstName">
@@ -14,7 +14,7 @@ const RegistrationForm = (props) => {
             </Form.Group>
         </Form.Row>
         <Form.Row>
-        <Form.Group as={Col} controlId="formGridLastName">
+            <Form.Group as={Col} controlId="formGridLastName">
                 <Form.Label>Прізвище</Form.Label>
                 <Form.Control type="text" placeholder="Прізвище" onChange={props.LNChanged} />
             </Form.Group>
@@ -26,15 +26,15 @@ const RegistrationForm = (props) => {
         <Form.Row>
             <Form.Group as={Col} controlId="formGridPhoneNumber">
                 <Form.Label>Номер телефону</Form.Label>
-                <Form.Control type="text" placeholder="Номер телефону" onChange={props.PhoneChanged}/>
+                <Form.Control type="text" placeholder="Номер телефону" onChange={props.PhoneChanged} />
             </Form.Group>
             <Form.Group as={Col} controlId="formGridConfirmPassword">
                 <Form.Label>Підтвердіть Пароль</Form.Label>
-                <Form.Control type="password" placeholder="Підтвердження Паролю" onChange={props.RegConfPasswordChanged}/>
+                <Form.Control type="password" placeholder="Підтвердження Паролю" onChange={props.RegConfPasswordChanged} />
             </Form.Group>
         </Form.Row>
     </Form>);
 
 }
 
-export default RegistrationForm;
+export default SignUpForm;

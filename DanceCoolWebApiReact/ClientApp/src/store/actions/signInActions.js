@@ -9,27 +9,27 @@ export const SignInStart = () => {
 
 export const SignInSuccess = (authData) => {
     return {
-        type: actionTypes.SignUpSuccess,
+        type: actionTypes.SIGN_IN_SUCCESS,
         authData: authData
     };
 };
 
 export const SignInFailed = (error) => {
     return {
-        type: actionTypes.SIGN_UP_FAILED,
+        type: actionTypes.SIGN_IN_FAILED,
         error: error
     };
 };
 
 export const SignIn = (email, password) => {
     return dispatch => {
-        const signUpData={
-            email:email,
+        const signUpData = {
+            email: email,
             password: password
         }
         dispatch(SignInStart());
         axios.post('api/register', signUpData)
-            .then(response=>{
+            .then(response => {
                 console.log(response);
                 dispatch(SignInSuccess(response.data));
             })

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Form } from 'react-bootstrap';
 
-class AutorizationForm extends Component {
+class SignInForm extends Component {
     constructor(props) {
         super(props);
 
@@ -28,4 +28,4 @@ class AutorizationForm extends Component {
     }
 }
 
-export default AutorizationForm;
+export default SignInForm;
