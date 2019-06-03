@@ -10,7 +10,7 @@ import './AuthenticationModal.css';
 import AutorizationForm from './Forms/AutorizationForm';
 import RegistrationForm from './Forms/RegistrationForm';
 import { connect } from 'react-redux';
-import * as actionTypes from '../../store/actions/rootActions';
+import * as actions from '../../store/actions/index';
 
 class AuthenticationModal extends Component {
   constructor(props) {
@@ -24,7 +24,7 @@ class AuthenticationModal extends Component {
       regEmail: '',
       regPassword: '',
       regConfPassword: '',
-      autEmail: 'rgosling@mail.com',
+      autEmail: 'gosling@mail.com',
       autPassword: 'LaLaLand'
     }
     this.onAuthenticationSelectTab = this.onAuthenticationSelectTab.bind(this);
@@ -38,7 +38,6 @@ class AuthenticationModal extends Component {
     this.onAutEmailInput = this.onAutEmailInput.bind(AutorizationForm);
     this.onAutPasswordInput = this.onAutPasswordInput.bind(AutorizationForm);
     this.registerRequest = this.registerRequest.bind(this);
-    this.autorizeRequest = this.autorizeRequest.bind(this);
   }
 
   onRegFNInput = event => {
@@ -95,17 +94,6 @@ class AuthenticationModal extends Component {
     event.preventDefault();
   }
 
-  autorizeRequest = () => {
-    let autorizationData = {
-      email: this.state.autEmail,
-      password: this.state.autPassword
-    }
-    Axios.post('api/autorize', autorizationData)
-      .then((Response) => {
-        this.setState({ accessToken: Response.data });
-      });
-  }
-
   render() {
     return (
       <Modal isOpen={this.props.visible}
@@ -134,7 +122,11 @@ class AuthenticationModal extends Component {
             type="submit"
             onClick={this.state.activeTabKey === 'SignInTab' ?
               () => this.props.onAuthorize(this.state.autEmail, this.state.autPassword) :
-              this.props.onRegister}>
+              this.props.onRegister(this.state.regFirstName,
+              this.state.regLastName, 
+              this.state.regPhoneNumber,
+              this.state.regEmail,
+              this.state.regPassword)}>
             {this.state.authenticationButtonText}
           </Button>
           <Button variant="secondary"
@@ -147,11 +139,16 @@ class AuthenticationModal extends Component {
   }
 }
 
+
 const mapDispatchToProps = dispatch => {
   return {
-    onAuthorize: (email, password) => dispatch({ type: actionTypes.AUTORIZE, email: email, password: password }),
-    onRegister: () => dispatch({ type: actionTypes.REGISTER })
+    onSignUp: (firstName, lastName, phoneNumber, email, password) => 
+      dispatch(actions.onSignUp(firstName, lastName, phoneNumber, email, password)),
+    //onRegister: (firstName, lastName, phoneNumber, email, password) => 
+      //dispatch(register(firstName, lastName, phoneNumber, email, password)),
+      //onLogout:()=>(logOut())
   };
 };
+
 
 export default connect(null, mapDispatchToProps)(AuthenticationModal);

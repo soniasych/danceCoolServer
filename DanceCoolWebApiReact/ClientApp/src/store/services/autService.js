@@ -5,7 +5,12 @@ export const AutorizationService = (email, password) => {
         email: email,
         password: password
     }).then(response => {
-        localStorage.setItem('user', JSON.stringify(response.data));
+        let authData = response.data;
+        if(response && authData){
+            let authData = response.data;
+            localStorage.setItem('authData', authData)
+        }
+        return authData;
     });
 }
 

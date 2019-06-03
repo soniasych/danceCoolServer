@@ -9,7 +9,7 @@ import './NavMenu.css';
 import AuthenticationModal from './Authentication/AuthenticationModal';
 import Logo from '../assets/lasalsa-logo.png';
 import { connect } from 'react-redux';
-import * as actionTypes from '../store/actions/rootActions';
+import * as actionTypes from '../store/actions/index';
 
 class NavMenu extends Component {
   static displayName = NavMenu.name;
@@ -47,10 +47,11 @@ class NavMenu extends Component {
   togglePopover() {
     if (this.state.popoverOpen === false) {
       this.setState({ popoverOpen: true })
-      console.log(this.props.authEmail);
+      console.log(this.props.authData);
     }
     else {
       this.setState({ popoverOpen: false });
+      console.log(this.props.authData);
     }
   }
 
@@ -84,10 +85,10 @@ class NavMenu extends Component {
                   <NavLink tag={Link} className="text-dark" to="/guest-contacts">Контакти</NavLink>
                 </NavItem>
                 <NavItem>
-                  {this.props.name === 'капуста' ?
+                  {this.props.authData === "lalal" ?
                     < div >
                       <Button id="Popover1" type="button" onClick={this.togglePopover}>
-                        Вітаємо, {this.props.name}
+                        Вітаємо, {this.props.authData}
                       </Button>
                       <Popover placement="bottom" isOpen={this.state.popoverOpen} target="Popover1">
                         <PopoverHeader>La la Land</PopoverHeader>
@@ -116,16 +117,19 @@ class NavMenu extends Component {
 
 const mapStateToProps = state => {
   return {
-    authEmail: state.authEmail
+    authData: state.authData
   };
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    onAuthorize: (email, password) => dispatch({ type: actionTypes.AUTORIZE, email: email, password: password }),
-    onRegister: () => dispatch({ type: actionTypes.REGISTER }),
-    onLogOut: () => dispatch({ type: actionTypes.LOG_OUT })
+    onSignUp: (firstName, lastName, phoneNumber, email, password) => 
+      dispatch(actionTypes.onSignUp(email, password)),
+    //onRegister: (firstName, lastName, phoneNumber, email, password) => 
+      //dispatch(register(firstName, lastName, phoneNumber, email, password)),
+      //onLogout:()=>(logOut())
   };
 };
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(NavMenu);

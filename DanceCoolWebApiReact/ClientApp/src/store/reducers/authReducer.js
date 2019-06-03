@@ -1,30 +1,10 @@
-import * as actionTypes from '../actions/rootActions';
 import * as authenticationService from '../services/autService';
 
-let authData = JSON.parse(localStorage.getItem('authData'));
-const initialState =
-{
-    authEmail: ''
-}
+let authData = localStorage.getItem('authData');
+const initialState = authData ? { loggedIn: true, authData } : {};
 
-const authReducer = (state = initialState, action) => {
-    switch (action.type) {
-        case actionTypes.AUTORIZE:
-            authenticationService.AutorizationService(action.email, action.password);
-            return {
-                authEmail: authData.name
-            }
-        case actionTypes.REGISTER:
-            return {
-            }
-        case actionTypes.LOG_OUT:
-            authenticationService.logout();
-            return {
-                name: ''
-            }
-        default:
-            break;
-    }
+export function authReducer(state = initialState, action) {
+  
     return state;
 }
 
