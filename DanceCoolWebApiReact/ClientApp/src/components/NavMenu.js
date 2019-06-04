@@ -96,10 +96,16 @@ class NavMenu extends Component {
                       <Popover placement="bottom" isOpen={this.state.popoverOpen} target="Popover1">
                         <PopoverHeader>La la Land</PopoverHeader>
                         <PopoverBody>
-                          <Button className="btn btn-light"
-                            onClick={this.onLogOutClick}>
-                            Вийти
+                          <div>
+                            <Link className="allBlack" to='/god-mode-on'>Адміністрування</Link>
+                          </div>
+                          <hr />
+                          <div>
+                            <Button className="btn btn-light"
+                              onClick={this.onLogOutClick}>
+                              Вийти
                           </Button>
+                          </div>
                         </PopoverBody>
                       </Popover>
                     </div> :

@@ -2,9 +2,13 @@ import React, { Component } from 'react';
 import { Container } from 'reactstrap';
 import NavMenu from './NavMenu';
 import './Layout.css';
+import * as actions from '../store/actions/index';
+import { connect } from 'react-redux';
 
-export class Layout extends Component {
-  static displayName = Layout.name;
+class Layout extends Component {
+  componentDidMount() {
+    this.props.onTryAutoLogin();
+  }
 
   render() {
     return (
@@ -17,3 +21,11 @@ export class Layout extends Component {
     );
   }
 }
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onTryAutoLogin: () => dispatch(actions.CheckLogInState())
+  };
+};
+
+export default connect(null, mapDispatchToProps)(Layout);

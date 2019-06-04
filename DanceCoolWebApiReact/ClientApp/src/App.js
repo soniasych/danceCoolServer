@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import { Route } from 'react-router';
-import { Layout } from './components/Layout';
+import Layout from './components/Layout';
 import { GuestPage } from './components/GuestComponent/GuestPage';
 import { GroupList } from './components/GroupPage/GroupList';
 import { GroupPage } from './components/GroupPage/GroupPage'
@@ -14,12 +13,9 @@ import GroupsGuestPage from './components/GuestComponent/GroupsGuest/GroupsGuest
 import MentorsGuestPage from './components/GuestComponent/MentorsGuest/MentorsGuestPage';
 import ContactsGuestPage from './components/GuestComponent/ContactsGuest/ContactsGuestPage';
 import StudentProfile from './components/Profiles/StudentProfile/StudentProfile';
-import * as actions from './store/actions/index';
+
 
 class App extends Component {
-  componentDidMount(){
-    this.props.onTryAutoLogin();
-  }
 
   render() {
     return (
@@ -42,10 +38,4 @@ class App extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    onTryAutoLogin:()=>dispatch(actions.CheckLogInState())
-  };
-};
-
-export default connect(null, mapDispatchToProps)(App);
+export default App;
