@@ -10,6 +10,8 @@ export const checkLogInTimeOut = (expirationTime) => {
 };
 
 export const LogOut = () => {
+    localStorage.removeItem('authData');
+    localStorage.removeItem('expirationDate');
     return {
         type: actionTypes.LOG_OUT
     };
@@ -49,6 +51,9 @@ export const LogIn = (email, password) => {
         axios.post('api/autorize', logInData)
             .then(response => {
                 console.log(response);
+                const expirationDate = new Date(new Date().getTime() + response.data.token_lifeTime);
+                localStorage.setItem('authData', JSON.stringify(response.data));
+                localStorage.setItem('expirationDate', expirationDate);
                 dispatch(LogInSuccess(
                     response.data.access_token,
                     response.data.token_lifeTime,
@@ -62,4 +67,27 @@ export const LogIn = (email, password) => {
                 dispatch(LogInFailed(error))
             });
     }
+};
+
+export const CheckLogInState =()=>{
+    return dispatch=>{
+        const authData = JSON.parse(localStorage.getItem('authData'));
+        if(!authData){
+            dispatch(LogOut());
+        }else{
+            const expirationDate = new Date(localStorage.getItem('expirationDate'));
+            if(expirationDate > new Date()){
+                dispatch(LogInSuccess(authData.access_token, 
+                    authData.token_lifeTime, 
+                    authData.email, 
+                    authData.firstName, 
+                    authData.lastName));
+                dispatch(checkLogInTimeOut(authData.token_lifeTime));
+            }else{
+                dispatch(LogOut());
+            }
+            
+        }
+       
+    };
 };

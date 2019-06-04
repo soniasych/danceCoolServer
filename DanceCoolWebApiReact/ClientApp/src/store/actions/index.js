@@ -11,6 +11,7 @@ export {
     LogOut,
     LogInStart,
     LogInSuccess,
-    LogInFailed
+    LogInFailed,
+    CheckLogInState
 }
     from './logInActions';

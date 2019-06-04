@@ -3,7 +3,7 @@ import updateObject from '../helpers/updateObject';
 
 const initialState = {
     access_token: null,
-    token_lifetime: null,
+    token_lifeTime: null,
     email: null,
     firstName: null,
     lastName: null,
@@ -21,7 +21,7 @@ const logInStart = (state, action) => {
 const logInSuccess = (state, action) => {
     return updateObject(state, {
         access_token: action.access_token,
-        token_lifetime: action.token_lifetime,
+        token_lifeTime: action.token_lifeTime,
         email: action.email,
         firstName: action.firstName,
         lastName: action.lastName,
