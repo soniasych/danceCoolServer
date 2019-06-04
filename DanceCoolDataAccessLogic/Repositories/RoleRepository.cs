@@ -23,7 +23,7 @@ namespace DanceCoolDataAccessLogic.Repositories
             {
                 return null;
             }
-            var user = Context.Users.Find(credentials.Id);
+            var user = Context.Users.Find(credentials.UserId);
             return user == null ? null : Context.Roles.Find(user.RoleId);
         }
     }

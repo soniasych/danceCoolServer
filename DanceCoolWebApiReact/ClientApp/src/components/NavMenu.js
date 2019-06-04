@@ -25,7 +25,7 @@ class NavMenu extends Component {
     this.AuthenticationMModalVisibilityHandler = this.AuthenticationModalVisibilityHandler.bind(AuthenticationModal);
     this.toggleNavbar = this.toggleNavbar.bind(this);
     this.togglePopover = this.togglePopover.bind(this);
-
+    this.onLogOutClick = this.onLogOutClick.bind(this);
   }
 
   toggleNavbar() {
@@ -51,6 +51,11 @@ class NavMenu extends Component {
     else {
       this.setState({ popoverOpen: false });
     }
+  }
+
+  onLogOutClick() {
+    this.props.onLogOut();
+    this.setState({ popoverOpen: false });
   }
 
   render() {
@@ -92,8 +97,8 @@ class NavMenu extends Component {
                         <PopoverHeader>La la Land</PopoverHeader>
                         <PopoverBody>
                           <Button className="btn btn-light"
-                            onClick={this.props.onLogout}>
-                              Вийти
+                            onClick={this.onLogOutClick}>
+                            Вийти
                           </Button>
                         </PopoverBody>
                       </Popover>
@@ -110,24 +115,25 @@ class NavMenu extends Component {
           visible={this.state.authenticationModalVisible}
           close={this.AuthenticationModalVisibilityHandler}
           tabSwitching={this.onAuthenticationSelectTab}
-          authenticationButtonText={this.state.AuthenticationButtonText} />
+          authenticationButtonText={this.state.AuthenticationButtonText}
+          isPopoverOpen={this.state.popoverOpen} />
       </div>
     );
   }
 }
 
-const mapStateToProps = state =>{
-  return{
-      isLogedIn: state.logInReducer.access_token != null,
-      email: state.logInReducer.email,
-      firstName: state.logInReducer.firstName,
-      lastName: state.logInReducer.lastName
+const mapStateToProps = state => {
+  return {
+    isLogedIn: state.logInReducer.access_token != null,
+    email: state.logInReducer.email,
+    firstName: state.logInReducer.firstName,
+    lastName: state.logInReducer.lastName
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    onLogout: () => dispatch(actionTypes.LogOut())
+    onLogOut: () => dispatch(actionTypes.LogOut())
   };
 };
 

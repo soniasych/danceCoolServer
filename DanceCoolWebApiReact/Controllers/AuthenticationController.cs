@@ -49,7 +49,7 @@ namespace DanceCoolWebApiReact.Controllers
             var creds = _authenticationService.Authenticate(credsDto.email, credsDto.password);
             var user = _userService.GetUserByEmail(credsDto.email);
 
-            if (creds == null)
+            if (creds == null || user== null)
                 return BadRequest(new { message = "Username or password is incorrect" });
 
             var now = DateTime.UtcNow;
