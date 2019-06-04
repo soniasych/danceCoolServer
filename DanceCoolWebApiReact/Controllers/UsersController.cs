@@ -57,13 +57,7 @@ namespace DanceCoolWebApiReact.Controllers
         {
             return _userService.GetUserById(userId);
         }
-
-        [HttpGet]
-        [Route("api/groups/{groupId}/users/")]
-        public IEnumerable<UserDTO> GetUsersById(int groupId)
-        {
-            return _userService.GetUsersFromGroup(groupId);
-        }
+       
 
         [HttpGet]
         [Route("api/users/search")]

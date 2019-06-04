@@ -1,10 +1,10 @@
 import React from 'react';
-import { Form } from 'react-bootstrap';
+import { Form, Button } from 'react-bootstrap';
 
 const LogInForm = (props) => {
     return (
         <Form>
-            <Form.Group controlId="formBasicEmail">
+            <Form.Group controlId="formBasicEmail" typeof="subimt">
                 <Form.Label>Електронна пошта</Form.Label>
                 <Form.Control
                     type="email"

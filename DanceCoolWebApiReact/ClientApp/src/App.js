@@ -3,7 +3,7 @@ import { Route } from 'react-router';
 import Layout from './components/Layout';
 import { GuestPage } from './components/GuestComponent/GuestPage';
 import { GroupList } from './components/GroupPage/GroupList';
-import { GroupPage } from './components/GroupPage/GroupPage'
+import GroupPage from './components/GroupPage/GroupPage'
 import { ManagingUsersPage } from './components/UserPage/ManagingUsersPage';
 import { AdminPage } from './components/AdminPage';
 import { AttendancePage } from './components/AttendancePage/Attendances';

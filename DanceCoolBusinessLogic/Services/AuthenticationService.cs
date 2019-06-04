@@ -68,7 +68,7 @@ namespace DanceCoolBusinessLogic.Services
             var roleName = db.Roles.GetRoleByCredentails(email).RoleName;
 
             // check if username exists
-            if (userCredentials == null)
+            if (userCredentials == null || roleName == null)
                 return null;
 
             // check if password is correct

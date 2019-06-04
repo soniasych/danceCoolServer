@@ -97,7 +97,7 @@ class NavMenu extends Component {
                         <PopoverHeader>La la Land</PopoverHeader>
                         <PopoverBody>
                           <div>
-                            <Link className="allBlack" to='/god-mode-on'>Адміністрування</Link>
+                            <Link to='/god-mode-on'>Адміністрування</Link>
                           </div>
                           <hr />
                           <div>

@@ -91,7 +91,6 @@ class AuthenticationModal extends Component {
         this.state.regEmail,
         this.state.regPassword)
     }
-    //this.props.isPopoverOpen = false;
   }
 
   render() {
