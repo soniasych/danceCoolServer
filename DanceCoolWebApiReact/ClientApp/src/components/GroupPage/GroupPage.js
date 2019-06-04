@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import GroupTittle from './GroupTittle';
+import { connect } from 'react-redux';
 import GroupStudentsList from './GroupStudentsList';
 import AddingStudentToGroupModal from './AddingStudentToGroupModal/AddingStudentToGroupModal';
 import Axios from 'axios';
 
-export class GroupPage extends Component {
-
+class GroupPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -13,7 +13,8 @@ export class GroupPage extends Component {
             group: {},
             groupStudents: [],
             studentsNotInGroup: [],
-            addingStudentToGroupModalVisible: false
+            addingStudentToGroupModalVisible: false,
+            requestHeader: ''
         }
         this.AddingStudenToGroupModalHandler = this.AddingStudenToGroupModalHandler.bind(AddingStudentToGroupModal);
         this.onAddNewStudentButtonClickHandler = this.onAddNewStudentButtonClickHandler.bind(AddingStudentToGroupModal);
@@ -24,6 +25,10 @@ export class GroupPage extends Component {
         this.populateCurrentGroupData();
         this.populateCurrentGroupStudentsData();
     }
+
+    /*fromRequestHeader() {
+        this.setState({ requestHeader: `Bearer ${this.props.access_token}` });
+    }*/
 
     AddingStudenToGroupModalHandler = event => {
         if (this.state.addingStudentToGroupModalVisible === false) {
@@ -61,7 +66,7 @@ export class GroupPage extends Component {
 
     render() {
         return (
-            <div>
+            <div className="container">
                 <h1>Інформація про поточну групу</h1>
                 <GroupTittle group={this.state.group} />
                 <br />
@@ -88,9 +93,20 @@ export class GroupPage extends Component {
 
     async populateStudentsNotInCurrentGroup() {
         const id = this.props.match.params.id;
-        const response = await Axios.get(`api/groups/${id}/students/notingroup`);
-        const data = await response.data;
-        this.setState({ studentsNotInGroup: data });
+
+        Axios.get(`api/groups/${id}/students/notingroup`, {
+            headers: {
+                Authorization: `Bearer ${this.props.access_token}`
+            }
+        })
+            .then(response =>
+                this.setState({ studentsNotInGroup: response.data }))
+            .catch(error => {
+                console.log(this.state.requestHeader)
+
+            });
+
+        ;
     }
 
     async populateCurrentGroupStudentsData() {
@@ -100,3 +116,12 @@ export class GroupPage extends Component {
         this.setState({ groupStudents: data });
     }
 }
+
+const mapStateToProps = state => {
+    return {
+        access_token: state.logInReducer.access_token
+    };
+};
+
+
+export default connect(mapStateToProps)(GroupPage);

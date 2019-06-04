@@ -68,5 +68,11 @@ namespace DanceCoolDataAccessLogic.Repositories
         {
             return Context.Users.Where(user => user.LastName.Contains(key.ToLower()));
         }
+
+        public User GetUserByEmail(string email)
+        {
+            var credentials = Context.UserCredentials.FirstOrDefault(uc => uc.Email == email);
+            return credentials == null ? null : Context.Users.Find(credentials.UserId);
+        }
     }
 }

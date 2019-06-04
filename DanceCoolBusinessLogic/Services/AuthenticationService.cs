@@ -65,11 +65,10 @@ namespace DanceCoolBusinessLogic.Services
                 return null;
 
             var userCredentials = db.UserCredentials.GetCredentialsByEmail(email);
-            //For times when role authentication will be enabled
-            //var roleName = db.Roles.GetRoleByCredentails(email).RoleName;
+            var roleName = db.Roles.GetRoleByCredentails(email).RoleName;
 
             // check if username exists
-            if (userCredentials == null)
+            if (userCredentials == null || roleName == null)
                 return null;
 
             // check if password is correct
@@ -79,8 +78,7 @@ namespace DanceCoolBusinessLogic.Services
             var claims = new List<Claim>
                 {
                     new Claim(ClaimsIdentity.DefaultNameClaimType, userCredentials.Email)
-                    //For times when role authentication will be enabled
-                    //,new Claim(ClaimsIdentity.DefaultNameClaimType, roleName)
+                    ,new Claim(ClaimsIdentity.DefaultNameClaimType, roleName)
                 };
             ClaimsIdentity claimsIdentity =
             new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType,
@@ -117,7 +115,7 @@ namespace DanceCoolBusinessLogic.Services
                 throw new ArgumentException("Value cannot be empty or whitespace only string.", "password");
 
             if (storedHash.Length != 64) throw new ArgumentException("Invalid length of password hash (64 bytes expected).", "passwordHash");
-            if (storedSalt.Length != 128) throw new ArgumentException("Invalid length of password salt (128 bytes expected).", "passwordHash");
+            if (storedSalt.Length != 128) throw new ArgumentException("Invalid length of password salt (128 bytes expected).", "passwordSalt");
 
             using (var hmac = new System.Security.Cryptography.HMACSHA512(storedSalt))
             {

@@ -1,22 +1,31 @@
 import React, { Component } from 'react';
-import { Collapse, Container, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink } from 'reactstrap';
+import {
+  Collapse, Container, Button,
+  Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink,
+  Popover, PopoverHeader, PopoverBody
+} from 'reactstrap';
 import { Link } from 'react-router-dom';
 import './NavMenu.css';
-import { AuthenticationModal } from './Authentication/AuthenticationModal';
-import Logo from '../assets/lasalsa-logo.png'
+import AuthenticationModal from './Authentication/AuthenticationModal';
+import Logo from '../assets/lasalsa-logo.png';
+import { connect } from 'react-redux';
+import * as actionTypes from '../store/actions/index';
 
-export class NavMenu extends Component {
+class NavMenu extends Component {
   static displayName = NavMenu.name;
 
   constructor(props) {
     super(props);
     this.state = {
       authenticationModalVisible: false,
-      collapsed: true
+      defaultModalTab: 'SignInTab',
+      collapsed: true,
+      popoverOpen: false
     };
     this.AuthenticationMModalVisibilityHandler = this.AuthenticationModalVisibilityHandler.bind(AuthenticationModal);
     this.toggleNavbar = this.toggleNavbar.bind(this);
-    
+    this.togglePopover = this.togglePopover.bind(this);
+    this.onLogOutClick = this.onLogOutClick.bind(this);
   }
 
   toggleNavbar() {
@@ -28,10 +37,25 @@ export class NavMenu extends Component {
   AuthenticationModalVisibilityHandler = event => {
     if (this.state.authenticationModalVisible === false) {
       this.setState({ authenticationModalVisible: true });
+      console.log(this.props.authEmail);
     }
     else {
       this.setState({ authenticationModalVisible: false });
     }
+  }
+
+  togglePopover() {
+    if (this.state.popoverOpen === false) {
+      this.setState({ popoverOpen: true });
+    }
+    else {
+      this.setState({ popoverOpen: false });
+    }
+  }
+
+  onLogOutClick() {
+    this.props.onLogOut();
+    this.setState({ popoverOpen: false });
   }
 
   render() {
@@ -45,8 +69,8 @@ export class NavMenu extends Component {
             <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
             <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={!this.state.collapsed} navbar>
               <ul className="navbar-nav flex-grow">
-              <NavItem>
-                <NavLink tag={Link} className="text-dark" to="/">Головна</NavLink>
+                <NavItem>
+                  <NavLink tag={Link} className="text-dark" to="/">Головна</NavLink>
                 </NavItem>
                 <NavItem>
                   <NavLink tag={Link} className="text-dark" to="/about-us">Про нас</NavLink>
@@ -64,7 +88,30 @@ export class NavMenu extends Component {
                   <NavLink tag={Link} className="text-dark" to="/guest-contacts">Контакти</NavLink>
                 </NavItem>
                 <NavItem>
-                  <button className="btn btn-light" onClick={this.AuthenticationModalVisibilityHandler}>Увійти</button>
+                  {this.props.isLogedIn ?
+                    < div >
+                      <Button id="Popover1" type="button" onClick={this.togglePopover}>
+                        Вітаємо, {this.props.firstName} {this.props.lastName}
+                      </Button>
+                      <Popover placement="bottom" isOpen={this.state.popoverOpen} target="Popover1">
+                        <PopoverHeader>La la Land</PopoverHeader>
+                        <PopoverBody>
+                          <div>
+                            <Link to='/god-mode-on'>Адміністрування</Link>
+                          </div>
+                          <hr />
+                          <div>
+                            <Button className="btn btn-light"
+                              onClick={this.onLogOutClick}>
+                              Вийти
+                          </Button>
+                          </div>
+                        </PopoverBody>
+                      </Popover>
+                    </div> :
+                    <Button className="btn btn-light"
+                      onClick={this.AuthenticationModalVisibilityHandler}>Увійти</Button>
+                  }
                 </NavItem>
               </ul>
             </Collapse>
@@ -74,8 +121,26 @@ export class NavMenu extends Component {
           visible={this.state.authenticationModalVisible}
           close={this.AuthenticationModalVisibilityHandler}
           tabSwitching={this.onAuthenticationSelectTab}
-          authenticationButtonText={this.state.AuthenticationButtonText}/>
+          authenticationButtonText={this.state.AuthenticationButtonText}
+          isPopoverOpen={this.state.popoverOpen} />
       </div>
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    isLogedIn: state.logInReducer.access_token != null,
+    email: state.logInReducer.email,
+    firstName: state.logInReducer.firstName,
+    lastName: state.logInReducer.lastName
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onLogOut: () => dispatch(actionTypes.LogOut())
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(NavMenu);

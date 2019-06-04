@@ -11,6 +11,10 @@ image {
   padding: 0;
 }
 
+Link .allBlack {
+  color: black;
+}
+
 html {
   font-size: 14px;
 }

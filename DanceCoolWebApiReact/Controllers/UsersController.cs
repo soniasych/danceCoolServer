@@ -29,6 +29,13 @@ namespace DanceCoolWebApiReact.Controllers
         }
 
         [HttpGet]
+        [Route("api/userInfo")]
+        public RegistrationUserIdentityDto GetUserInfo(string email)
+        {
+            return null;
+        }
+
+        [HttpGet]
         [Route("api/user-models")]
         public IEnumerable<User> GetAllUserModels()
         {
@@ -50,13 +57,7 @@ namespace DanceCoolWebApiReact.Controllers
         {
             return _userService.GetUserById(userId);
         }
-
-        [HttpGet]
-        [Route("api/groups/{groupId}/users/")]
-        public IEnumerable<UserDTO> GetUsersById(int groupId)
-        {
-            return _userService.GetUsersFromGroup(groupId);
-        }
+       
 
         [HttpGet]
         [Route("api/users/search")]

@@ -3,11 +3,10 @@ using DanceCoolDTO;
 using System;
 using Microsoft.AspNetCore.Mvc;
 using System.IdentityModel.Tokens.Jwt;
-using System.Text;
 using Microsoft.IdentityModel.Tokens;
-using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using DanceCoolBusinessLogic.Helpers;
+using DanceCoolBusinessLogic.Services;
 
 namespace DanceCoolWebApiReact.Controllers
 {
@@ -16,10 +15,13 @@ namespace DanceCoolWebApiReact.Controllers
     public class AuthenticationController : ControllerBase
     {
         IAuthenticationService _authenticationService;
+        IUserService _userService;
 
-        public AuthenticationController(IAuthenticationService authenticationService)
+        public AuthenticationController(IAuthenticationService authenticationService, 
+                                        IUserService userService)
         {
             this._authenticationService = authenticationService;
+            this._userService = userService;
         }
 
         [AllowAnonymous]
@@ -31,7 +33,30 @@ namespace DanceCoolWebApiReact.Controllers
             {
                 // save 
                 _authenticationService.RegisterUser(newCredsDto, newCredsDto.Password);
-                return Ok();
+                
+                var regedCreds = _authenticationService.Authenticate(newCredsDto.Email, newCredsDto.Password);
+                var now = DateTime.UtcNow;
+
+            // создаем JWT-токен
+            var jwt = new JwtSecurityToken(
+                    issuer: AuthOptions.ISSUER,
+                    audience: AuthOptions.AUDIENCE,
+                    notBefore: now,
+                    claims: regedCreds.Claims,
+                    expires: now.Add(TimeSpan.FromMinutes(AuthOptions.LIFETIME)),
+                    signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
+            var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
+
+            var response = new
+            {
+                access_token = encodedJwt,
+                token_lifeTime = 3600000,
+                email = regedCreds.Name,
+                firstName = newCredsDto.FirstName,
+                lastName = newCredsDto.LastName
+            };
+            return Ok(response);
+
             }
             catch (AppException ex)
             {
@@ -45,8 +70,9 @@ namespace DanceCoolWebApiReact.Controllers
         public IActionResult Autorize([FromBody] AutorizationUserIdentityDto credsDto)
         {
             var creds = _authenticationService.Authenticate(credsDto.email, credsDto.password);
+            var user = _userService.GetUserByEmail(credsDto.email);
 
-            if (creds == null)
+            if (creds == null || user== null)
                 return BadRequest(new { message = "Username or password is incorrect" });
 
             var now = DateTime.UtcNow;
@@ -64,7 +90,10 @@ namespace DanceCoolWebApiReact.Controllers
             var response = new
             {
                 access_token = encodedJwt,
-                name = creds.Name
+                token_lifeTime = 3600000,
+                email = creds.Name,
+                firstName = user.FirstName,
+                lastName = user.LastName
             };
             return Ok(response);
         }
