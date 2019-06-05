@@ -37,25 +37,25 @@ namespace DanceCoolWebApiReact.Controllers
                 var regedCreds = _authenticationService.Authenticate(newCredsDto.Email, newCredsDto.Password);
                 var now = DateTime.UtcNow;
 
-            // создаем JWT-токен
-            var jwt = new JwtSecurityToken(
-                    issuer: AuthOptions.ISSUER,
-                    audience: AuthOptions.AUDIENCE,
-                    notBefore: now,
-                    claims: regedCreds.Claims,
-                    expires: now.Add(TimeSpan.FromMinutes(AuthOptions.LIFETIME)),
-                    signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
-            var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
+                // создаем JWT-токен
+                var jwt = new JwtSecurityToken(
+                        issuer: AuthOptions.ISSUER,
+                        audience: AuthOptions.AUDIENCE,
+                        notBefore: now,
+                        claims: regedCreds.Claims,
+                        expires: now.Add(TimeSpan.FromMinutes(AuthOptions.LIFETIME)),
+                        signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
+                var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
 
-            var response = new
-            {
-                access_token = encodedJwt,
-                token_lifeTime = 3600000,
-                email = regedCreds.Name,
-                firstName = newCredsDto.FirstName,
-                lastName = newCredsDto.LastName
-            };
-            return Ok(response);
+                var response = new
+                {
+                    access_token = encodedJwt,
+                    token_lifeTime = 3600000,
+                    email = regedCreds.Name,
+                    firstName = newCredsDto.FirstName,
+                    lastName = newCredsDto.LastName
+                };
+                return Ok(response);
 
             }
             catch (AppException ex)
@@ -93,7 +93,8 @@ namespace DanceCoolWebApiReact.Controllers
                 token_lifeTime = 3600000,
                 email = creds.Name,
                 firstName = user.FirstName,
-                lastName = user.LastName
+                lastName = user.LastName,
+                role = user.RoleName
             };
             return Ok(response);
         }

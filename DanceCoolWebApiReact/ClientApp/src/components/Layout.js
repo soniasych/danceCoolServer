@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import { Container } from 'reactstrap';
 import NavMenu from './NavMenu';
-import './Layout.css';
 import * as actions from '../store/actions/index';
 import { connect } from 'react-redux';
 
@@ -14,9 +12,9 @@ class Layout extends Component {
     return (
       <div>
         <NavMenu />
-        <Container className="rootContent">
+        <div>
           {this.props.children}
-        </Container>
+        </div>
       </div>
     );
   }

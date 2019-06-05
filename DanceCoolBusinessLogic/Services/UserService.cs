@@ -115,7 +115,8 @@ namespace DanceCoolBusinessLogic.Services
             new UserDTO(userModel.Id,
                     userModel.FirstName,
                     userModel.LastName,
-                    userModel.PhoneNumber);
+                    userModel.PhoneNumber,
+                    userModel.Role.RoleName);
 
         private User NewUserDTOToUserModel(NewUserDTO userDto) =>
             new User

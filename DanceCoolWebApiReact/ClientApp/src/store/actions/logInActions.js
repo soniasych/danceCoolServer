@@ -23,14 +23,15 @@ export const LogInStart = () => {
     };
 };
 
-export const LogInSuccess = (access_token, token_lifeTime, email, firstName, lastName) => {
+export const LogInSuccess = (access_token, token_lifeTime, email, firstName, lastName, roleName) => {
     return {
         type: actionTypes.LOG_IN_SUCCESS,
         access_token: access_token,
         token_lifeTime: token_lifeTime,
         email: email,
         firstName: firstName,
-        lastName: lastName
+        lastName: lastName,
+        roleName: roleName
     };
 };
 
@@ -59,7 +60,8 @@ export const LogIn = (email, password) => {
                     response.data.token_lifeTime,
                     response.data.email,
                     response.data.firstName,
-                    response.data.lastName));
+                    response.data.lastName,
+                    response.data.role));
                 dispatch(checkLogInTimeOut(response.data.token_lifeTime));
             })
             .catch(error => {
@@ -69,25 +71,25 @@ export const LogIn = (email, password) => {
     }
 };
 
-export const CheckLogInState =()=>{
-    return dispatch=>{
+export const CheckLogInState = () => {
+    return dispatch => {
         const authData = JSON.parse(localStorage.getItem('authData'));
-        if(!authData){
+        if (!authData) {
             dispatch(LogOut());
-        }else{
+        } else {
             const expirationDate = new Date(localStorage.getItem('expirationDate'));
-            if(expirationDate > new Date()){
-                dispatch(LogInSuccess(authData.access_token, 
-                    authData.token_lifeTime, 
-                    authData.email, 
-                    authData.firstName, 
+            if (expirationDate > new Date()) {
+                dispatch(LogInSuccess(authData.access_token,
+                    authData.token_lifeTime,
+                    authData.email,
+                    authData.firstName,
                     authData.lastName));
                 dispatch(checkLogInTimeOut(authData.token_lifeTime));
-            }else{
+            } else {
                 dispatch(LogOut());
             }
-            
+
         }
-       
+
     };
 };

@@ -7,6 +7,7 @@ const initialState = {
     email: null,
     firstName: null,
     lastName: null,
+    role: null,
     loading: false,
     error: null
 };
@@ -38,10 +39,10 @@ const logInFailed = (state, action) => {
         });
 }
 
-const logOut = (state, action)=>{
+const logOut = (state, action) => {
     return updateObject(state, {
         access_token: null,
-        email:null,
+        email: null,
         firstName: null,
         lastName: null
     });

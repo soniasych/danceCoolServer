@@ -1,15 +1,21 @@
-td, th {
+.schedule-container {
+    width: 80%;
+    margin: 0 auto;
+}
+
+td,
+th {
     text-align: center;
 }
 
-h4{
+h4 {
     text-align: center;
 }
 
-li{
+li {
     list-style-type: none;
 }
 
-.groupLevelName{
+.groupLevelName {
     font-weight: bold;
 }

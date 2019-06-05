@@ -9,9 +9,9 @@ namespace DanceCoolDTO
         public int Id { get; set; }
         [Required]
         [StringLength(ValidationRules.MAX_LENGTH_NAME,
-            ErrorMessage = "LastName too long")]
+            ErrorMessage = "FirstName too long")]
         [RegularExpression(ValidationRules.ONLY_LETTERS,
-            ErrorMessage = "LastName not valid")]
+            ErrorMessage = "FirstName not valid")]
         public string FirstName { get; set; }
         [Required]
         [StringLength(ValidationRules.MAX_LENGTH_NAME,
@@ -20,13 +20,16 @@ namespace DanceCoolDTO
             ErrorMessage = "LastName not valid")]
         public string LastName { get; set; }
         public string PhoneNumber { get; set; }
+        [Required]
+        public string RoleName { get; set; }
 
-        public UserDTO(int id, string firstName, string lastName, string phoneNumber)
+        public UserDTO(int id, string firstName, string lastName, string phoneNumber, string roleName)
         {
             Id = id;
             FirstName = firstName;
             LastName = lastName;
             PhoneNumber = phoneNumber;
+            RoleName = roleName;
         }
     }
 }

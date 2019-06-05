@@ -5,7 +5,7 @@ import { GuestPage } from './components/GuestComponent/GuestPage';
 import { GroupList } from './components/GroupPage/GroupList';
 import GroupPage from './components/GroupPage/GroupPage'
 import { ManagingUsersPage } from './components/UserPage/ManagingUsersPage';
-import { AdminPage } from './components/AdminPage';
+import RegisteredUserPage from './components/RegisteredUserPage/RegisteredUserPage'
 import { AttendancePage } from './components/AttendancePage/Attendances';
 import Schedule from './components/GuestComponent/Schedule/Schedule';
 import AboutUs from './components/GuestComponent/AboutUs/AboutUs';
@@ -14,8 +14,7 @@ import MentorsGuestPage from './components/GuestComponent/MentorsGuest/MentorsGu
 import ContactsGuestPage from './components/GuestComponent/ContactsGuest/ContactsGuestPage';
 import StudentProfile from './components/Profiles/StudentProfile/StudentProfile';
 
-
-class App extends Component {
+export class App extends Component {
 
   render() {
     return (
@@ -26,7 +25,7 @@ class App extends Component {
         <Route exact path='/schedule' component={Schedule} />
         <Route exact path='/guest-mentors' component={MentorsGuestPage} />
         <Route exact path='/guest-contacts' component={ContactsGuestPage} />
-        <Route exact path='/god-mode-on' component={AdminPage} />
+        <Route exact path='/god-mode-on' component={RegisteredUserPage} />
         <Route exact path='/groups' component={GroupList} />
         <Route exact path='/groups/:id' component={GroupPage} />
         <Route exact path='/students/' component={ManagingUsersPage} />
@@ -37,5 +36,3 @@ class App extends Component {
     );
   }
 }
-
-export default App;

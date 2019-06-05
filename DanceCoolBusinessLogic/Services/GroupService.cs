@@ -73,7 +73,8 @@ namespace DanceCoolBusinessLogic.Services
                 dtos.Add(new UserDTO(student.Id,
                     student.FirstName,
                     student.LastName,
-                    student.PhoneNumber));
+                    student.PhoneNumber,
+                    student.Role.RoleName));
             }
 
             return dtos;
