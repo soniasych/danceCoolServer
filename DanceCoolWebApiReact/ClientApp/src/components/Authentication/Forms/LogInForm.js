@@ -8,7 +8,6 @@ const LogInForm = (props) => {
                 <Form.Label>Електронна пошта</Form.Label>
                 <Form.Control
                     type="email"
-                    value="gosling@mail.com"
                     onChange={props.autEmailChanged} />
             </Form.Group>
 
