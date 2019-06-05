@@ -3,7 +3,7 @@ import Axios from "axios";
 import UsersList from './UsersList';
 import AddingUserModal from './AddingNewUserModal';
 
-export class ManagingUsersPage extends Component {
+export class ManageUsersPage extends Component {
 
   constructor(props) {
     super(props);
@@ -83,7 +83,7 @@ export class ManagingUsersPage extends Component {
 
 
   async populateAllStudents() {
-      const responce = await Axios.get("api/users", {timeout: 1000});
+    const responce = await Axios.get("api/users");
     const data = await responce.data;
     this.setState({ students: data, loading: false });
   }

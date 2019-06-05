@@ -94,7 +94,7 @@ namespace DanceCoolWebApiReact.Controllers
                 email = creds.Name,
                 firstName = user.FirstName,
                 lastName = user.LastName,
-                role = user.RoleName
+                roleName = user.RoleName
             };
             return Ok(response);
         }

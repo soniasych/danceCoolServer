@@ -20,7 +20,7 @@ namespace DanceCoolDataAccessLogic.Repositories
 
         public IEnumerable<User> GetAllUsers()
         {
-            return Context.Users.ToList();
+            return Context.Users.Include(user => user.Role).ToList();
         }
 
         public User GetUserById(int userId)

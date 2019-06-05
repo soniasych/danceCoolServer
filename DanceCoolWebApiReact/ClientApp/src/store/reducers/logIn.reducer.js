@@ -7,7 +7,7 @@ const initialState = {
     email: null,
     firstName: null,
     lastName: null,
-    role: null,
+    roleName: null,
     loading: false,
     error: null
 };
@@ -26,6 +26,7 @@ const logInSuccess = (state, action) => {
         email: action.email,
         firstName: action.firstName,
         lastName: action.lastName,
+        roleName: action.roleName,
         loading: false,
         error: null
     });
