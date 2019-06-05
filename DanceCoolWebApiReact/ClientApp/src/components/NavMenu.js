@@ -4,6 +4,7 @@ import {
   Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink,
   Popover, PopoverHeader, PopoverBody
 } from 'reactstrap';
+import { ListGroup } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import './NavMenu.css';
 import AuthenticationModal from './Authentication/AuthenticationModal';
@@ -91,21 +92,21 @@ class NavMenu extends Component {
                   {this.props.isLogedIn ?
                     < div >
                       <Button id="Popover1" type="button" onClick={this.togglePopover}>
-                        Вітаємо, {this.props.firstName} {this.props.lastName}
+                       {this.props.firstName} {this.props.lastName}
                       </Button>
                       <Popover placement="bottom" isOpen={this.state.popoverOpen} target="Popover1">
-                        <PopoverHeader>La la Land</PopoverHeader>
                         <PopoverBody>
-                          <div>
-                            <Link to='/god-mode-on'>Адміністрування</Link>
-                          </div>
-                          <hr />
-                          <div>
-                            <Button className="btn btn-light"
-                              onClick={this.onLogOutClick}>
-                              Вийти
-                          </Button>
-                          </div>
+                          <ListGroup variant="flush">
+                            <ListGroup.Item action>
+                              <Link to='/god-mode-on'
+                                style={{ textDecoration: 'none', color: 'black' }}>Адміністрування</Link>
+                            </ListGroup.Item>
+                            <ListGroup.Item variant='danger'>
+                              <Button className="btn btn-light"
+                                onClick={this.onLogOutClick}>
+                                Вийти</Button>
+                            </ListGroup.Item>
+                          </ListGroup>
                         </PopoverBody>
                       </Popover>
                     </div> :

@@ -47,10 +47,10 @@ export class AttendancePage extends Component{
                 </div>
                 <div>
                 <DropdownButton id="dropdown-basic-button" title="Оберіть групу">
-                    <Dropdown.Item href="#/action-1">Salsa LA</Dropdown.Item>
-                    <Dropdown.Item href="#/action-2">Salsa Casino</Dropdown.Item>
-                    <Dropdown.Item href="#/action-3">Бачата</Dropdown.Item>
-                    <Dropdown.Item href="#/action-3">Salsa Lady Solo</Dropdown.Item>
+                    <Dropdown.Item >Salsa LA</Dropdown.Item>
+                    <Dropdown.Item >Salsa Casino</Dropdown.Item>
+                    <Dropdown.Item >Бачата</Dropdown.Item>
+                    <Dropdown.Item >Salsa Lady Solo</Dropdown.Item>
                 </DropdownButton>
                 </div>
                 <div>
