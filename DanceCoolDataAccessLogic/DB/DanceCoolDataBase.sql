@@ -305,6 +305,25 @@ CREATE TABLE [dbo].[Lessons]
 );
 GO
 
+-- Insert rows into table '[Lessons]' in schema '[dbo]'
+INSERT INTO [dbo].[Lessons]
+    ([Date], [Room], [GroupId])
+VALUES
+    ( '2019-05-27 19:00', N'Малий зал', 1),
+    ( '2019-05-24 21:00', N'Великий зал', 3),
+    ( '2019-05-23 21:00', N'Великий зал', 7),
+  ( '2019-05-22 19:30', N'Малий зал', 4),
+  ( '2019-05-21 20:30', N'Малий зал', 2),
+  ( '2019-05-20 20:00', N'Малий зал', 5),
+  ( '2019-05-18 19:00', N'Великий зал', 8),
+    ( '2019-05-17 21:00', N'Великий зал', 3),
+    ( '2019-05-16 21:00', N'Малий зал', 4),
+  ( '2019-05-15 19:30', N'Малий зал', 6),
+  ( '2019-05-14 20:30', N'Великий зал', 7),
+  ( '2019-05-13 20:00', N'Малий зал', 2),
+  ( '2019-05-12 20:00', N'Малий зал', 6)
+GO
+
 -- Create the table in the specified schema
 CREATE TABLE [dbo].[Attendances]
 (
@@ -316,12 +335,117 @@ CREATE TABLE [dbo].[Attendances]
 );
 GO
 
+-- Insert rows into table '[Attendances]' in schema '[dbo]'
+INSERT INTO [dbo].[Attendances]
+    ([LessonId], [PresentStudentId])
+VALUES
+  --1
+  ( 1,  10),
+  ( 1,  13),
+  ( 1,  14),
+  ( 1,  15),
+  ( 1,  17),
+  --2
+  ( 2,  18),
+  ( 2,  20),
+  ( 2,  21),
+  ( 2,  22),
+  ( 2,  24),
+  ( 2,  25),
+  --3
+  ( 3,  10),
+  ( 3,  11),
+  ( 3,  12),
+  ( 3,  14),
+  ( 3,  16),
+  --4
+  ( 4,  19),
+  ( 4,  20),
+  ( 4,  21),
+  ( 4,  23),
+  ( 4,  24),
+  --5
+  ( 5,  23),
+  ( 5,  25),
+  ( 5,  27),
+  ( 5,  28),
+  ( 5,  30),
+  ( 5,  31),
+  --6
+  ( 6,  18),
+  ( 6,  21),
+  ( 6,  22),
+  ( 6,  23),
+  ( 6,  24),
+  ( 6,  25),
+  --7
+  ( 7, 10),
+  ( 7, 13),
+  ( 7, 14),
+  ( 7, 15),
+  ( 7, 17),
+  --8
+  ( 8,  23),
+  ( 8,  24),
+  ( 8,  26),
+  ( 8,  28),
+  ( 8,  20),
+  ( 8,  30),
+  ( 8,  31),
+  --9
+  ( 9, 18),
+  ( 9, 21),
+  ( 9, 22),
+  ( 9, 23),
+  --10
+  ( 10, 10),
+  ( 10, 11),
+  ( 10, 14),
+  ( 10, 15),
+  ( 10, 16),
+  ( 10, 17),
+  --11
+  ( 11, 18),
+  ( 11, 19),
+  ( 11, 20),
+  ( 11, 21),
+  ( 11, 22),
+  ( 11, 23),
+  --12
+  ( 12, 23),
+  ( 12, 26),
+  ( 12, 27),
+  ( 12, 30),
+  ( 12, 31),
+  --13
+  ( 13, 18),
+  ( 13, 20),
+  ( 13, 21),
+  ( 13, 22),
+  ( 13, 23)
+  GO
+
 -- Create a new table called '[Abonnements]' in schema '[dbo]'
 CREATE TABLE [dbo].[Abonnements]
 (
     [Id] INT NOT NULL PRIMARY KEY IDENTITY(1,1),
-    [AbonnementName] NVARCHAR(50) NOT NULL
+    [AbonnementName] NVARCHAR(50) NOT NULL,
+	[Price] DECIMAL NOT NULL
 );
+GO
+
+-- Insert rows into table 'Abonnements' in schema '[dbo]'
+INSERT INTO [dbo].[Abonnements]
+    ( [AbonnementName], [Price])
+VALUES
+  ( N'разовий одинарний', 60),
+  ( N'разовий парий', 50),
+    ( N'4-разовий одинарний', 200),
+  ( N'4-разовий парий', 150),
+    ( N'8-разовий одинарний', 300),
+  ( N'8-разовий парний', 250),
+    ( N'індивідуальний одинарний', 250),
+    ( N'індивідуальний парний', 175)
 GO
 
 -- Create a new table called '[Payments]' in schema '[dbo]'
@@ -329,7 +453,7 @@ CREATE TABLE [dbo].[Payments]
 (
     [Id] INT NOT NULL PRIMARY KEY IDENTITY(1,1),
     [Date] DATETIME NOT NULL,
-    [TotalSum] MONEY NOT NULL,
+    [TotalSum] DECIMAL NOT NULL,
     [UserSenderId] INT NOT NULL,
     [UserReceiverId] INT NOT NULL,
     [AbonnementId] INT NOT NULL,
