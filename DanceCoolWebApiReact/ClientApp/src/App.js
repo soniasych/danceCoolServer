@@ -4,7 +4,7 @@ import Layout from './components/Layout';
 import { GuestPage } from './components/GuestComponent/GuestPage';
 import { GroupList } from './components/GroupPage/GroupList';
 import GroupPage from './components/GroupPage/GroupPage'
-import { ManagingUsersPage } from './components/UserPage/ManagingUsersPage';
+import { ManageUsersPage } from './components/ManageUsersPage/ManageUsersPage';
 import RegisteredUserPage from './components/RegisteredUserPage/RegisteredUserPage'
 import { AttendancePage } from './components/AttendancePage/Attendances';
 import Schedule from './components/GuestComponent/Schedule/Schedule';
@@ -28,8 +28,7 @@ export class App extends Component {
         <Route exact path='/god-mode-on' component={RegisteredUserPage} />
         <Route exact path='/groups' component={GroupList} />
         <Route exact path='/groups/:id' component={GroupPage} />
-        <Route exact path='/students/' component={ManagingUsersPage} />
-        <Route exact path='/students/:id' component={ManagingUsersPage} />
+        <Route exact path='/students/' component={ManageUsersPage} />
         <Route exact path='/attendances' component={AttendancePage} />
         <Route exact path='/student-profile/1' component={StudentProfile} />
       </Layout>

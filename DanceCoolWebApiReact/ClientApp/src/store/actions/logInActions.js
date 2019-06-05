@@ -61,7 +61,7 @@ export const LogIn = (email, password) => {
                     response.data.email,
                     response.data.firstName,
                     response.data.lastName,
-                    response.data.role));
+                    response.data.roleName));
                 dispatch(checkLogInTimeOut(response.data.token_lifeTime));
             })
             .catch(error => {
@@ -83,13 +83,12 @@ export const CheckLogInState = () => {
                     authData.token_lifeTime,
                     authData.email,
                     authData.firstName,
-                    authData.lastName));
+                    authData.lastName,
+                    authData.roleName));
                 dispatch(checkLogInTimeOut(authData.token_lifeTime));
             } else {
                 dispatch(LogOut());
             }
-
         }
-
     };
 };

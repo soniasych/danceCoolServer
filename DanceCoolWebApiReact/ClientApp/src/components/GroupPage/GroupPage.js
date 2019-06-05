@@ -3,6 +3,7 @@ import GroupTittle from './GroupTittle';
 import { connect } from 'react-redux';
 import GroupStudentsList from './GroupStudentsList';
 import AddingStudentToGroupModal from './AddingStudentToGroupModal/AddingStudentToGroupModal';
+import { EditGroupModal } from './EditGroupModal/EditGroupModal';
 import Axios from 'axios';
 
 class GroupPage extends Component {
@@ -14,21 +15,20 @@ class GroupPage extends Component {
             groupStudents: [],
             studentsNotInGroup: [],
             addingStudentToGroupModalVisible: false,
+            editGroupModalVisible: false,
             requestHeader: ''
         }
         this.AddingStudenToGroupModalHandler = this.AddingStudenToGroupModalHandler.bind(AddingStudentToGroupModal);
         this.onAddNewStudentButtonClickHandler = this.onAddNewStudentButtonClickHandler.bind(AddingStudentToGroupModal);
         this.onChooseStudentNotInGroupTab = this.onChooseStudentNotInGroupTab.bind(AddingStudentToGroupModal);
+        this.OpenEditGroupModalHandler = this.OpenEditGroupModalHandler.bind(this);
+        this.CloseEditGroupModalHandler = this.CloseEditGroupModalHandler.bind(EditGroupModal);
     }
 
     componentDidMount() {
         this.populateCurrentGroupData();
         this.populateCurrentGroupStudentsData();
     }
-
-    /*fromRequestHeader() {
-        this.setState({ requestHeader: `Bearer ${this.props.access_token}` });
-    }*/
 
     AddingStudenToGroupModalHandler = event => {
         if (this.state.addingStudentToGroupModalVisible === false) {
@@ -38,6 +38,19 @@ class GroupPage extends Component {
             this.setState({ addingStudentToGroupModalVisible: false });
         }
     }
+
+    OpenEditGroupModalHandler = () => {
+        if (this.state.editGroupModalVisible === false) {
+            this.setState({ editGroupModalVisible: true });
+        }
+    }
+
+    CloseEditGroupModalHandler = () => {
+        if (this.state.editGroupModalVisible === true) {
+            this.setState({ editGroupModalVisible: false });
+        }
+    }
+
     onChooseStudentNotInGroupTab = (key) => {
         if (key === 'ExistingStudents') {
             if (this.state.studentsNotInGroup.length < 1) {
@@ -70,6 +83,11 @@ class GroupPage extends Component {
                 <h1>Інформація про поточну групу</h1>
                 <GroupTittle group={this.state.group} />
                 <br />
+                {this.props.roleName === "Admin" ?
+                    <button className="btn btn-primary"
+                        onClick={this.OpenEditGroupModalHandler}>Редагувати групу</button>
+                    : null
+                }
                 <button className="btn btn-primary"
                     onClick={this.AddingStudenToGroupModalHandler}>Додати студента до групи</button>
                 <GroupStudentsList groupStudents={this.state.groupStudents} />
@@ -79,6 +97,11 @@ class GroupPage extends Component {
                     studentsNotInGroup={this.state.studentsNotInGroup}
                     addNewStudent={this.onAddNewStudentButtonClickHandler}
                     groupId={this.props.match.params.id}
+                />
+                <EditGroupModal
+                    editGroupVisible={this.state.editGroupModalVisible}
+                    closeEditModal={this.CloseEditGroupModalHandler}
+                    initialgroupState={this.state.group}
                 />
             </div>
         );
@@ -93,7 +116,6 @@ class GroupPage extends Component {
 
     async populateStudentsNotInCurrentGroup() {
         const id = this.props.match.params.id;
-
         Axios.get(`api/groups/${id}/students/notingroup`, {
             headers: {
                 Authorization: `Bearer ${this.props.access_token}`
@@ -101,12 +123,7 @@ class GroupPage extends Component {
         })
             .then(response =>
                 this.setState({ studentsNotInGroup: response.data }))
-            .catch(error => {
-                console.log(this.state.requestHeader)
-
-            });
-
-        ;
+            .catch(error => { console.log(error) });
     }
 
     async populateCurrentGroupStudentsData() {
@@ -119,7 +136,8 @@ class GroupPage extends Component {
 
 const mapStateToProps = state => {
     return {
-        access_token: state.logInReducer.access_token
+        access_token: state.logInReducer.access_token,
+        roleName: state.logInReducer.roleName
     };
 };
 
