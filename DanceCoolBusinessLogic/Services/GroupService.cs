@@ -40,23 +40,14 @@ namespace DanceCoolBusinessLogic.Services
             var groupModels = db.Groups.GetGroupsByUserId(userId);
 
             if (groupModels == null)
-            {
                 return null;
-            }
 
             var groupDtos = new List<GroupDTO>();
 
             foreach (var model in groupModels)
-            {
                 groupDtos.Add(GroupModelToGroupDTO(model));
-            }
 
             return groupDtos;
-        }
-
-        public void ChangeGroupLevel(int groupId, int targetLevelId)
-        {
-            db.Groups.ChangeGroupLevel(groupId, targetLevelId);
         }
 
         public IEnumerable<UserDTO> GetStudentsNotInCurrentGroup(int groupId)
@@ -78,6 +69,16 @@ namespace DanceCoolBusinessLogic.Services
             }
 
             return dtos;
+        }
+
+        public bool ChangeGroupMentors(int groupId, int newPrimaryMentorId, int newSecMentorId)
+        {
+            return db.Groups.ChangeGroupMentors(groupId, newPrimaryMentorId, newSecMentorId);
+        }
+
+        public void ChangeGroupLevel(int groupId, int targetLevelId)
+        {
+            db.Groups.ChangeGroupLevel(groupId, targetLevelId);
         }
 
         public IEnumerable<LessonDTO> GetLessons()
@@ -109,28 +110,23 @@ namespace DanceCoolBusinessLogic.Services
             var attendance = db.Attendances.GetAllPresentStudentsOnLesson(lessonId);
 
             if (attendance == null)
-            {
                 return null;
-            }
 
             var attendanceDtos = new List<AttendanceDTO>();
 
             foreach (var attendanceModel in attendance)
-            {
                 attendanceDtos.Add(AttendanceModelToDTO(attendanceModel));
-            }
+
             return attendanceDtos;
         }
 
         private GroupDTO GroupModelToGroupDTO(Group groupModel) => new GroupDTO(
-                groupModel.Id,
-                groupModel.Direction.Name,
-                $"{groupModel.PrimaryMentor.FirstName} {groupModel.PrimaryMentor.LastName}",
-                groupModel.SecondaryMentor
-                == null 
-                ? null 
+            groupModel.Id,
+            groupModel.Direction.Name,
+            $"{groupModel.PrimaryMentor.FirstName} {groupModel.PrimaryMentor.LastName}",
+            groupModel.SecondaryMentor == null
+                ? null
                 : $"{groupModel.SecondaryMentor.FirstName} {groupModel.SecondaryMentor.LastName}",
-                groupModel.Level?.Name);
-        
+            groupModel.Level?.Name);
     }
 }

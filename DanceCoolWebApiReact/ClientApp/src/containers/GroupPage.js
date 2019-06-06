@@ -101,7 +101,7 @@ class GroupPage extends Component {
 
     async populateStudentsNotInCurrentGroup() {
         const id = this.props.match.params.id;
-        Axios.get(`api/groups/${id}/students/notingroup`, {
+        Axios.get(`api/groups/${id}/students/not-in-group`, {
             headers: {
                 Authorization: `Bearer ${this.props.access_token}`
             }

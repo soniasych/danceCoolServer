@@ -2,6 +2,7 @@
 using DanceCoolBusinessLogic.Services;
 using DanceCoolDTO;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace danceCoolWebApi.Controllers
@@ -9,8 +10,8 @@ namespace danceCoolWebApi.Controllers
     [ApiController]
     public class GroupsController : ControllerBase
     {
-        private IGroupService _groupService;
-        private IUserService _userService;
+        private readonly IGroupService _groupService;
+        private readonly IUserService _userService;
 
         public GroupsController(IGroupService groupService, IUserService userService)
         {
@@ -18,7 +19,7 @@ namespace danceCoolWebApi.Controllers
             _userService = userService;
         }
 
-        //GET: api/Groups
+        /// <summary>returns all groups in database.</summary>
         [HttpGet]
         [Route("api/groups")]
         public IEnumerable<GroupDTO> GetAllGroups()
@@ -26,7 +27,8 @@ namespace danceCoolWebApi.Controllers
             return _groupService.GetAllGroups();
         }
 
-        // GET: api/Groups/5
+        /// <summary>Get specific group by it's id.</summary>
+        /// <param name="groupId">Id of the group.</param>
         [Authorize(Roles = "Mentor, Admin")]
         [HttpGet]
         [Route("api/groups/{id}")]
@@ -35,6 +37,8 @@ namespace danceCoolWebApi.Controllers
             return _groupService.GetGroupById(id);
         }
 
+        /// <summary>Get students that is in current group .</summary>
+        /// <param name="groupId">Id of the group.</param>
         [Authorize(Roles = "Mentor, Admin")]
         [HttpGet]
         [Route("api/groups/{groupId}/users/")]
@@ -42,27 +46,53 @@ namespace danceCoolWebApi.Controllers
         {
             return _userService.GetUsersFromGroup(groupId);
         }
-        
+
+        /// <summary>Get students that not in current group .</summary>
+        /// <param name="groupId">Id of the group.</param>
         [Authorize(Roles = "Mentor, Admin")]
         [HttpGet]
         [Authorize]
-        [Route("api/groups/{groupId}/students/notingroup")]
+        [Route("api/groups/{groupId}/students/not-in-group")]
         public IEnumerable<UserDTO> GetStudentsNotInCurrentGroup(int groupId)
         {
             return _groupService.GetStudentsNotInCurrentGroup(groupId);
         }
 
-        //// POST: api/Groups
-        //[HttpPost]
-        //public void Post([FromBody] string value)
-        //{
-        //}
+        /// <summary>Add new group.</summary>
+        /// <param name="newGroup">Group Dto to be created.</param>
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        [Route("api/groups/new-group/")]
+        public void Post(NewGroupDto newGroup)
+        {
+        }
 
-        //// PUT: api/Groups/5
-        //[HttpPut("{id}")]
-        //public void Put(int id, [FromBody] string value)
-        //{
-        //}
+        /// <summary>Changes Group mentors.</summary>
+        /// <param name="groupId">Id of the group to be changed.</param>
+        /// <param name="newSkillLevelId">New skill level id.</param>
+        [Authorize(Roles = "Admin")]
+        [HttpPut]
+        [Route("api/group/skill-level/")]
+        public void ChangeGroupLevel(int groupId, int newSkillLevelId)
+        {
+            _groupService.ChangeGroupLevel(groupId, newSkillLevelId);
+        }
+
+        /// <summary>Changes Group mentors.</summary>
+        /// <param name="groupId">Id of the group to be changed.</param>
+        /// <param name="newPrimaryMentorId">New primary mentor id.</param>
+        /// <param name="newSecMentorId">New secondary mentor id.</param>
+        [Authorize(Roles = "Admin")]
+        [HttpPut]
+        [Route("api/group/mentor")]
+        public StatusCodeResult ChangeGroupLevelMentor(int groupId, int newPrimaryMentorId, int newSecMentorId)
+        {
+            if (_groupService.ChangeGroupMentors(groupId, newPrimaryMentorId, newSecMentorId))
+            {
+                Ok();
+            }
+            return StatusCode(502);
+        }
 
         //// DELETE: api/ApiWithActions/5
         //[HttpDelete("{id}")]
