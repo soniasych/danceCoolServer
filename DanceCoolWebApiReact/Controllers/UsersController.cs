@@ -22,6 +22,7 @@ namespace DanceCoolWebApiReact.Controllers
         }
 
         //GET: api/Users
+        [Authorize]
         [HttpGet]
         [Route("api/users")]
         public IEnumerable<UserDTO> GetAllUsers()
@@ -29,21 +30,8 @@ namespace DanceCoolWebApiReact.Controllers
             return _userService.GetAllUsers();
         }
 
-        [HttpGet]
-        [Route("api/userInfo")]
-        public RegistrationUserIdentityDto GetUserInfo(string email)
-        {
-            return null;
-        }
-
-        [HttpGet]
-        [Route("api/user-models")]
-        public IEnumerable<User> GetAllUserModels()
-        {
-            return _userService.GetAllUserModels();
-        }
-
         //GET: api/students
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         [Route("api/students")]
         public IEnumerable<UserDTO> GetAllStudents()
@@ -52,6 +40,7 @@ namespace DanceCoolWebApiReact.Controllers
         }
 
         // GET: api/Users/5
+        [Authorize]
         [HttpGet]
         [Route("api/users/{userId}")]
         public UserDTO GetUserById(int userId)
@@ -59,14 +48,14 @@ namespace DanceCoolWebApiReact.Controllers
             return _userService.GetUserById(userId);
         }
 
-        [HttpGet]
+        [Authorize(Roles = "Mentor, Admin")]
         [Route("api/users/phone")]
         public UserDTO GetUserByPhoneNumber(string phoneNumber)
         {
             var user = _userService.GetUserByPhoneNumber(phoneNumber);
             return user != null ? user : null;
         }
-
+         [Authorize(Roles = "Admin")]
         [HttpGet]
         [Route("api/users/search")]
         public IEnumerable<UserDTO> Search(string searchQuery)
@@ -76,6 +65,7 @@ namespace DanceCoolWebApiReact.Controllers
         }
 
         // POST: api/Users
+        [Authorize(Roles = "Mentor, Admin")]
         [HttpPost]
         [Route("api/users/")]
         public void AddNewUser([FromBody] NewUserDTO userDto)
@@ -83,6 +73,7 @@ namespace DanceCoolWebApiReact.Controllers
             _userService.AddUser(userDto);
         }
 
+        [Authorize(Roles = "Mentor, Admin")]
         [HttpPost]
         [Route("api/group/{groupId}/user/")]
         public void AddStudentToGroup([FromBody] NewUserGroupDTO newUserGroupDTO)

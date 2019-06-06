@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using DanceCoolBusinessLogic.Services;
 using DanceCoolDTO;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DanceCoolWebApiReact.Controllers
@@ -17,6 +18,7 @@ namespace DanceCoolWebApiReact.Controllers
         }
 
         // GET: api/Lessons
+        [Authorize(Roles = "Mentor, Admin")]
         [HttpGet]
         [Route("api/lessons")]
         public IEnumerable<LessonDTO> GetAllStudents()

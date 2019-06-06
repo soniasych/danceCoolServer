@@ -108,9 +108,15 @@ class GroupPage extends Component {
 
     async populateCurrentGroupStudentsData() {
         const id = this.props.match.params.id;
-        const responce = await Axios.get(`api/groups/${id}/users/`);
-        const data = await responce.data;
-        this.setState({ groupStudents: data });
+        Axios.get(`api/groups/${id}/users/`, {
+            headers: {
+                Authorization: `Bearer ${this.props.access_token}`
+            }
+        }).then(response =>
+            this.setState({
+                groupStudents: response.data
+            }))
+            .catch(error => console.log(error));
     }
 }
 

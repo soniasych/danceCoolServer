@@ -3,14 +3,14 @@ import { connect } from 'react-redux';
 import { Route } from 'react-router';
 import { Tab, Nav, Row, Col, Container } from 'react-bootstrap';
 import { GroupList } from '../GroupPage/GroupList';
-import { ManageUsersPage } from '../ManageUsersPage/ManageUsersPage';
+import ManageUsersPage from '../ManageUsersPage/ManageUsersPage';
 import GroupPage from '../GroupPage/GroupPage';
 import { AttendancePage } from '../AttendancePage/Attendances';
 
 class RegisteredUserPage extends Component {
     render() {
         return (
-            <Container style={{marginTop: 30}}>
+            <Container style={{ marginTop: 30 }}>
                 <Tab.Container id="left-tabs-example" defaultActiveKey="Attendances">
                     <Row>
                         <Col sm={3}>

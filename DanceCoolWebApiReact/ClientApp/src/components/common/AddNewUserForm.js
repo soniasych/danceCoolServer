@@ -45,7 +45,13 @@ export class AddNewUserForm extends Component {
             lastName: this.state.studentLastName,
             phoneNumber: this.state.studentPhoneNumber
         };
-        Axios.post('api/users/', addedStudent).then(console.log(addedStudent));
+        Axios.post('api/users/', addedStudent, {
+            headers: {
+                Authorization: `Bearer ${this.props.access_token}`
+            }
+        })
+            .then(response => console.log(response))
+            .catch(error => console.log(error));
 
     }
 

@@ -1,9 +1,10 @@
 import React, { Component } from "react";
+import { connect } from 'react-redux';
 import Axios from "axios";
 import UsersList from './UsersList';
 import AddingUserModal from './AddingNewUserModal';
 
-export class ManageUsersPage extends Component {
+class ManageUsersPage extends Component {
 
   constructor(props) {
     super(props);
@@ -17,7 +18,7 @@ export class ManageUsersPage extends Component {
   }
 
   componentDidMount() {
-    this.populateAllStudents();
+    this.populateAllUsers();
   }
 
   handleSearchChange = event => {
@@ -82,17 +83,34 @@ export class ManageUsersPage extends Component {
   }
 
 
-  async populateAllStudents() {
-    const responce = await Axios.get("api/users");
-    const data = await responce.data;
-    this.setState({ students: data, loading: false });
+  async populateAllUsers() {
+    Axios.get("api/users", {
+      headers: {
+        Authorization: `Bearer ${this.props.access_token}`
+      }
+    })
+      .then(response =>
+        this.setState({ students: response.data }))
+      .catch(error => console.log(error));
   }
 
   async searchUsers() {
-    const responce = await Axios.get(
-      `api/users/search?searchQuery=${this.state.searchQuery}`
-    );
-    const data = await responce.data;
-    this.setState({ students: data, loading: false });
+    Axios.get(
+      `api/users/search?searchQuery=${this.state.searchQuery}`, {
+        headers: {
+          Authorization: `Bearer ${this.props.access_token}`
+        }
+      }).then(response =>
+        this.setState({ students: response.data }))
+      .catch(error => console.log(error));
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    access_token: state.logInReducer.access_token,
+    roleName: state.logInReducer.roleName
+  };
+};
+
+export default connect(mapStateToProps)(ManageUsersPage);

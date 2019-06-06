@@ -27,19 +27,23 @@ namespace danceCoolWebApi.Controllers
         }
 
         // GET: api/Groups/5
+        [Authorize(Roles = "Mentor, Admin")]
         [HttpGet]
         [Route("api/groups/{id}")]
         public GroupDTO GetGroupById(int id)
         {
             return _groupService.GetGroupById(id);
         }
-         [HttpGet]
+
+        [Authorize(Roles = "Mentor, Admin")]
+        [HttpGet]
         [Route("api/groups/{groupId}/users/")]
         public IEnumerable<UserDTO> GetUsersById(int groupId)
         {
             return _userService.GetUsersFromGroup(groupId);
         }
         
+        [Authorize(Roles = "Mentor, Admin")]
         [HttpGet]
         [Authorize]
         [Route("api/groups/{groupId}/students/notingroup")]

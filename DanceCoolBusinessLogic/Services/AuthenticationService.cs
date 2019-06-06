@@ -78,7 +78,7 @@ namespace DanceCoolBusinessLogic.Services
             var claims = new List<Claim>
                 {
                     new Claim(ClaimsIdentity.DefaultNameClaimType, userCredentials.Email)
-                    ,new Claim(ClaimsIdentity.DefaultNameClaimType, roleName)
+                    ,new Claim(ClaimsIdentity.DefaultRoleClaimType, roleName)
                 };
             ClaimsIdentity claimsIdentity =
             new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType,
