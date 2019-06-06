@@ -22,7 +22,7 @@ namespace DanceCoolWebApiReact.Controllers
         }
 
         //GET: api/Users
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         [Route("api/users")]
         public IEnumerable<UserDTO> GetAllUsers()
@@ -40,6 +40,7 @@ namespace DanceCoolWebApiReact.Controllers
         }
 
         // GET: api/Users/5
+        [Authorize(Roles = "Mentor, Admin")]
         [Authorize]
         [HttpGet]
         [Route("api/users/{userId}")]

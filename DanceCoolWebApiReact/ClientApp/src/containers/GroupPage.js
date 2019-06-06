@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import GroupTittle from './GroupTittle';
+import GroupTittle from '../components/GroupPage/GroupTittle';
 import { connect } from 'react-redux';
-import GroupStudentsList from './GroupStudentsList';
-import AddingStudentToGroupModal from './AddingStudentToGroupModal/AddingStudentToGroupModal';
-import { EditGroupModal } from './EditGroupModal/EditGroupModal';
+import GroupStudentsList from '../components/GroupPage/GroupStudentsList';
+import AddingStudentToGroupModal from '../components/GroupPage/AddingStudentToGroupModal/AddingStudentToGroupModal';
+import { EditGroupModal } from '../components/GroupPage/EditGroupModal/EditGroupModal';
 import Axios from 'axios';
 
 class GroupPage extends Component {
@@ -89,9 +89,14 @@ class GroupPage extends Component {
 
     async populateCurrentGroupData() {
         const id = this.props.match.params.id;
-        const responce = await Axios.get(`api/groups/${id}`);
-        const data = await responce.data;
-        this.setState({ group: data });
+        Axios.get(`api/groups/${id}`, {
+            headers: {
+                Authorization: `Bearer ${this.props.access_token}`
+            }
+        })
+            .then(response => this.setState({ group: response.data }))
+            .catch(error => console.log(error))
+            ;
     }
 
     async populateStudentsNotInCurrentGroup() {

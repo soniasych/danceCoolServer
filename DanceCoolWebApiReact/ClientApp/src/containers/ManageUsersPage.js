@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
 import Axios from "axios";
-import UsersList from './UsersList';
-import AddingUserModal from './AddingNewUserModal';
+import UsersList from '../components/ManageUsersPage/UsersList';
+import AddingUserModal from '../components/ManageUsersPage/AddingNewUserModal';
 
 class ManageUsersPage extends Component {
 
