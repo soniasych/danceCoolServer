@@ -7,11 +7,13 @@ namespace DanceCoolDataAccessLogic.Repositories.Interfaces
     {
         IEnumerable<User> GetAllUsers();
         User GetUserById(int userId);
-        IEnumerable<User> GetStudentsByGroupId(int groupId);
         IEnumerable<User> GetStudents();
+        IEnumerable<User> GetStudentsByGroupId(int groupId);
+        IEnumerable<User> GetStudentsNotInGroup(int groupId);
+        IEnumerable<User> GetMentors();
         void AddUserRange(IEnumerable<User> users);
         IEnumerable<User> Search(string key);
-        IEnumerable<User> GetStudentsNotInGroup(int groupId);
+        
         User GetUserByPhoneNumber(string phoneNumber);
         User GetUserByEmail(string email);
     }

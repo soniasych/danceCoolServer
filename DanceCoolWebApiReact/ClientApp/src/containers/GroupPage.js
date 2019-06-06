@@ -3,6 +3,7 @@ import GroupTittle from '../components/GroupPage/GroupTittle';
 import { connect } from 'react-redux';
 import GroupStudentsList from '../components/GroupPage/GroupStudentsList';
 import AddingStudentToGroupModal from '../components/GroupPage/AddingStudentToGroupModal/AddingStudentToGroupModal';
+import EditGroup from '../components/GroupPage/EditingGroup'
 import { EditGroupModal } from '../components/GroupPage/EditGroupModal/EditGroupModal';
 import Axios from 'axios';
 
@@ -12,6 +13,11 @@ class GroupPage extends Component {
         this.state = {
             student: {},
             group: {},
+            skillLevels:[],
+            mentors:[],
+            newSkillLevelId:null,
+            newPimMentorId:null,
+            newSecMentorId:null,
             groupStudents: [],
             studentsNotInGroup: [],
             addingStudentToGroupModalVisible: false,
@@ -62,7 +68,10 @@ class GroupPage extends Component {
         return (
             <div className="container">
                 <h1>Інформація про поточну групу</h1>
+                {this.props.roleName === 'Admin' ?
+                <EditGroup/>:
                 <GroupTittle group={this.state.group} />
+                }                
                 <br />
                 {this.props.roleName === "Admin" ?
                     <button className="btn btn-primary"
@@ -123,6 +132,46 @@ class GroupPage extends Component {
             }))
             .catch(error => console.log(error));
     }
+
+    async getAllSkillLevels(){
+        Axios.get('api/skill-levels/')
+        .then(response => this.setState({
+            skillLevels: response.data
+        }))
+        .catch(error=> console.log(error));
+    }
+
+    async getAllMentors(){
+        Axios.get('api/mentors')
+        .then(response => this.setState({
+            mentors: response.data
+        }))
+        .catch(error=> console.log(error));
+    }
+
+    async changeGroupLevel(){
+        const id = this.props.match.params.id;
+        Axios.put('api/group/skill-level/',
+        {params:{
+            groupId: id,
+            newSkillLevelId: this.state.newSkillLevelId
+        }})
+        .then(response => console.log(response))
+        .catch(error => console.log(error));
+    }
+
+    async changeGroupMentors(){
+        const id = this.props.match.params.id;
+        Axios.put('api/group/mentor', null,{
+            params:{
+                groupId: id,
+                newPrimaryMentorId: this.state.newPimMentorId,
+                newSecMentorId: this.state.newSecMentorId
+            }
+        })
+        .then(response => console.log(response))
+        .catch(error => console.log(error));
+    }
 }
 
 const mapStateToProps = state => {
@@ -131,6 +180,5 @@ const mapStateToProps = state => {
         roleName: state.logInReducer.roleName
     };
 };
-
 
 export default connect(mapStateToProps)(GroupPage);

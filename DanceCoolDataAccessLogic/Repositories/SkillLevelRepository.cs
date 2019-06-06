@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using DanceCoolDataAccessLogic.EfStructures.Context;
 using DanceCoolDataAccessLogic.EfStructures.Entities;
 using DanceCoolDataAccessLogic.Repositories.Interfaces;
@@ -14,7 +13,7 @@ namespace DanceCoolDataAccessLogic.Repositories
 
         public IEnumerable<SkillLevel> GetAllSkillLevels()
         {
-            return  Context.SkillLevels.ToList();
+            return  Context.SkillLevels;
         }
 
         public SkillLevel GetSkillLevelById(int? id)

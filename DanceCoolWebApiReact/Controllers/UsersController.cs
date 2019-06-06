@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using DanceCoolBusinessLogic.Services;
 using DanceCoolDTO;
 using Microsoft.AspNetCore.Authorization;
@@ -19,6 +20,7 @@ namespace DanceCoolWebApiReact.Controllers
             _userService = userService;
         }
 
+        /// <summary>Get all users in database.</summary>
         //GET: api/Users
         [Authorize(Roles = "Admin")]
         [HttpGet]
@@ -28,6 +30,7 @@ namespace DanceCoolWebApiReact.Controllers
             return _userService.GetAllUsers();
         }
 
+        /// <summary>Get all students in database.</summary>
         //GET: api/students
         [Authorize(Roles = "Admin")]
         [HttpGet]
@@ -37,7 +40,23 @@ namespace DanceCoolWebApiReact.Controllers
             return _userService.GetAllStudents();
         }
 
-        // GET: api/Users/5
+        /// <summary>Get all mentors in database.</summary>
+        [Authorize(Roles = "Admin")]
+        [HttpGet]
+        [Route("api/mentors")]
+        public IActionResult GetAllMentors()
+        {
+            var mentors = _userService.GetMentors();
+
+            if (!mentors.Any())
+            {
+                return NotFound("No mentors in database");
+            }
+            return Ok(mentors);
+        }
+
+        /// <summary>Get user by his id in database.</summary>
+        /// <param name="userId">Id of the student to be gotten.</param>
         [Authorize(Roles = "Mentor, Admin")]
         [Authorize]
         [HttpGet]

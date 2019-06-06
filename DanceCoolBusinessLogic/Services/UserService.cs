@@ -104,6 +104,24 @@ namespace DanceCoolBusinessLogic.Services
 
         }
 
+        public IEnumerable<UserDTO> GetMentors()
+        {
+            var mentorModels = db.Users.GetMentors();
+
+            if (mentorModels == null)
+            {
+                return null;
+            }
+
+            var mentorsDtos = new List<UserDTO>();
+
+            foreach (var item in mentorModels)
+            {
+                mentorsDtos.Add(UserModelToUserDTO(item));
+            }
+            return mentorsDtos;
+        }
+
         public IEnumerable<UserDTO> Search(string key)
         {
             var users = db.Users.Search(key);

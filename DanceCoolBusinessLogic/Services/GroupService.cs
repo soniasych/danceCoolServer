@@ -76,6 +76,11 @@ namespace DanceCoolBusinessLogic.Services
             return db.Groups.ChangeGroupMentors(groupId, newPrimaryMentorId, newSecMentorId);
         }
 
+        public IEnumerable<SkillLevel> GetAllSkillLevels()
+        {
+            return db.SkillLevels.GetAllSkillLevels();
+        }
+
         public void ChangeGroupLevel(int groupId, int targetLevelId)
         {
             db.Groups.ChangeGroupLevel(groupId, targetLevelId);

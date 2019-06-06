@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using DanceCoolBusinessLogic.Services;
 using DanceCoolDTO;
 using Microsoft.AspNetCore.Authorization;
@@ -67,16 +68,33 @@ namespace danceCoolWebApi.Controllers
         {
         }
 
-        /// <summary>Changes Group mentors.</summary>
+        /// <summary>Changes Group skill level.</summary>
         /// <param name="groupId">Id of the group to be changed.</param>
         /// <param name="newSkillLevelId">New skill level id.</param>
         [Authorize(Roles = "Admin")]
         [HttpPut]
         [Route("api/group/skill-level/")]
-        public void ChangeGroupLevel(int groupId, int newSkillLevelId)
+        public IActionResult ChangeGroupLevel(int groupId, int newSkillLevelId)
         {
+            if (groupId < 1 || newSkillLevelId < 1)
+            {
+                return BadRequest("Вказано невірні параметри");
+            }
             _groupService.ChangeGroupLevel(groupId, newSkillLevelId);
+            return Ok();
         }
+
+        /// <summary>Get all skill levels from database.</summary>
+        [HttpGet]
+        [Route("api/skill-levels")]
+        public IActionResult GetAllSkillLevels()
+        {
+            var skillLevels = _groupService.GetAllSkillLevels();
+            return !skillLevels.Any()
+                ? (IActionResult) NotFound("There's no skill levels in database")
+                : Ok(skillLevels);
+        }
+
 
         /// <summary>Changes Group mentors.</summary>
         /// <param name="groupId">Id of the group to be changed.</param>
@@ -85,8 +103,13 @@ namespace danceCoolWebApi.Controllers
         [Authorize(Roles = "Admin")]
         [HttpPut]
         [Route("api/group/mentor")]
-        public StatusCodeResult ChangeGroupLevelMentor(int groupId, int newPrimaryMentorId, int newSecMentorId)
+        public IActionResult ChangeGroupLevelMentor(int groupId, int newPrimaryMentorId, int newSecMentorId)
         {
+            if (groupId < 1 || newPrimaryMentorId < 1 || newSecMentorId < 1)
+            {
+                return BadRequest("Вказано невірні параметри");
+            }
+
             if (_groupService.ChangeGroupMentors(groupId, newPrimaryMentorId, newSecMentorId))
             {
                 Ok();
