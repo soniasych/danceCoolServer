@@ -54,6 +54,12 @@ namespace DanceCoolBusinessLogic.Services
             return userModel == null ? null : UserModelToUserDTO(userModel);
         }
 
+        public UserDTO GetUserByPhoneNumber(string phoneNumber)
+        {
+            var userModel = db.Users.GetUserByPhoneNumber(phoneNumber);
+            return userModel == null ? null : UserModelToUserDTO(userModel);
+        }
+
         public UserDTO GetUserByEmail(string email)
         {
             var user = db.Users.GetUserByEmail(email);

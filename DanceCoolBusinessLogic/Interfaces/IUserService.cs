@@ -15,5 +15,6 @@ namespace DanceCoolBusinessLogic.Services
         IEnumerable<UserDTO> Search(string key);
         IEnumerable<User> GetAllUserModels();
         UserDTO GetUserByEmail(string email);
+        UserDTO GetUserByPhoneNumber(string phoneNumber);
     }
 }

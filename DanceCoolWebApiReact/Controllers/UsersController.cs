@@ -3,6 +3,7 @@ using System.Net.Http;
 using DanceCoolBusinessLogic.Services;
 using DanceCoolDataAccessLogic.EfStructures.Entities;
 using DanceCoolDTO;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DanceCoolWebApiReact.Controllers
@@ -57,7 +58,14 @@ namespace DanceCoolWebApiReact.Controllers
         {
             return _userService.GetUserById(userId);
         }
-       
+
+        [HttpGet]
+        [Route("api/users/phone")]
+        public UserDTO GetUserByPhoneNumber(string phoneNumber)
+        {
+            var user = _userService.GetUserByPhoneNumber(phoneNumber);
+            return user != null ? user : null;
+        }
 
         [HttpGet]
         [Route("api/users/search")]

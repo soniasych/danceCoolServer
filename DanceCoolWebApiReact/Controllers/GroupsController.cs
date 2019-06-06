@@ -48,7 +48,6 @@ namespace danceCoolWebApi.Controllers
             return _groupService.GetStudentsNotInCurrentGroup(groupId);
         }
 
-
         //// POST: api/Groups
         //[HttpPost]
         //public void Post([FromBody] string value)
