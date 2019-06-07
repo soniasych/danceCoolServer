@@ -3,7 +3,7 @@ import GroupTittle from '../components/GroupPage/GroupTittle';
 import { connect } from 'react-redux';
 import GroupStudentsList from '../components/GroupPage/GroupStudentsList';
 import AddingStudentToGroupModal from '../components/GroupPage/AddingStudentToGroupModal/AddingStudentToGroupModal';
-import EditGroup from '../components/GroupPage/EditingGroup'
+import EditGroup from '../components/GroupPage/EditGroup/EditingGroup'
 import Axios from 'axios';
 
 class GroupPage extends Component {
@@ -53,8 +53,13 @@ class GroupPage extends Component {
         return (
             <div className="container">
                 <h1>Інформація про поточну групу</h1>
+                <br />
                 {this.props.roleName === 'Admin' ?
-                    <EditGroup group={this.state.group} /> :
+                    <EditGroup
+                        group={this.state.group}
+                        mentors={this.state.mentors}
+                        skillLevels={this.state.skillLevels}
+                    /> :
                     <GroupTittle group={this.state.group} />
                 }
                 <br />
@@ -117,11 +122,13 @@ class GroupPage extends Component {
     }
 
     async getAllMentors() {
-        Axios.get('api/mentors')
-            .then(response => this.setState({
-                mentors: response.data
-            }))
-            .catch(error => console.log(error));
+        Axios.get('api/mentors', {
+            headers: {
+                Authorization: `Bearer ${this.props.access_token}`
+            }
+        }).then(response => this.setState({
+            mentors: response.data
+        })).catch(error => console.log(error));
     }
 
     async changeGroupLevel() {
