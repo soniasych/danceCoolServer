@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import GroupStudentsList from '../components/GroupPage/GroupStudentsList';
 import AddingStudentToGroupModal from '../components/GroupPage/AddingStudentToGroupModal/AddingStudentToGroupModal';
 import EditGroup from '../components/GroupPage/EditingGroup'
-import { EditGroupModal } from '../components/GroupPage/EditGroupModal/EditGroupModal';
 import Axios from 'axios';
 
 class GroupPage extends Component {
@@ -13,11 +12,11 @@ class GroupPage extends Component {
         this.state = {
             student: {},
             group: {},
-            skillLevels:[],
-            mentors:[],
-            newSkillLevelId:null,
-            newPimMentorId:null,
-            newSecMentorId:null,
+            skillLevels: [],
+            mentors: [],
+            newSkillLevelId: null,
+            newPimMentorId: null,
+            newSecMentorId: null,
             groupStudents: [],
             studentsNotInGroup: [],
             addingStudentToGroupModalVisible: false,
@@ -26,8 +25,6 @@ class GroupPage extends Component {
         }
         this.AddingStudenToGroupModalHandler = this.AddingStudenToGroupModalHandler.bind(AddingStudentToGroupModal);
         this.onChooseStudentNotInGroupTab = this.onChooseStudentNotInGroupTab.bind(AddingStudentToGroupModal);
-        this.OpenEditGroupModalHandler = this.OpenEditGroupModalHandler.bind(this);
-        this.CloseEditGroupModalHandler = this.CloseEditGroupModalHandler.bind(EditGroupModal);
     }
 
     componentDidMount() {
@@ -44,18 +41,6 @@ class GroupPage extends Component {
         }
     }
 
-    OpenEditGroupModalHandler = () => {
-        if (this.state.editGroupModalVisible === false) {
-            this.setState({ editGroupModalVisible: true });
-        }
-    }
-
-    CloseEditGroupModalHandler = () => {
-        if (this.state.editGroupModalVisible === true) {
-            this.setState({ editGroupModalVisible: false });
-        }
-    }
-
     onChooseStudentNotInGroupTab = (key) => {
         if (key === 'ExistingStudents') {
             if (this.state.studentsNotInGroup.length < 1) {
@@ -69,15 +54,10 @@ class GroupPage extends Component {
             <div className="container">
                 <h1>Інформація про поточну групу</h1>
                 {this.props.roleName === 'Admin' ?
-                <EditGroup/>:
-                <GroupTittle group={this.state.group} />
-                }                
-                <br />
-                {this.props.roleName === "Admin" ?
-                    <button className="btn btn-primary"
-                        onClick={this.OpenEditGroupModalHandler}>Редагувати групу</button>
-                    : null
+                    <EditGroup group={this.state.group} /> :
+                    <GroupTittle group={this.state.group} />
                 }
+                <br />
                 <button className="btn btn-primary"
                     onClick={this.AddingStudenToGroupModalHandler}>Додати студента до групи</button>
                 <GroupStudentsList groupStudents={this.state.groupStudents} />
@@ -86,11 +66,6 @@ class GroupPage extends Component {
                     selectStudentsNotInGroupTab={this.onChooseStudentNotInGroupTab}
                     studentsNotInGroup={this.state.studentsNotInGroup}
                     groupId={this.props.match.params.id}
-                />
-                <EditGroupModal
-                    editGroupVisible={this.state.editGroupModalVisible}
-                    closeEditModal={this.CloseEditGroupModalHandler}
-                    initialgroupState={this.state.group}
                 />
             </div>
         );
@@ -133,44 +108,46 @@ class GroupPage extends Component {
             .catch(error => console.log(error));
     }
 
-    async getAllSkillLevels(){
+    async getAllSkillLevels() {
         Axios.get('api/skill-levels/')
-        .then(response => this.setState({
-            skillLevels: response.data
-        }))
-        .catch(error=> console.log(error));
+            .then(response => this.setState({
+                skillLevels: response.data
+            }))
+            .catch(error => console.log(error));
     }
 
-    async getAllMentors(){
+    async getAllMentors() {
         Axios.get('api/mentors')
-        .then(response => this.setState({
-            mentors: response.data
-        }))
-        .catch(error=> console.log(error));
+            .then(response => this.setState({
+                mentors: response.data
+            }))
+            .catch(error => console.log(error));
     }
 
-    async changeGroupLevel(){
+    async changeGroupLevel() {
         const id = this.props.match.params.id;
         Axios.put('api/group/skill-level/',
-        {params:{
-            groupId: id,
-            newSkillLevelId: this.state.newSkillLevelId
-        }})
-        .then(response => console.log(response))
-        .catch(error => console.log(error));
+            {
+                params: {
+                    groupId: id,
+                    newSkillLevelId: this.state.newSkillLevelId
+                }
+            })
+            .then(response => console.log(response))
+            .catch(error => console.log(error));
     }
 
-    async changeGroupMentors(){
+    async changeGroupMentors() {
         const id = this.props.match.params.id;
-        Axios.put('api/group/mentor', null,{
-            params:{
+        Axios.put('api/group/mentor', null, {
+            params: {
                 groupId: id,
                 newPrimaryMentorId: this.state.newPimMentorId,
                 newSecMentorId: this.state.newSecMentorId
             }
         })
-        .then(response => console.log(response))
-        .catch(error => console.log(error));
+            .then(response => console.log(response))
+            .catch(error => console.log(error));
     }
 }
 

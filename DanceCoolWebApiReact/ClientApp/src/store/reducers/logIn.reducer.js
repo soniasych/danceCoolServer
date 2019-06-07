@@ -1,4 +1,4 @@
-import * as actionTypes from '../actions/actionTypes';
+import * as actionTypes from '../actionTypes/actionTypes.index';
 import updateObject from '../helpers/updateObject';
 
 const initialState = {
