@@ -30,6 +30,8 @@ class GroupPage extends Component {
     componentDidMount() {
         this.populateCurrentGroupData();
         this.populateCurrentGroupStudentsData();
+        this.getAllMentors();
+        this.getAllSkillLevels();
     }
 
     AddingStudenToGroupModalHandler = event => {
@@ -121,7 +123,7 @@ class GroupPage extends Component {
             .catch(error => console.log(error));
     }
 
-    async getAllMentors() {
+    getAllMentors() {
         Axios.get('api/mentors', {
             headers: {
                 Authorization: `Bearer ${this.props.access_token}`
