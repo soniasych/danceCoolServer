@@ -62,7 +62,7 @@ namespace danceCoolWebApi.Controllers
         /// /// <param name="secMentor">Id of group secondary mentor.</param>
         [Authorize(Roles = "Admin")]
         [HttpGet]
-        [Route("api/groups/{groupId}/students/not-in-group")]
+        [Route("api/groups/{groupId}/mentors/not-in-group")]
         public IActionResult GetMentorsNotInCurrentGroup(int primMentor, int secMentor)
         {
             var currentMentors = new[] {primMentor, secMentor};

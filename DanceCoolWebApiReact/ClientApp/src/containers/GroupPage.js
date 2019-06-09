@@ -13,25 +13,28 @@ class GroupPage extends Component {
             student: {},
             group: {},
             skillLevels: [],
-            mentors: [],
+            availableMentors: [],
             newSkillLevelId: null,
             newPimMentorId: null,
             newSecMentorId: null,
             groupStudents: [],
             studentsNotInGroup: [],
             addingStudentToGroupModalVisible: false,
-            editGroupModalVisible: false,
-            requestHeader: ''
+            editGroupModalVisible: false
         }
         this.AddingStudenToGroupModalHandler = this.AddingStudenToGroupModalHandler.bind(AddingStudentToGroupModal);
         this.onChooseStudentNotInGroupTab = this.onChooseStudentNotInGroupTab.bind(AddingStudentToGroupModal);
+        this.onGetAvailableMentors = this.onGetAvailableMentors.bind(EditGroup);
     }
 
     componentDidMount() {
         this.populateCurrentGroupData();
         this.populateCurrentGroupStudentsData();
-        this.getAllMentors();
-        this.getAllSkillLevels();
+        this.setState({
+            newPimMentorId: this.state.group.primaryMentorId,
+            newSecMentorId: this.state.group.secondaryMentorId,
+            
+        });
     }
 
     AddingStudenToGroupModalHandler = event => {
@@ -51,6 +54,10 @@ class GroupPage extends Component {
         }
     }
 
+    onGetAvailableMentors = () => {
+        this.getAvailableMentors();
+    }
+
     render() {
         return (
             <div className="container">
@@ -59,8 +66,11 @@ class GroupPage extends Component {
                 {this.props.roleName === 'Admin' ?
                     <EditGroup
                         group={this.state.group}
-                        mentors={this.state.mentors}
+                        availableMentors={this.state.availableMentors}
                         skillLevels={this.state.skillLevels}
+                        curPrimeMentor={this.state.group.primaryMentor}
+                        curSecMentor={this.state.group.secondaryMentor}
+                        getAvailableMentors={this.onGetAvailableMentors}
                     /> :
                     <GroupTittle group={this.state.group} />
                 }
@@ -123,13 +133,18 @@ class GroupPage extends Component {
             .catch(error => console.log(error));
     }
 
-    getAllMentors() {
-        Axios.get('api/mentors', {
+    getAvailableMentors = () => {
+        const groupId = this.props.match.params.id;
+        Axios.get(`api/groups/${groupId}/mentors/not-in-group`, {
             headers: {
                 Authorization: `Bearer ${this.props.access_token}`
-            }
+            },
+        },{
+            primMentor: this.state.newPimMentorId,
+            secMentor: this.state.newSecMentorId
+            
         }).then(response => this.setState({
-            mentors: response.data
+            availableMentors: response.data
         })).catch(error => console.log(error));
     }
 
