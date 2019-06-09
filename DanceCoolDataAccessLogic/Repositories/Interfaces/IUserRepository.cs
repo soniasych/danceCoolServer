@@ -11,6 +11,7 @@ namespace DanceCoolDataAccessLogic.Repositories.Interfaces
         IEnumerable<User> GetStudentsByGroupId(int groupId);
         IEnumerable<User> GetStudentsNotInGroup(int groupId);
         IEnumerable<User> GetMentors();
+        IEnumerable<User> GetMentorsNotInGroup(int[] actualMentors);
         void AddUserRange(IEnumerable<User> users);
         IEnumerable<User> Search(string key);
         

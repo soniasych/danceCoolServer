@@ -44,13 +44,6 @@ namespace DanceCoolDataAccessLogic.Repositories
                 .Where(user => user.RoleId == 1).ToList();
         }
 
-        public IEnumerable<User> GetMentors()
-        {
-            return Context.Users
-                .Include(user => user.Role)
-                .Where(user => user.RoleId == 2).ToList();
-        }
-
         public IEnumerable<User> GetStudentsByGroupId(int groupId)
         {
             var groupStudents = Context.Users
@@ -64,10 +57,25 @@ namespace DanceCoolDataAccessLogic.Repositories
 
         public IEnumerable<User> GetStudentsNotInGroup(int groupId)
         {
-            var group = Context.Groups.Find(groupId);
-            int[] engagedStudentsIds = GetStudentsByGroupId(groupId).Select(student => student.Id).ToArray();
+            var engagedStudentsIds = GetStudentsByGroupId(groupId).Select(student => student.Id).ToArray();
             return Context.Users.Include(user => user.Role)
                 .Where(user => !engagedStudentsIds.Contains(user.Id) && user.RoleId == 1);
+        }
+
+        public IEnumerable<User> GetMentors()
+        {
+            return Context.Users
+                .Include(user => user.Role)
+                .Where(user => user.RoleId == 2).ToList();
+        }
+
+        public IEnumerable<User> GetMentorsNotInGroup(int[] actualMentors)
+        {
+            var unUsedMentors = Context.Users
+                .Include(user => user.Role)
+                .Where(user => !actualMentors.Contains(user.Id) && (user.RoleId == 2 || user.RoleId == 3));
+
+            return unUsedMentors;
         }
 
         public IEnumerable<User> Search(string key)

@@ -50,27 +50,6 @@ namespace DanceCoolBusinessLogic.Services
             return groupDtos;
         }
 
-        public IEnumerable<UserDTO> GetStudentsNotInCurrentGroup(int groupId)
-        {
-            var studentsNotInCurrentGroup = db.Users.GetStudentsNotInGroup(groupId);
-            if (studentsNotInCurrentGroup == null)
-            {
-                return null;
-            }
-            var dtos = new List<UserDTO>();
-
-            foreach (var student in studentsNotInCurrentGroup)
-            {
-                dtos.Add(new UserDTO(student.Id,
-                    student.FirstName,
-                    student.LastName,
-                    student.PhoneNumber,
-                    student.Role.RoleName));
-            }
-
-            return dtos;
-        }
-
         public bool ChangeGroupMentors(int groupId, int newPrimaryMentorId, int newSecMentorId)
         {
             return db.Groups.ChangeGroupMentors(groupId, newPrimaryMentorId, newSecMentorId);

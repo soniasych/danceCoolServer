@@ -25,11 +25,6 @@ namespace DanceCoolBusinessLogic.Services
             db.Save();
         }
 
-        public IEnumerable<User> GetAllUserModels()
-        {
-            return db.Users.GetAllUsers();
-        }
-
         public IEnumerable<UserDTO> GetAllUsers()
         {
             var users = db.Users.GetAllUsers();
@@ -85,6 +80,23 @@ namespace DanceCoolBusinessLogic.Services
             return usersInGroup;
         }
 
+        public IEnumerable<UserDTO> GetStudentsNotInCurrentGroup(int groupId)
+        {
+            var studentsNotInCurrentGroup = db.Users.GetStudentsNotInGroup(groupId);
+            if (studentsNotInCurrentGroup == null)
+            {
+                return null;
+            }
+            var studentsDtos = new List<UserDTO>();
+
+            foreach (var student in studentsNotInCurrentGroup)
+            {
+                studentsDtos.Add(UserModelToUserDTO(student));
+            }
+
+            return studentsDtos;
+        }
+
         public IEnumerable<UserDTO> GetAllStudents()
         {
             var studentModels = db.Users.GetStudents();
@@ -120,6 +132,21 @@ namespace DanceCoolBusinessLogic.Services
                 mentorsDtos.Add(UserModelToUserDTO(item));
             }
             return mentorsDtos;
+        }
+
+        public IEnumerable<UserDTO> GetMentorsNotInGroup(int[] usedMentors)
+        {
+            var unUSedMentors = db.Users.GetMentorsNotInGroup(usedMentors);
+
+            if (unUSedMentors == null)
+                return null;
+
+            var mentorDtos = new List<UserDTO>();
+
+            foreach (var item in unUSedMentors)
+                mentorDtos.Add(UserModelToUserDTO(item));
+
+            return mentorDtos;
         }
 
         public IEnumerable<UserDTO> Search(string key)

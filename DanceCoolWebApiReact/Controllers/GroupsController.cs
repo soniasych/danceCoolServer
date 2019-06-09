@@ -3,7 +3,6 @@ using System.Linq;
 using DanceCoolBusinessLogic.Services;
 using DanceCoolDTO;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace danceCoolWebApi.Controllers
@@ -52,11 +51,39 @@ namespace danceCoolWebApi.Controllers
         /// <param name="groupId">Id of the group.</param>
         [Authorize(Roles = "Mentor, Admin")]
         [HttpGet]
-        [Authorize]
         [Route("api/groups/{groupId}/students/not-in-group")]
         public IEnumerable<UserDTO> GetStudentsNotInCurrentGroup(int groupId)
         {
-            return _groupService.GetStudentsNotInCurrentGroup(groupId);
+            return _userService.GetStudentsNotInCurrentGroup(groupId);
+        }
+
+        /// <summary>Get Mentors that not in current group .</summary>
+        /// <param name="primMentor">Id of group primary mentor.</param>
+        /// /// <param name="secMentor">Id of group secondary mentor.</param>
+        [Authorize(Roles = "Admin")]
+        [HttpGet]
+        [Route("api/groups/{groupId}/students/not-in-group")]
+        public IActionResult GetMentorsNotInCurrentGroup(int primMentor, int secMentor)
+        {
+            var currentMentors = new[] {primMentor, secMentor};
+            var unUsedMentors = _userService.GetMentorsNotInGroup(currentMentors);
+            if (unUsedMentors == null)
+            {
+                return NotFound("Не знайдено викладачів");
+            }
+
+            return Ok(unUsedMentors);
+        }
+
+        /// <summary>Get all skill levels from database.</summary>
+        [HttpGet]
+        [Route("api/skill-levels")]
+        public IActionResult GetAllSkillLevels()
+        {
+            var skillLevels = _groupService.GetAllSkillLevels();
+            return !skillLevels.Any()
+                ? (IActionResult)NotFound("There's no skill levels in database")
+                : Ok(skillLevels);
         }
 
         /// <summary>Add new group.</summary>
@@ -84,20 +111,6 @@ namespace danceCoolWebApi.Controllers
             return Ok();
         }
 
-        /// <summary>Get all skill levels from database.</summary>
-        [HttpGet]
-        [Route("api/skill-levels")]
-        public IActionResult GetAllSkillLevels()
-        {
-            var skillLevels = _groupService.GetAllSkillLevels();
-            return !skillLevels.Any()
-                ? (IActionResult) NotFound("There's no skill levels in database")
-                : Ok(skillLevels);
-        }
-
-        //LaLaLAnd
-
-
         /// <summary>Changes Group mentors.</summary>
         /// <param name="groupId">Id of the group to be changed.</param>
         /// <param name="newPrimaryMentorId">New primary mentor id.</param>
@@ -105,7 +118,7 @@ namespace danceCoolWebApi.Controllers
         [Authorize(Roles = "Admin")]
         [HttpPut]
         [Route("api/group/mentor")]
-        public IActionResult ChangeGroupLevelMentor(int groupId, int newPrimaryMentorId, int newSecMentorId)
+        public IActionResult ChangeGroupMentors(int groupId, int newPrimaryMentorId, int newSecMentorId)
         {
             if (groupId < 1 || newPrimaryMentorId < 1 || newSecMentorId < 1)
             {
