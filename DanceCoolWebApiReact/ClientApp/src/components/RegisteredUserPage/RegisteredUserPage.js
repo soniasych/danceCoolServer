@@ -26,14 +26,14 @@ class RegisteredUserPage extends Component {
                                         <Nav.Link eventKey="Groups">Групи</Nav.Link>
                                     </Nav.Item> : null
                                 }
-                                {this.props.roleName === 'Mentor' || this.props.roleName === 'Admin' ?
+                                {this.props.roleName === 'Admin' ?
                                     <Nav.Item>
-                                        <Nav.Link eventKey="Students">Студенти</Nav.Link>
+                                        <Nav.Link eventKey="ManageUsers">Менеджмент користувачів</Nav.Link>
                                     </Nav.Item> : null
                                 }
                                 {this.props.roleName === 'Admin' ?
                                     <Nav.Item>
-                                        <Nav.Link eventKey="ManageUsers">Керування користувачами</Nav.Link>
+                                        <Nav.Link eventKey="Abonnements">Абонементи</Nav.Link>
                                     </Nav.Item> : null
                                 }
                             </Nav>
@@ -51,11 +51,11 @@ class RegisteredUserPage extends Component {
                                     <Route path='/groups/:id' component={GroupPage} />
                                     <GroupList />
                                 </Tab.Pane>
-                                <Tab.Pane eventKey="Students">
-                                    <div>Студенти</div>
-                                </Tab.Pane>
                                 <Tab.Pane eventKey="ManageUsers">
                                     <ManageUsersPage />
+                                </Tab.Pane>
+                                <Tab.Pane eventKey="Abonnements">
+                                    <div>Абонементи</div>
                                 </Tab.Pane>
                             </Tab.Content>
                         </Col>
