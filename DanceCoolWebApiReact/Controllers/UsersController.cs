@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using DanceCoolBusinessLogic.Services;
 using DanceCoolDTO;
 using Microsoft.AspNetCore.Authorization;
@@ -21,7 +20,6 @@ namespace DanceCoolWebApiReact.Controllers
         }
 
         /// <summary>Get all users in database.</summary>
-        //GET: api/Users
         [Authorize(Roles = "Admin")]
         [HttpGet]
         [Route("api/users")]
@@ -31,7 +29,6 @@ namespace DanceCoolWebApiReact.Controllers
         }
 
         /// <summary>Get all students in database.</summary>
-        //GET: api/students
         [Authorize(Roles = "Admin")]
         [HttpGet]
         [Route("api/students")]
@@ -41,24 +38,23 @@ namespace DanceCoolWebApiReact.Controllers
         }
 
         /// <summary>Get all mentors in database.</summary>
-        [Authorize(Roles = "Admin")]
-        [HttpGet]
-        [Route("api/mentors")]
-        public IActionResult GetAllMentors()
-        {
-            var mentors = _userService.GetMentors();
+        //[Authorize(Roles = "Admin")]
+        //[HttpGet]
+        //[Route("api/mentors")]
+        //public IActionResult GetAllMentors()
+        //{
+        //    var mentors = _userService.GetMentors();
 
-            if (!mentors.Any())
-            {
-                return NotFound("No mentors in database");
-            }
-            return Ok(mentors);
-        }
+        //    if (!mentors.Any())
+        //    {
+        //        return NotFound("No mentors in database");
+        //    }
+        //    return Ok(mentors);
+        //}
 
         /// <summary>Get user by his id in database.</summary>
         /// <param name="userId">Id of the student to be gotten.</param>
         [Authorize(Roles = "Mentor, Admin")]
-        [Authorize]
         [HttpGet]
         [Route("api/users/{userId}")]
         public UserDTO GetUserById(int userId)
@@ -73,7 +69,8 @@ namespace DanceCoolWebApiReact.Controllers
             var user = _userService.GetUserByPhoneNumber(phoneNumber);
             return user;
         }
-         [Authorize(Roles = "Admin")]
+
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         [Route("api/users/search")]
         public IEnumerable<UserDTO> Search(string searchQuery)
@@ -102,17 +99,5 @@ namespace DanceCoolWebApiReact.Controllers
                 Ok();
             }
         }
-
-        //// PUT: api/Users/5
-        //[HttpPut("{id}")]
-        //public void Put(int id, [FromBody] string value)
-        //{
-        //}
-
-        //// DELETE: api/ApiWithActions/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //}
     }
 }
