@@ -1,77 +1,74 @@
 import React, { Component } from 'react';
 import Axios from 'axios';
 
-export class AddNewUserForm extends Component {
+export class AddNewUserToGroupForm extends Component {
 
     constructor(props) {
         super(props);
 
         this.state = {
+            studentId: null,
             studentFirstName: '',
             studentLastName: '',
-            studentPhoneNumber: ''
+            studentPhoneNumber: '',
+            isAddingActive: false
+
         };
 
         this.onFirtsNameInputChanged = this.onFirtsNameInputChanged.bind(this);
         this.onLastNameInputChanged = this.onLastNameInputChanged.bind(this);
-        this.onPhonNumberInputChanged = this.onPhonNumberInputChanged.bind(this);
+        this.onPhoneNumberInputChanged = this.onPhoneNumberInputChanged.bind(this);
         this.onAddStudentButtonClickHandler = this.onAddStudentButtonClickHandler.bind(this);
     }
 
     onFirtsNameInputChanged = event => {
         this.setState({ studentFirstName: event.target.value });
-        console.log(this.state.studentLastName);
+        console.log(this.state.studentFirstName);
     }
 
     onLastNameInputChanged = event => {
         this.setState({ studentLastName: event.target.value });
         console.log(this.state.studentLastName);
-
     }
 
-    onPhonNumberInputChanged = event => {
+    onPhoneNumberInputChanged = event => {
         this.setState({ studentPhoneNumber: event.target.value });
-        console.log(this.state.studentLastName);
+        console.log(this.state.studentPhoneNumber);
     }
 
     onAddStudentButtonClickHandler = event => {
-        if (this.state.studentFirstName >= 1 &&
-            this.state.studentLastName >= 1 &&
-            this.state.studentPhoneNumber >= 1) {
-            this.addStudent();
-        }
-        let addedStudent = {
+        Axios.post('api/users/', {
             firstName: this.state.studentFirstName,
             lastName: this.state.studentLastName,
             phoneNumber: this.state.studentPhoneNumber
-        };
-        Axios.post('api/users/', addedStudent, {
-            headers: {
-                Authorization: `Bearer ${this.props.access_token}`
-            }
         })
-            .then(response => console.log(response))
-            .catch(error => console.log(error));
+            .then(response => {
 
+                Axios.get(`api/users/phone?phoneNumber=${this.state.studentPhoneNumber}`)
+                    .then(response => {
+                        
+                        this.setState({ studentId: response.data.id });
+                        Axios.post(`api/group/${this.props.groupId}/user/`, {
+                            userId: this.state.studentId,
+                            groupId: this.props.groupId
+                        });
+                    });
+            });
     }
 
     render() {
         return (<form className="needs-validation" noValidate>
             <div className="form-row">
                 <div className="col-md-4 mb-3">
-                    <label htmlFor="validationDefault01">Ім'я</label>
+                    <label>Ім'я</label>
                     <input type="text"
                         className="form-control"
-                        id="validationDefault01"
-                        required value={this.state.studentFirstName}
                         onChange={this.onFirtsNameInputChanged} />
                 </div>
                 <div className="col-md-4 mb-3">
-                    <label htmlFor="validationDefault02">Прізвище</label>
+                    <labe>Прізвище</labe>
                     <input type="text"
                         className="form-control"
-                        id="validationDefault02"
-                        required value={this.state.studentLastName}
                         onChange={this.onLastNameInputChanged} />
                 </div>
                 <div className="col-md-4 mb-3">
@@ -79,11 +76,13 @@ export class AddNewUserForm extends Component {
                     <input type="text"
                         className="form-control"
                         id="validationDefaultUsername"
-                        required value={this.state.studentPhoneNumber}
-                        onChange={this.onPhonNumberInputChanged} />
+                        onChange={this.onPhoneNumberInputChanged} />
                 </div>
             </div>
-            <button className="btn btn-primary" type="button" onClick={this.onAddStudentButtonClickHandler}>Додати студента</button>
+            <button className="btn btn-primary" type="button"
+                onClick={this.onAddStudentButtonClickHandler}>
+                Додати студента
+                </button>
         </form>);
     }
 }

@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { Route } from 'react-router';
+import { Route } from 'react-router-dom';
 import Layout from './components/Layout';
 import { GuestPage } from './components/GuestComponent/GuestPage';
-import { GroupList } from './components/GroupPage/GroupList';
-import GroupPage from './components/GroupPage/GroupPage'
-import { ManageUsersPage } from './components/ManageUsersPage/ManageUsersPage';
+import { GroupList } from './containers/GroupList';
+import GroupPage from './containers/GroupPage'
+import ManageUsersPage from './containers/ManageUsersPage';
 import RegisteredUserPage from './components/RegisteredUserPage/RegisteredUserPage'
 import { AttendancePage } from './components/AttendancePage/Attendances';
 import Schedule from './components/GuestComponent/Schedule/Schedule';

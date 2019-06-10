@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import {
   Collapse, Container, Button,
   Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink,
-  Popover, PopoverHeader, PopoverBody
+  Popover, PopoverBody
 } from 'reactstrap';
 import { ListGroup } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { BrowserRouter, Link } from 'react-router-dom';
+import { withRouter } from 'react-router'
 import './NavMenu.css';
 import AuthenticationModal from './Authentication/AuthenticationModal';
 import Logo from '../assets/lasalsa-logo.png';
@@ -57,6 +58,7 @@ class NavMenu extends Component {
   onLogOutClick() {
     this.props.onLogOut();
     this.setState({ popoverOpen: false });
+    this.props.history.push('/');
   }
 
   render() {
@@ -92,7 +94,7 @@ class NavMenu extends Component {
                   {this.props.isLogedIn ?
                     < div >
                       <Button id="Popover1" type="button" onClick={this.togglePopover}>
-                       {this.props.firstName} {this.props.lastName}
+                        {this.props.firstName} {this.props.lastName}
                       </Button>
                       <Popover placement="bottom" isOpen={this.state.popoverOpen} target="Popover1">
                         <PopoverBody>
@@ -144,4 +146,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(NavMenu);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(NavMenu));

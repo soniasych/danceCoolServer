@@ -24,10 +24,9 @@ namespace DanceCoolBusinessLogic.Services
             if (db.UserCredentials.IsEmailReserved(newCredentials.Email))
                 throw new AppException($"Username \\ {newCredentials.Email} \\ is already taken");
 
-            byte[] passwordHash, passwordSalt;
             int existingUserId;
 
-            CreatePasswordHash(password, out passwordHash, out passwordSalt);
+            CreatePasswordHash(password, out var passwordHash, out var passwordSalt);
 
             if (db.Users.GetUserByPhoneNumber(newCredentials.PhoneNumber) != null)
             {
@@ -64,11 +63,13 @@ namespace DanceCoolBusinessLogic.Services
             if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
                 return null;
 
-            var userCredentials = db.UserCredentials.GetCredentialsByEmail(email);
-            var roleName = db.Roles.GetRoleByCredentails(email).RoleName;
-
             // check if username exists
-            if (userCredentials == null || roleName == null)
+            var userCredentials = db.UserCredentials.GetCredentialsByEmail(email);
+            if (userCredentials == null)
+                return null;
+
+            var roleName = db.Roles.GetRoleByCredentails(email).RoleName;
+            if (roleName == null)
                 return null;
 
             // check if password is correct
@@ -78,7 +79,7 @@ namespace DanceCoolBusinessLogic.Services
             var claims = new List<Claim>
                 {
                     new Claim(ClaimsIdentity.DefaultNameClaimType, userCredentials.Email)
-                    ,new Claim(ClaimsIdentity.DefaultNameClaimType, roleName)
+                    ,new Claim(ClaimsIdentity.DefaultRoleClaimType, roleName)
                 };
             ClaimsIdentity claimsIdentity =
             new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType,

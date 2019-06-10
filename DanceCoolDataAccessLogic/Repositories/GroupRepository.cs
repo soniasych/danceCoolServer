@@ -32,26 +32,6 @@ namespace DanceCoolDataAccessLogic.Repositories
                 .First(group => group.Id == groupId);
         }
 
-        public IEnumerable<Group> GetGroupsByLevelId(int levelId)
-        {
-            return Context.Groups
-                .Include(g => g.Direction)
-                .Include(g => g.Level)
-                .Include(g => g.PrimaryMentor)
-                .Include(g => g.SecondaryMentor)
-                .Where(group => group.LevelId == levelId).ToList();
-        }
-
-        public IEnumerable<Group> GetGroupsByDirectionId(int directionId)
-        {
-            return Context.Groups
-                .Include(g => g.Direction)
-                .Include(g => g.Level)
-                .Include(g => g.PrimaryMentor)
-                .Include(g => g.SecondaryMentor)
-                .Where(group => group.DirectionId == directionId).ToList();
-        }
-
         public IEnumerable<Group> GetGroupsByUserId(int userId)
         {
             return Context.Groups.Where(group => group.UserGroups.Any(ug => ug.UserId == userId));
@@ -62,11 +42,21 @@ namespace DanceCoolDataAccessLogic.Repositories
             Context.Groups.Add(group);
         }
 
-        public void ChangeGroupLevel(int groupId, int levelId)
+        public bool ChangeGroupLevel(int groupId, int levelId)
         {
             var groupModel = GetGroupById(groupId);
             groupModel.LevelId = levelId;
             Context.SaveChanges();
+            return true;
+        }
+
+        public bool ChangeGroupMentors(int groupId, int newPrimaryMentorId, int newSecMentorId)
+        {
+            var groupModel = GetGroupById(groupId);
+            groupModel.PrimaryMentorId = newPrimaryMentorId;
+            groupModel.SecondaryMentorId = newSecMentorId;
+            Context.SaveChanges();
+            return true;
         }
     }
 }

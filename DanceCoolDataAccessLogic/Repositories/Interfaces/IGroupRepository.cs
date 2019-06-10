@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using DanceCoolDataAccessLogic.EfStructures.Context;
+﻿using System.Collections.Generic;
 using DanceCoolDataAccessLogic.EfStructures.Entities;
 
 namespace DanceCoolDataAccessLogic.Repositories.Interfaces
@@ -10,12 +7,12 @@ namespace DanceCoolDataAccessLogic.Repositories.Interfaces
     {
         IEnumerable<Group> GetAllGroups();
         Group GetGroupById(int groupId);
-        IEnumerable<Group> GetGroupsByLevelId(int levelId);
-        IEnumerable<Group> GetGroupsByDirectionId(int directionId);
         IEnumerable<Group> GetGroupsByUserId(int userId);
 
         void AddGroup(Group group);
 
-        void ChangeGroupLevel(int groupId, int levelId);
+        bool ChangeGroupLevel(int groupId, int levelId);
+        bool ChangeGroupMentors(int groupId, int newPrimaryMentorId, int newSecMentorId);
+
     }
 }

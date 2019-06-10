@@ -25,17 +25,30 @@ namespace DanceCoolDataAccessLogic.Repositories
 
         public User GetUserById(int userId)
         {
-            return Context.Users.Find(userId);
+            return Context.Users
+                .Include(user=> user.Role)
+                .SingleOrDefault(user => user.Id == userId);
         }
 
         public User GetUserByPhoneNumber(string phoneNumber)
         {
-            return Context.Users.FirstOrDefault(user => user.PhoneNumber == phoneNumber);
+            return Context.Users
+                .Include(user => user.Role)
+                .FirstOrDefault(user => user.PhoneNumber.Contains(phoneNumber));
         }
 
         public IEnumerable<User> GetStudents()
         {
-            return Context.Users.Where(user => user.RoleId == 1).ToList();
+            return Context.Users
+                .Include(user =>user.Role)
+                .Where(user => user.RoleId == 1).ToList();
+        }
+
+        public IEnumerable<User> GetMentors()
+        {
+            return Context.Users
+                .Include(user => user.Role)
+                .Where(user => user.RoleId == 2).ToList();
         }
 
         public IEnumerable<User> GetStudentsByGroupId(int groupId)
@@ -57,16 +70,11 @@ namespace DanceCoolDataAccessLogic.Repositories
                 .Where(user => !engagedStudentsIds.Contains(user.Id) && user.RoleId == 1);
         }
 
-        public IEnumerable<User> GetMentors()
-        {
-            return null;
-            //return Context.Users.Where(user => user.UserRoles.
-            //        Any(ur => ur.RoleId == 2));
-        }
-
         public IEnumerable<User> Search(string key)
         {
-            return Context.Users.Where(user => user.LastName.Contains(key.ToLower()));
+            return Context.Users
+                .Include(user => user.Role)
+                .Where(user => user.LastName.Contains(key.ToLower()));
         }
 
         public User GetUserByEmail(string email)

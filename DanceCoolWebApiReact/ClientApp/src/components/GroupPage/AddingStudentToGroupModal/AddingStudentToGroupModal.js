@@ -6,7 +6,7 @@ import {
     ModalFooter
 } from 'reactstrap';
 import { Tabs, Tab } from 'react-bootstrap';
-import { AddNewUserForm } from '../../common/AddNewUserForm';
+import { AddNewUserToGroupForm } from './AddNewUserToGroupForm';
 import ExistingSudentsTable from './ExistingSudentsTable';
 
 const AddingStudentToGroupModal = props => {
@@ -21,11 +21,11 @@ const AddingStudentToGroupModal = props => {
             <ModalBody>
                 <Tabs onSelect={props.selectStudentsNotInGroupTab}>
                     <Tab eventKey="NewStudentForm" title="Додати нового">
-                        <AddNewUserForm />
+                        <AddNewUserToGroupForm groupId={props.groupId}/>
                     </Tab>
                     <Tab eventKey="ExistingStudents" title="Наявні студенти">
                         <ExistingSudentsTable existingStudents={props.studentsNotInGroup}
-                            groupId={groupId}
+                            groupId={props.groupId}
                         />
                     </Tab>
                 </Tabs>

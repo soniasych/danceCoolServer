@@ -54,6 +54,12 @@ namespace DanceCoolBusinessLogic.Services
             return userModel == null ? null : UserModelToUserDTO(userModel);
         }
 
+        public UserDTO GetUserByPhoneNumber(string phoneNumber)
+        {
+            var userModel = db.Users.GetUserByPhoneNumber(phoneNumber);
+            return userModel == null ? null : UserModelToUserDTO(userModel);
+        }
+
         public UserDTO GetUserByEmail(string email)
         {
             var user = db.Users.GetUserByEmail(email);
@@ -96,6 +102,24 @@ namespace DanceCoolBusinessLogic.Services
             }
             return studentsDtos;
 
+        }
+
+        public IEnumerable<UserDTO> GetMentors()
+        {
+            var mentorModels = db.Users.GetMentors();
+
+            if (mentorModels == null)
+            {
+                return null;
+            }
+
+            var mentorsDtos = new List<UserDTO>();
+
+            foreach (var item in mentorModels)
+            {
+                mentorsDtos.Add(UserModelToUserDTO(item));
+            }
+            return mentorsDtos;
         }
 
         public IEnumerable<UserDTO> Search(string key)

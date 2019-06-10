@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using System.Net.Http;
+using System.Linq;
 using DanceCoolBusinessLogic.Services;
-using DanceCoolDataAccessLogic.EfStructures.Entities;
 using DanceCoolDTO;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DanceCoolWebApiReact.Controllers
@@ -20,7 +20,9 @@ namespace DanceCoolWebApiReact.Controllers
             _userService = userService;
         }
 
+        /// <summary>Get all users in database.</summary>
         //GET: api/Users
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         [Route("api/users")]
         public IEnumerable<UserDTO> GetAllUsers()
@@ -28,21 +30,9 @@ namespace DanceCoolWebApiReact.Controllers
             return _userService.GetAllUsers();
         }
 
-        [HttpGet]
-        [Route("api/userInfo")]
-        public RegistrationUserIdentityDto GetUserInfo(string email)
-        {
-            return null;
-        }
-
-        [HttpGet]
-        [Route("api/user-models")]
-        public IEnumerable<User> GetAllUserModels()
-        {
-            return _userService.GetAllUserModels();
-        }
-
+        /// <summary>Get all students in database.</summary>
         //GET: api/students
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         [Route("api/students")]
         public IEnumerable<UserDTO> GetAllStudents()
@@ -50,15 +40,40 @@ namespace DanceCoolWebApiReact.Controllers
             return _userService.GetAllStudents();
         }
 
-        // GET: api/Users/5
+        /// <summary>Get all mentors in database.</summary>
+        [Authorize(Roles = "Admin")]
+        [HttpGet]
+        [Route("api/mentors")]
+        public IActionResult GetAllMentors()
+        {
+            var mentors = _userService.GetMentors();
+
+            if (!mentors.Any())
+            {
+                return NotFound("No mentors in database");
+            }
+            return Ok(mentors);
+        }
+
+        /// <summary>Get user by his id in database.</summary>
+        /// <param name="userId">Id of the student to be gotten.</param>
+        [Authorize(Roles = "Mentor, Admin")]
+        [Authorize]
         [HttpGet]
         [Route("api/users/{userId}")]
         public UserDTO GetUserById(int userId)
         {
             return _userService.GetUserById(userId);
         }
-       
 
+        [Authorize(Roles = "Mentor, Admin")]
+        [Route("api/users/phone")]
+        public UserDTO GetUserByPhoneNumber(string phoneNumber)
+        {
+            var user = _userService.GetUserByPhoneNumber(phoneNumber);
+            return user;
+        }
+         [Authorize(Roles = "Admin")]
         [HttpGet]
         [Route("api/users/search")]
         public IEnumerable<UserDTO> Search(string searchQuery)
@@ -68,6 +83,7 @@ namespace DanceCoolWebApiReact.Controllers
         }
 
         // POST: api/Users
+        [Authorize(Roles = "Mentor, Admin")]
         [HttpPost]
         [Route("api/users/")]
         public void AddNewUser([FromBody] NewUserDTO userDto)
@@ -75,6 +91,7 @@ namespace DanceCoolWebApiReact.Controllers
             _userService.AddUser(userDto);
         }
 
+        [Authorize(Roles = "Mentor, Admin")]
         [HttpPost]
         [Route("api/group/{groupId}/user/")]
         public void AddStudentToGroup([FromBody] NewUserGroupDTO newUserGroupDTO)

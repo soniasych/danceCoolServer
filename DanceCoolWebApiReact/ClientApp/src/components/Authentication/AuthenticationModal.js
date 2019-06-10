@@ -6,6 +6,8 @@ import {
   , ModalFooter
 } from 'reactstrap';
 import './AuthenticationModal.css';
+import { BrowserRouter, Link } from 'react-router-dom';
+import { withRouter } from 'react-router'
 import LogInForm from './Forms/LogInForm';
 import SignUpForm from './Forms/SignUpForm';
 import { connect } from 'react-redux';
@@ -85,6 +87,7 @@ class AuthenticationModal extends Component {
     if (this.state.activeTabKey === 'SignInTab') {
       this.props.onSignIn(this.state.autEmail, this.state.autPassword);
     } else {
+      console.log(this.props);
       this.props.onSignUp(this.state.regFirstName,
         this.state.regLastName,
         this.state.regPhoneNumber,
@@ -98,7 +101,8 @@ class AuthenticationModal extends Component {
       <Modal isOpen={this.props.visible}
         className="my-modal">
         <ModalBody>
-          <Tabs onSelect={this.onAuthenticationSelectTab}>
+          <Tabs onSelect={this.onAuthenticationSelectTab}
+            defaultActiveKey="SignInTab">
             <Tab eventKey="SignInTab" title="Авторизація">
               <LogInForm
                 autEmailChanged={this.onAutEmailInput}
@@ -143,4 +147,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(AuthenticationModal);
+export default connect(null, mapDispatchToProps)(withRouter(AuthenticationModal));

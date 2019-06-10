@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using DanceCoolDataAccessLogic.EfStructures.Context;
 using DanceCoolDataAccessLogic.EfStructures.Entities;
 using DanceCoolDTO;
 
@@ -12,7 +11,9 @@ namespace DanceCoolBusinessLogic.Services
         IEnumerable<GroupDTO> GetGroupsByUserId(int userId);
 
         //void AddGroup(GroupDTO group);
+        IEnumerable<SkillLevel> GetAllSkillLevels();
         void ChangeGroupLevel(int groupId, int targetLevelId);
+        bool ChangeGroupMentors(int groupId, int newPrimaryMentorId, int newSecMentorId);
         IEnumerable<UserDTO> GetStudentsNotInCurrentGroup(int groupId);
         IEnumerable<LessonDTO> GetLessons();
         IEnumerable<AttendanceDTO> GetPresentStudentsOnLesson(int lessonId);

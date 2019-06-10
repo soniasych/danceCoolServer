@@ -4,7 +4,7 @@ import * as actions from '../store/actions/index';
 import { connect } from 'react-redux';
 
 class Layout extends Component {
-  componentDidMount() {
+  UNSAFE_componentWillMount() {
     this.props.onTryAutoLogin();
   }
 
