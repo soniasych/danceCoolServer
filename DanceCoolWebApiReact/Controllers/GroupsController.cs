@@ -60,7 +60,7 @@ namespace danceCoolWebApi.Controllers
         /// <summary>Get Mentors that not in current group .</summary>
         /// <param name="primMentor">Id of group primary mentor.</param>
         /// /// <param name="secMentor">Id of group secondary mentor.</param>
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpGet]
         [Route("api/groups/{groupId}/mentors/not-in-group")]
         public IActionResult GetMentorsNotInCurrentGroup(int primMentor, int secMentor)
@@ -101,8 +101,10 @@ namespace danceCoolWebApi.Controllers
         [Authorize(Roles = "Admin")]
         [HttpPut]
         [Route("api/group/skill-level/")]
-        public IActionResult ChangeGroupLevel(int groupId, int newSkillLevelId)
+        public IActionResult ChangeGroupLevel([FromBody]dynamic requestObject)
         {
+            var groupId = (int)requestObject.groupId;
+            var newSkillLevelId = (int)requestObject.newSkillLevelId;
             if (groupId < 1 || newSkillLevelId < 1)
             {
                 return BadRequest("Вказано невірні параметри");

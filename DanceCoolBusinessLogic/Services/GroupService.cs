@@ -108,11 +108,11 @@ namespace DanceCoolBusinessLogic.Services
             groupModel.Id,
             groupModel.Direction.Name,  
             groupModel.PrimaryMentorId,
-            $"{groupModel.PrimaryMentor.FirstName} {groupModel.PrimaryMentor.LastName}",
+            groupModel.PrimaryMentor.FirstName,
+            groupModel.PrimaryMentor.LastName,
             groupModel.SecondaryMentorId ?? 0,
-            groupModel.SecondaryMentor == null
-                ? null
-                : $"{groupModel.SecondaryMentor.FirstName} {groupModel.SecondaryMentor.LastName}",
+            groupModel.SecondaryMentor?.FirstName,
+            groupModel.SecondaryMentor?.LastName,
             groupModel.Level?.Name);
     }
 }
