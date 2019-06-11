@@ -60,13 +60,15 @@ namespace danceCoolWebApi.Controllers
         /// <summary>Get Mentors that not in current group .</summary>
         /// <param name="primMentor">Id of group primary mentor.</param>
         /// /// <param name="secMentor">Id of group secondary mentor.</param>
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         [Route("api/groups/{groupId}/mentors/not-in-group")]
-        public IActionResult GetMentorsNotInCurrentGroup(int primMentor, int secMentor)
+        public IActionResult GetMentorsNotInCurrentGroup([FromBody]dynamic currentMentors)
         {
-            var currentMentors = new[] {primMentor, secMentor};
-            var unUsedMentors = _userService.GetMentorsNotInGroup(currentMentors);
+            var primMentorId = (int)currentMentors.primMentor;
+            var secMentor = (int)currentMentors.secMentor;
+            var currentMentorsArray = new[] { primMentorId, secMentor};
+            var unUsedMentors = _userService.GetMentorsNotInGroup(currentMentorsArray);
             if (unUsedMentors == null)
             {
                 return NotFound("Не знайдено викладачів");

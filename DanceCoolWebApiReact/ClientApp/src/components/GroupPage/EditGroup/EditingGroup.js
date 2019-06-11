@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, ButtonToolbar, Button, Form } from 'react-bootstrap';
+import { Container, ButtonToolbar, Button, Form, InputGroup } from 'react-bootstrap';
 import Axios from 'axios';
 import { connect } from 'react-redux';
 import './EditGroup.css';
@@ -10,8 +10,8 @@ class EditGroup extends Component {
             ableToEdit: false,
             changesBeenMade: false,
             skillLevelDropDownOpen: false,
-            // newPrimMentorId: 0,
-            // newSecMentorId: 0,
+            newPrimMentorId: 0,
+            newSecMentorId: 0,
             newSkillLevelId: 0,
             newSkillLevelName: '',
             newPrimaryMentor: {},
@@ -22,30 +22,31 @@ class EditGroup extends Component {
         this.enableEditGroup = this.enableEditGroup.bind(this);
         this.onSelectedSkillLevel = this.onSelectedSkillLevel.bind(this);
         this.confirmChanges = this.confirmChanges.bind(this);
+        this.onSelectedPrimaryMentor = this.onSelectedPrimaryMentor.bind(this);
+        this.onSelectedSecondaryMentor = this.onSelectedSecondaryMentor.bind(this);
     }
 
     componentDidMount() {
         this.setState({
+            newPrimMentorId: this.props.group.primaryMentorId,
+            newSecMentorId: this.props.group.secondaryMentorId,
             newSkillLevelName: this.props.group.groupLevel,
+            newPrimaryMentor: {
+                id: this.props.group.primaryMentorId,
+                firstName: this.props.group.primaryMentorFirstName,
+                lastName: this.props.group.primaryMentorLastName
+            },
+            newSecondaryMentor: {
+                id: this.props.group.secondaryMentorId,
+                firstName: this.props.group.secondaryMentorFirstName,
+                lastName: this.props.group.secondaryMentorLastName
+            }
         });
-    }
-
-    onSelectedSkillLevel(event) {
-        let newSkillLevel = this.state.availableSkillLevels.find(skillLevel => skillLevel.name === event.target.value);
-        console.log(newSkillLevel);
-        this.setState({
-             newSkillLevelName:newSkillLevel.name,
-             newSkillLevelId:newSkillLevel.id
-        });
-    }
-
-    confirmChanges = () => {
-        this.changeGroupLevel();
-        this.setState({ ableToEdit: false });
     }
 
     enableEditGroup(event) {
         this.getAvailableSkillLevels();
+        this.getAvailableMentors();
         this.setState({
             ableToEdit: true,
             newPrimMentorId: this.props.group.primaryMentorId,
@@ -64,28 +65,83 @@ class EditGroup extends Component {
         });
     }
 
+    onSelectedSkillLevel(event) {
+        let newSkillLevel = this.state.availableSkillLevels.find(skillLevel => skillLevel.name === event.target.value);
+        console.log(newSkillLevel);
+        this.setState({
+            newSkillLevelName: newSkillLevel.name,
+            newSkillLevelId: newSkillLevel.id
+        });
+    }
+
+    onSelectedPrimaryMentor(event){
+        console.log(event.target.value);
+    }
+
+    onSelectedSecondaryMentor(event){
+        console.log(event.target.value);
+    }
+
+    confirmChanges = () => {
+        this.changeGroupLevel();
+        this.setState({ ableToEdit: false });
+    }
+
     render() {
         return (
             <Container>
                 <div className="row justify-content-md-left">
                     <div className="col-md-auto">
-                        <Form.Group controlId="exampleForm.ControlSelect1">
-                            <Form.Label>Example select</Form.Label>
-                            <Form.Control as="select"
-                            disabled={!this.state.ableToEdit}
-                            value={this.state.newSkillLevelName}
-                            onChange={this.onSelectedSkillLevel}>
-                                {this.state.availableSkillLevels.map(skillLevel=>
-                                <option key={skillLevel.id}>
-                                {skillLevel.name}
-                                </option>)}
-                            </Form.Control>
+                        <Form.Group controlId="getGroupLevel">
+                            <InputGroup>
+                                <InputGroup.Prepend>
+                                    <InputGroup.Text >{this.props.group.groupDirection}</InputGroup.Text>
+                                </InputGroup.Prepend>
+                                <Form.Control as="select"
+                                    disabled={!this.state.ableToEdit}
+                                    onChange={this.onSelectedSkillLevel}>
+                                    <option selected>{this.props.group.groupLevel}</option>
+                                    {this.state.availableSkillLevels.map(skillLevel =>
+                                        <option key={skillLevel.id}>
+                                            {skillLevel.name}
+                                        </option>)}
+                                </Form.Control>
+                            </InputGroup>
                         </Form.Group>
                     </div>
                 </div>
-                <br />
-                <label>Наставники</label>
-                <br />
+                <div className="row justify-content-md-left">
+                    <div className="col-md-6">
+                        <Form.Group controlId="getGroupMentors">
+                            <InputGroup>
+                                <InputGroup.Prepend>
+                                    <InputGroup.Text >Наставники</InputGroup.Text>
+                                </InputGroup.Prepend>
+                                <Form.Control as="select" id="getGroupPrimaryMentor"
+                                    disabled={!this.state.ableToEdit}
+                                    onChange={this.onSelectedPrimaryMentor}>
+                                    <option selected>
+                                    {`${this.props.group.primaryMentorFirstName} ${this.props.group.primaryMentorLastName}`}
+                                    </option>
+                                    {this.state.availableMentors.map(primaryMentor =>
+                                        <option key={primaryMentor.id}>
+                                            {`${primaryMentor.firstName} ${primaryMentor.lastName}`}
+                                        </option>)}
+                                </Form.Control>
+                                <Form.Control as="select" id="getGroupSecondaryMentor"
+                                    disabled={!this.state.ableToEdit}
+                                    onChange={this.onSelectedSecondaryMentor}>
+                                    <option selected>{`${this.props.group.secondaryMentorFirstName} ${this.props.group.secondaryMentorLastName}`}</option>
+                                    {this.state.availableMentors.map(secondaryMentor =>
+                                        <option key={secondaryMentor.id}>
+                                            {`${secondaryMentor.firstName} ${secondaryMentor.lastName}`}
+                                        </option>)}
+                                </Form.Control>
+                            </InputGroup>
+                        </Form.Group>
+                    </div>
+                </div>
+
                 <ButtonToolbar className="btn-toolbar mb-3">
                     <Button
                         onClick={this.enableEditGroup}
@@ -108,14 +164,13 @@ class EditGroup extends Component {
             .catch(error => console.log(error));
     }
 
-    getAvailableMentors = () => {
+    getAvailableMentors(){
         let groupId = this.props.group.groupId;
-        console.log(this.state.newPrimaryMentor.id, this.state.newSecondaryMentor.id);
+        Axios.get(`api/groups/${groupId}/mentors/not-in-group`,{
 
-        Axios.get(`api/groups/${groupId}/mentors/not-in-group`, {
-            params: {
-                primMentor: this.state.newPrimaryMentor.id,
-                secMentor: this.state.newSecondaryMentor.id
+        },{
+            headers: {
+                Authorization: `Bearer ${this.props.access_token}`
             }
         })
             .then(response => this.setState({
@@ -125,8 +180,8 @@ class EditGroup extends Component {
 
     changeGroupLevel() {
         Axios.put('api/group/skill-level', {
-                groupId: this.props.group.groupId,
-                newSkillLevelId: this.state.newSkillLevelId
+            groupId: this.props.group.groupId,
+            newSkillLevelId: this.state.newSkillLevelId
         }, {
                 headers: {
                     Authorization: `Bearer ${this.props.access_token}`
