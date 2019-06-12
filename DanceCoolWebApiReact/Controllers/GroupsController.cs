@@ -58,21 +58,24 @@ namespace danceCoolWebApi.Controllers
         }
 
         /// <summary>Get Mentors that not in current group .</summary>
-        /// <param name="primMentor">Id of group primary mentor.</param>
-        /// /// <param name="secMentor">Id of group secondary mentor.</param>
+        /// <param name="primMentorId">Id of group primary mentor.</param>
+        /// <param name="secMentorId">Id of group secondary mentor.</param>
         [Authorize(Roles = "Admin")]
         [HttpGet]
         [Route("api/groups/{groupId}/mentors/not-in-group")]
-        public IActionResult GetMentorsNotInCurrentGroup([FromBody]dynamic currentMentors)
+        public IActionResult GetMentorsNotInCurrentGroup(int primMentorId, int secMentorId)
         {
-            var primMentorId = (int)currentMentors.primMentor;
-            var secMentor = (int)currentMentors.secMentor;
-            var currentMentorsArray = new[] { primMentorId, secMentor};
-            var unUsedMentors = _userService.GetMentorsNotInGroup(currentMentorsArray);
-            if (unUsedMentors == null)
+            var currentMentors = new int[2];
+            if (primMentorId < 1 && secMentorId < 1)
             {
-                return NotFound("Не знайдено викладачів");
+                return BadRequest("Подано погані дані викладачів.");
             }
+
+            currentMentors[0] = primMentorId;
+            currentMentors[1] = secMentorId;
+
+            var unUsedMentors = _userService.GetMentorsNotInGroup(currentMentors);
+            if (unUsedMentors == null) return NotFound("Не знайдено викладачів");
 
             return Ok(unUsedMentors);
         }
@@ -116,23 +119,20 @@ namespace danceCoolWebApi.Controllers
         }
 
         /// <summary>Changes Group mentors.</summary>
-        /// <param name="groupId">Id of the group to be changed.</param>
-        /// <param name="newPrimaryMentorId">New primary mentor id.</param>
-        /// <param name="newSecMentorId">New secondary mentor id.</param>
+        /// <param name="newMentorsReqObject">Requested object from front. Must include groupId newPrimaryMentorId newSecMentorId</param>
         [Authorize(Roles = "Admin")]
         [HttpPut]
         [Route("api/group/mentor")]
-        public IActionResult ChangeGroupMentors(int groupId, int newPrimaryMentorId, int newSecMentorId)
+        public IActionResult ChangeGroupMentors([FromBody] dynamic newMentorsReqObject)
         {
-            if (groupId < 1 || newPrimaryMentorId < 1 || newSecMentorId < 1)
-            {
-                return BadRequest("Вказано невірні параметри");
-            }
+            var groupId = (int) newMentorsReqObject.groupId;
+            var newPrimaryMentorId = (int) newMentorsReqObject.newPrimaryMentorId;
+            var newSecMentorId = (int) newMentorsReqObject.newSecMentorId;
 
-            if (_groupService.ChangeGroupMentors(groupId, newPrimaryMentorId, newSecMentorId))
-            {
-                Ok();
-            }
+            if (groupId < 1 || newPrimaryMentorId < 1 || newSecMentorId < 1)
+                return BadRequest("Вказано невірні параметри");
+
+            if (_groupService.ChangeGroupMentors(groupId, newPrimaryMentorId, newSecMentorId)) Ok();
             return StatusCode(502);
         }
 

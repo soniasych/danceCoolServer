@@ -55,6 +55,7 @@ class GroupPage extends Component {
                 {this.props.roleName === 'Admin' ?
                     <EditGroup
                         group={this.state.group}
+                        groupLevel={this.state.group.groupLevel}
                     /> :
                     <GroupTittle group={this.state.group} />
                 }
