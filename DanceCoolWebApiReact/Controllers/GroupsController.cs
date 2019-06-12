@@ -3,7 +3,6 @@ using System.Linq;
 using DanceCoolBusinessLogic.Services;
 using DanceCoolDTO;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace danceCoolWebApi.Controllers
@@ -52,11 +51,44 @@ namespace danceCoolWebApi.Controllers
         /// <param name="groupId">Id of the group.</param>
         [Authorize(Roles = "Mentor, Admin")]
         [HttpGet]
-        [Authorize]
         [Route("api/groups/{groupId}/students/not-in-group")]
         public IEnumerable<UserDTO> GetStudentsNotInCurrentGroup(int groupId)
         {
-            return _groupService.GetStudentsNotInCurrentGroup(groupId);
+            return _userService.GetStudentsNotInCurrentGroup(groupId);
+        }
+
+        /// <summary>Get Mentors that not in current group .</summary>
+        /// <param name="primMentorId">Id of group primary mentor.</param>
+        /// <param name="secMentorId">Id of group secondary mentor.</param>
+        [Authorize(Roles = "Admin")]
+        [HttpGet]
+        [Route("api/groups/{groupId}/mentors/not-in-group")]
+        public IActionResult GetMentorsNotInCurrentGroup(int primMentorId, int secMentorId)
+        {
+            var currentMentors = new int[2];
+            if (primMentorId < 1 && secMentorId < 1)
+            {
+                return BadRequest("Подано погані дані викладачів.");
+            }
+
+            currentMentors[0] = primMentorId;
+            currentMentors[1] = secMentorId;
+
+            var unUsedMentors = _userService.GetMentorsNotInGroup(currentMentors);
+            if (unUsedMentors == null) return NotFound("Не знайдено викладачів");
+
+            return Ok(unUsedMentors);
+        }
+
+        /// <summary>Get all skill levels from database.</summary>
+        [HttpGet]
+        [Route("api/skill-levels")]
+        public IActionResult GetAllSkillLevels()
+        {
+            var skillLevels = _groupService.GetAllSkillLevels();
+            return !skillLevels.Any()
+                ? (IActionResult)NotFound("There's no skill levels in database")
+                : Ok(skillLevels);
         }
 
         /// <summary>Add new group.</summary>
@@ -74,8 +106,10 @@ namespace danceCoolWebApi.Controllers
         [Authorize(Roles = "Admin")]
         [HttpPut]
         [Route("api/group/skill-level/")]
-        public IActionResult ChangeGroupLevel(int groupId, int newSkillLevelId)
+        public IActionResult ChangeGroupLevel([FromBody]dynamic requestObject)
         {
+            var groupId = (int)requestObject.groupId;
+            var newSkillLevelId = (int)requestObject.newSkillLevelId;
             if (groupId < 1 || newSkillLevelId < 1)
             {
                 return BadRequest("Вказано невірні параметри");
@@ -84,36 +118,21 @@ namespace danceCoolWebApi.Controllers
             return Ok();
         }
 
-        /// <summary>Get all skill levels from database.</summary>
-        [HttpGet]
-        [Route("api/skill-levels")]
-        public IActionResult GetAllSkillLevels()
-        {
-            var skillLevels = _groupService.GetAllSkillLevels();
-            return !skillLevels.Any()
-                ? (IActionResult) NotFound("There's no skill levels in database")
-                : Ok(skillLevels);
-        }
-
-
         /// <summary>Changes Group mentors.</summary>
-        /// <param name="groupId">Id of the group to be changed.</param>
-        /// <param name="newPrimaryMentorId">New primary mentor id.</param>
-        /// <param name="newSecMentorId">New secondary mentor id.</param>
+        /// <param name="newMentorsReqObject">Requested object from front. Must include groupId newPrimaryMentorId newSecMentorId</param>
         [Authorize(Roles = "Admin")]
         [HttpPut]
         [Route("api/group/mentor")]
-        public IActionResult ChangeGroupLevelMentor(int groupId, int newPrimaryMentorId, int newSecMentorId)
+        public IActionResult ChangeGroupMentors([FromBody] dynamic newMentorsReqObject)
         {
-            if (groupId < 1 || newPrimaryMentorId < 1 || newSecMentorId < 1)
-            {
-                return BadRequest("Вказано невірні параметри");
-            }
+            var groupId = (int) newMentorsReqObject.groupId;
+            var newPrimaryMentorId = (int) newMentorsReqObject.newPrimaryMentorId;
+            var newSecMentorId = (int) newMentorsReqObject.newSecMentorId;
 
-            if (_groupService.ChangeGroupMentors(groupId, newPrimaryMentorId, newSecMentorId))
-            {
-                Ok();
-            }
+            if (groupId < 1 || newPrimaryMentorId < 1 || newSecMentorId < 1)
+                return BadRequest("Вказано невірні параметри");
+
+            if (_groupService.ChangeGroupMentors(groupId, newPrimaryMentorId, newSecMentorId)) Ok();
             return StatusCode(502);
         }
 

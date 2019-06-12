@@ -14,7 +14,6 @@ namespace DanceCoolBusinessLogic.Services
         IEnumerable<SkillLevel> GetAllSkillLevels();
         void ChangeGroupLevel(int groupId, int targetLevelId);
         bool ChangeGroupMentors(int groupId, int newPrimaryMentorId, int newSecMentorId);
-        IEnumerable<UserDTO> GetStudentsNotInCurrentGroup(int groupId);
         IEnumerable<LessonDTO> GetLessons();
         IEnumerable<AttendanceDTO> GetPresentStudentsOnLesson(int lessonId);
 

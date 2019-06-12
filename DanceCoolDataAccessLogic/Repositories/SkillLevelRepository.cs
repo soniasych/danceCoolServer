@@ -20,11 +20,5 @@ namespace DanceCoolDataAccessLogic.Repositories
         {
             return Context.SkillLevels.Find(id);
         }
-
-        public string GetSkillLevelNameById(int? id)
-        {
-            var skillLevel = GetSkillLevelById(id);
-            return skillLevel.Name;
-        }
     }
 }
