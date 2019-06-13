@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using DanceCoolBusinessLogic.Services;
+﻿using System.Collections.Generic;
+using DanceCoolBusinessLogic.Interfaces;
 using DanceCoolDTO;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DanceCoolWebApiReact.Controllers
@@ -12,11 +8,11 @@ namespace DanceCoolWebApiReact.Controllers
     [ApiController]
     public class AttendanceController : ControllerBase
     {
-        private IGroupService _groupService;
+        private ILessonService _lessonService;
 
-        public AttendanceController(IGroupService groupService)
+        public AttendanceController(ILessonService lessonService)
         {
-            _groupService = groupService;
+            _lessonService = lessonService;
         }
 
         //// GET: api/Attendance
@@ -37,7 +33,7 @@ namespace DanceCoolWebApiReact.Controllers
         [Route("api/attendance/{lessonId}/present-students/")] 
         public IEnumerable<AttendanceDTO> GetPresentStudentsByLessonId(int lessonId)
         {
-            return _groupService.GetPresentStudentsOnLesson(lessonId);
+            return _lessonService.GetPresentStudentsOnLesson(lessonId);
         }
 
         //// POST: api/Attendance

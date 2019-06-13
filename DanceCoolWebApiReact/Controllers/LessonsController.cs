@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using DanceCoolBusinessLogic.Services;
+using DanceCoolBusinessLogic.Interfaces;
 using DanceCoolDTO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -10,11 +10,11 @@ namespace DanceCoolWebApiReact.Controllers
     [ApiController]
     public class LessonsController : ControllerBase
     {
-        private IGroupService _groupService;
+        private ILessonService _lessonService;
 
-        public LessonsController(IGroupService groupService, IUserService userService)
+        public LessonsController(ILessonService lessonService)
         {
-            _groupService = groupService;
+            _lessonService = lessonService;
         }
 
         // GET: api/Lessons
@@ -23,32 +23,14 @@ namespace DanceCoolWebApiReact.Controllers
         [Route("api/lessons")]
         public IEnumerable<LessonDTO> GetAllStudents()
         {
-            return _groupService.GetLessons();
+            return _lessonService.GetLessons();
         }
 
-        //// GET: api/Lessons/5
-        //[HttpGet("{id}", Name = "Get")]
-        //public string Get(int id)
-        //{
-        //    return "value";
-        //}
-
-        //// POST: api/Lessons
-        //[HttpPost]
-        //public void Post([FromBody] string value)
-        //{
-        //}
-
-        //// PUT: api/Lessons/5
-        //[HttpPut("{id}")]
-        //public void Put(int id, [FromBody] string value)
-        //{
-        //}
-
-        //// DELETE: api/ApiWithActions/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //}
+        [HttpGet]
+        [Route("api/lessons/{groupId}/{month}")]
+        public IEnumerable<LessonDTO> GetLessonsByMonthForGroup(int groupId, int month)
+        {
+            return _lessonService.GetLessonsByMonthForGroup(groupId, month);
+        }
     }
 }
