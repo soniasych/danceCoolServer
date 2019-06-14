@@ -30,7 +30,7 @@ class ManageUsersPage extends Component {
         if (this.state.searchQuery && this.state.searchQuery.length >= 1) {
           this.searchUsers();
         } else {
-          this.populateAllStudents();
+          this.populateAllUsers();
         }
       }
     );

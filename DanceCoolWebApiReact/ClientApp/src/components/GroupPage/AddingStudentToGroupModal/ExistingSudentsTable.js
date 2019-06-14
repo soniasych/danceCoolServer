@@ -2,6 +2,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import React, { Component } from 'react';
 import './AddingStudentToGroupModal.css';
 import Axios from 'axios';
+import {connect} from 'react-redux';
 
 export class ExistingSudentsTable extends Component {
     constructor(props) {
@@ -24,7 +25,10 @@ export class ExistingSudentsTable extends Component {
         }
 
         console.log(this.state.selectedStudentId);
-        Axios.post(`api/group/${groupId}/user/`, studentGroup)
+        Axios.post(`api/group/${groupId}/user/`, studentGroup,{
+            headers:{
+                Authorization: `Bearer ${this.props.access_token}`}
+        })
             .then(response => console.log(this.state.selectedStudentId));
         event.preventDefault();
     }
@@ -80,4 +84,12 @@ export class ExistingSudentsTable extends Component {
     }
 }
 
-export default ExistingSudentsTable;
+
+const mapStateToProps = state => {
+    return {
+      access_token: state.logInReducer.access_token,
+      roleName: state.logInReducer.roleName
+    };
+  };
+  
+  export default connect(mapStateToProps)(ExistingSudentsTable);
