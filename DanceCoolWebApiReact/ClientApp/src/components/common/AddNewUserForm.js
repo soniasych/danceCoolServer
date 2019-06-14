@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import Axios from 'axios';
+import {connect} from 'react-redux';
 
-export class AddNewUserForm extends Component {
+class AddNewUserForm extends Component {
 
     constructor(props) {
         super(props);
@@ -87,3 +88,14 @@ export class AddNewUserForm extends Component {
         </form>);
     }
 }
+
+
+
+const mapStateToProps = state => {
+    return {
+      access_token: state.logInReducer.access_token,
+      roleName: state.logInReducer.roleName
+    };
+  };
+  
+  export default connect(mapStateToProps)(AddNewUserForm);
