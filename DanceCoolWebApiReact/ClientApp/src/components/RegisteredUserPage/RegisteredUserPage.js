@@ -5,7 +5,7 @@ import { Tab, Nav, Row, Col, Container } from 'react-bootstrap';
 import { GroupList } from '../../containers/GroupList';
 import ManageUsersPage from '../../containers/ManageUsersPage';
 import GroupPage from '../../containers/GroupPage';
-import { AttendancePage } from '../AttendancePage/Attendances';
+import AttendancePage from '../AttendancePage/Attendances';
 
 class RegisteredUserPage extends Component {
     render() {
