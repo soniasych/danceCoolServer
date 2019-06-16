@@ -18,6 +18,7 @@ namespace DanceCoolDataAccessLogic.UnitOfWork
         private IUserGroupRepository userGroups;
         private ILessonRepository lessons;
         private IAttendanceRepository attendances;
+        private IPaymentRepository payments;
 
         public UnitOfWork(DanceCoolContext context)
         {
@@ -51,6 +52,9 @@ namespace DanceCoolDataAccessLogic.UnitOfWork
 
         public IAttendanceRepository Attendances =>
             attendances ?? (attendances = new AttendanceRepository(_context));
+
+        public IPaymentRepository Payments =>
+            payments ?? (payments = new PaymentRepository(_context));
 
         public void Save()
         {
