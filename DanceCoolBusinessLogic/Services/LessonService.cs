@@ -40,20 +40,20 @@ namespace DanceCoolBusinessLogic.Services
             return lessonDtos;
         }
 
-        public IEnumerable<AttendanceDTO> GetPresentStudentsOnLesson(int lessonId)
-        {
-            var attendance = db.Attendances.GetAllPresentStudentsOnLesson(lessonId);
+        //public IEnumerable<AttendanceDTO> GetPresentStudentsOnLesson(int lessonId)
+        //{
+        //    var attendance = db.Attendances.GetAllPresentStudentsOnLesson(lessonId);
 
-            if (attendance == null)
-                return null;
+        //    if (attendance == null)
+        //        return null;
 
-            var attendanceDtos = new List<AttendanceDTO>();
+        //    var attendanceDtos = new List<AttendanceDTO>();
 
-            foreach (var attendanceModel in attendance)
-                attendanceDtos.Add(AttendanceModelToDTO(attendanceModel));
+        //    foreach (var attendanceModel in attendance)
+        //        attendanceDtos.Add(AttendanceModelToDTO(attendanceModel));
 
-            return attendanceDtos;
-        }
+        //    return attendanceDtos;
+        //}
 
         #region Helpers
         private LessonDTO LessonModelToDTO(Lesson lessonModel) => new LessonDTO(
@@ -62,10 +62,10 @@ namespace DanceCoolBusinessLogic.Services
             lessonModel.Room,
             $"{lessonModel.Group.Direction.Name} {lessonModel.Group.Level.Name}");
 
-        private AttendanceDTO AttendanceModelToDTO(Attendance attendanceModel) => new AttendanceDTO(
-            attendanceModel.Id,
-            attendanceModel.Lesson.Id.ToString(),
-            attendanceModel.PresentStudent.Id);
+        //private AttendanceDTO AttendanceModelToDTO(Attendance attendanceModel) => new AttendanceDTO(
+        //    attendanceModel.Id,
+        //    attendanceModel.Lesson.Id.ToString(),
+        //    attendanceModel.PresentStudent.Id);
         #endregion Helpers
     }
 }

@@ -8,6 +8,6 @@ namespace DanceCoolBusinessLogic.Interfaces
     {
         IEnumerable<LessonDTO> GetLessonsByMonthForGroup(int groupId, int month);
         IEnumerable<LessonDTO> GetLessons();
-        IEnumerable<AttendanceDTO> GetPresentStudentsOnLesson(int lessonId);
+        //IEnumerable<AttendanceDTO> GetPresentStudentsOnLesson(int lessonId);
     }
 }

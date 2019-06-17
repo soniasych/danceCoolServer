@@ -5,24 +5,25 @@ import './Attendances.css';
 import Button from 'react-bootstrap/Button';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 
 class AttendancePage extends Component {
     constructor(props) {
         super(props);
         this.state = {
             groups: [],
-            attendances: [],
             lessons: [],
-            students: []
+            students: [],
+            attendances: [],
+            studentAttendances:[]
         };
     }
 
     componentDidMount() {
-        this.getAttendancesByMonth();
         this.GetLessonsInMonth();
         this.getStudents();
         this.getGroups();
+        this.getAttendances();
     }
 
     render() {
@@ -62,9 +63,13 @@ class AttendancePage extends Component {
                                 </tr>
                             </thead>
                             <tbody>
-                                {this.state.students.map(student => 
-                                    <tr key={student.id}>
-                                        <td>{student.firstName} {student.lastName}</td>
+                                {this.state.studentAttendances.map(studentAttendance =>
+                                    <tr key={studentAttendance.currentStudent.id}>
+                                        <td>{studentAttendance.currentStudent.firstName} {studentAttendance.currentStudent.lastName}</td>
+                                        {
+                                            studentAttendance.presences.map(presence=>
+                                            <td key={presence.lessonId}>{presence.lessonPresence ? "+": ""}</td>)
+                                        }
                                     </tr>
                                 )}
                             </tbody>
@@ -76,7 +81,7 @@ class AttendancePage extends Component {
     }
 
     GetLessonsInMonth() {
-        let tempLessons=[];
+        let tempLessons = [];
         Axios.get('api/lessons/1/4')
             .then(response => {
                 tempLessons = response.data;
@@ -84,36 +89,69 @@ class AttendancePage extends Component {
                     const date = new Date(tempLessons[index].date);
                     let day = date.getDate();
                     let month = date.getMonth() + 1;
-                    tempLessons[index].date = `${day < 10 ? '0'+ day : day }.${month  < 10 ? '0'+ month : month }`;
+                    tempLessons[index].date = `${day < 10 ? '0' + day : day}.${month < 10 ? '0' + month : month}`;
                 }
-                
-                this.setState({lessons:tempLessons});
+
+                this.setState({ lessons: tempLessons });
             })
             .catch(error => console.log(error));
     }
 
-    getAttendancesByMonth = () => {
-        Axios.get('https://my.api.mockaroo.com/attendances.json?key=63b23930')
-            .then(response => {
-                this.setState({ attendances: response.data })
-            }
-            );
+    getAttendances() {
+        let studentAttendances = [];
+        Axios.get("api/attendance/1/4/")
+            .then(response => 
+                this.setState({attendances: response.data
+                }))
+            .then(() => {
+                for (let index = 1; index < this.state.students.length - 1; index++) {
+                    let currentStudent = this.state.students[index];
+                    let allLessonsId = this.state.lessons.map(lesson => lesson.id);
+
+                    let curentStudentAttendances = this.state.attendances
+                        .filter(attendance => attendance.presentStudentId === currentStudent.id)
+                        .map(attendance => attendance.lessonId);
+
+                    let presences = [];
+
+                    for (let index = 0; index < allLessonsId.length; index++) {
+                        if (curentStudentAttendances.includes(allLessonsId[index])) {
+                            presences.push({
+                                lessonId: allLessonsId[index],
+                                lessonPresence: true
+                            });
+                        } else {
+                            presences.push({
+                                lessonId: allLessonsId[index],
+                                lessonPresence: false
+                            });
+                        }
+                    }
+                    let frontObject = {
+                        currentStudent,
+                        presences
+                    }
+                    studentAttendances.push(frontObject);
+                }
+                this.setState({studentAttendances: studentAttendances});
+                console.log(this.state.studentAttendances);
+            })
+            .catch();
     }
 
-    getStudents(){
-        Axios.get('api/groups/1/users/',{
+    getStudents() {
+        Axios.get('api/groups/1/users/', {
             headers: {
-              Authorization: `Bearer ${this.props.access_token}`
+                Authorization: `Bearer ${this.props.access_token}`
             }
-          })
-            .then(response =>{
+        })
+            .then(response => {
                 this.setState({ students: response.data });
-                console.log(response.data);
             })
             .catch(error => console.log(error));
     }
 
-    getGroups = () => {
+    getGroups() {
         Axios.get('api/groups/')
             .then(response =>
                 this.setState({ groups: response.data })
@@ -123,9 +161,9 @@ class AttendancePage extends Component {
 
 const mapStateToProps = state => {
     return {
-      access_token: state.logInReducer.access_token,
-      roleName: state.logInReducer.roleName
+        access_token: state.logInReducer.access_token,
+        roleName: state.logInReducer.roleName
     };
-  };
-  
-  export default connect(mapStateToProps)(AttendancePage);
+};
+
+export default connect(mapStateToProps)(AttendancePage);

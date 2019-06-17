@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using DanceCoolDataAccessLogic.EfStructures.Context;
 using DanceCoolDataAccessLogic.EfStructures.Entities;
 using DanceCoolDataAccessLogic.Repositories.Interfaces;
@@ -19,6 +17,12 @@ namespace DanceCoolDataAccessLogic.Repositories
 
 
         public Attendance GetAttendanceById(int id) => Context.Attendances.Find(id);
+
+        public IEnumerable<Attendance> GetAttendancesByLessonsArray(int[] lessonIdsArray)
+        {
+            var attendancesByLessonsSet = Context.Attendances.Where(attendance => lessonIdsArray.Contains(attendance.LessonId)).ToList();
+            return attendancesByLessonsSet;
+        }
 
         public IEnumerable<Attendance> GetAllPresentStudentsOnLesson(int lessonId)
         {
