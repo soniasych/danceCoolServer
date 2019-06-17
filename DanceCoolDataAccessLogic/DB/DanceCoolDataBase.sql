@@ -1,9 +1,4 @@
-﻿-- Sonia's server DESKTOP-MSSKMVD\SQLEXPRESS
--- Create a new database called 'DanceCool'
--- Connect to the 'master' database to run this snippet
-
-
-USE master
+﻿USE master
 GO
 IF NOT EXISTS (
     SELECT [name]
