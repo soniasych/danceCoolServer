@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using DanceCoolBusinessLogic.Interfaces;
-using DanceCoolDTO;
+﻿using DanceCoolBusinessLogic.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DanceCoolWebApiReact.Controllers
@@ -28,7 +26,7 @@ namespace DanceCoolWebApiReact.Controllers
         [Route("api/attendance/{groupId}/{month}/")]
         public IActionResult GetAttendancesByGroupAndMonth(int groupId, int month)
         {
-            var attendances = _attendanceService.GetAttendancesByMonth(groupId, month);
+            var attendances = _attendanceService.GetPresentStudents(groupId, month);
             if (attendances == null)
             {
                 return NotFound("Жодного відвідування не знайдено за цими параметрами");
