@@ -37,21 +37,6 @@ namespace DanceCoolWebApiReact.Controllers
             return _userService.GetAllStudents();
         }
 
-        /// <summary>Get all mentors in database.</summary>
-        //[Authorize(Roles = "Admin")]
-        //[HttpGet]
-        //[Route("api/mentors")]
-        //public IActionResult GetAllMentors()
-        //{
-        //    var mentors = _userService.GetMentors();
-
-        //    if (!mentors.Any())
-        //    {
-        //        return NotFound("No mentors in database");
-        //    }
-        //    return Ok(mentors);
-        //}
-
         /// <summary>Get user by his id in database.</summary>
         /// <param name="userId">Id of the student to be gotten.</param>
         [Authorize(Roles = "Mentor, Admin")]
@@ -77,6 +62,21 @@ namespace DanceCoolWebApiReact.Controllers
         {
             var searchResult = new List<UserDTO>();
             return searchQuery == null ? searchResult : _userService.Search(searchQuery);
+        }
+
+        /// <summary>Get all roles from database.</summary>
+        [Authorize(Roles = "Mentor, Admin")]
+        [HttpGet]
+        [Route("api/roles/")]
+        public IActionResult GetAllRoles()
+        {
+            var roles = _userService.GetAllRoles();
+            if (roles== null)
+            {
+                return NotFound("Не знайдено жодної ролі");
+            }
+
+            return Ok(roles);
         }
 
         // POST: api/Users

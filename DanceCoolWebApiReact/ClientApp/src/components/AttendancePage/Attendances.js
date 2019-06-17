@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Form, InputGroup } from 'react-bootstrap';
+import { Table, Form, InputGroup, Button } from 'react-bootstrap';
 import Axios from 'axios';
 import './Attendances.css';
 import { connect } from 'react-redux';
@@ -135,6 +135,11 @@ class AttendancePage extends Component {
                                 </Form.Control>
                             </InputGroup>
                         </Form.Group>
+                    </div>
+                    <div>
+                        <Button>
+                            Додати заняття
+                        </Button>
                     </div>
                 </div>
                 <br />
