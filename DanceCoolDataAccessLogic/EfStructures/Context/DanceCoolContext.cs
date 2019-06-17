@@ -51,6 +51,8 @@ namespace DanceCoolDataAccessLogic.EfStructures.Context
 
             modelBuilder.Entity<Group>(entity =>
             {
+                entity.Property(e => e.GroupName).IsUnicode(false);
+
                 entity.HasOne(d => d.Direction)
                     .WithMany(p => p.Groups)
                     .HasForeignKey(d => d.DirectionId)
@@ -106,7 +108,7 @@ namespace DanceCoolDataAccessLogic.EfStructures.Context
             modelBuilder.Entity<User>(entity =>
             {
                 entity.HasIndex(e => e.PhoneNumber)
-                    .HasName("UQ__Users__85FB4E3871CF0B77")
+                    .HasName("UQ__Users__85FB4E3822E7A5CD")
                     .IsUnique();
 
                 entity.Property(e => e.PhoneNumber).IsUnicode(false);
@@ -123,11 +125,11 @@ namespace DanceCoolDataAccessLogic.EfStructures.Context
             modelBuilder.Entity<UserCredential>(entity =>
             {
                 entity.HasIndex(e => e.Email)
-                    .HasName("UQ__UserCred__A9D105347A795B69")
+                    .HasName("UQ__UserCred__A9D1053487EC0EDD")
                     .IsUnique();
 
                 entity.HasIndex(e => e.UserId)
-                    .HasName("UQ__UserCred__1788CC4D425A9D0C")
+                    .HasName("UQ__UserCred__1788CC4D3446343A")
                     .IsUnique();
 
                 entity.HasOne(d => d.User)

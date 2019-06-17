@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using DanceCoolBusinessLogic.Interfaces;
 using DanceCoolDataAccessLogic.EfStructures.Entities;
 using DanceCoolDataAccessLogic.UnitOfWork;
 using DanceCoolDTO;

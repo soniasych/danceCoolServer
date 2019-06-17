@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using DanceCoolBusinessLogic.Services;
+using DanceCoolBusinessLogic.Interfaces;
 using DanceCoolDTO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

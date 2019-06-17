@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using DanceCoolBusinessLogic.Interfaces;
 using DanceCoolDataAccessLogic.EfStructures.Entities;
 using DanceCoolDataAccessLogic.UnitOfWork;
 using DanceCoolDTO;
@@ -65,44 +66,7 @@ namespace DanceCoolBusinessLogic.Services
             db.Groups.ChangeGroupLevel(groupId, targetLevelId);
         }
 
-        public IEnumerable<LessonDTO> GetLessons()
-        {
-            var lessons = db.Lessons.GetAllLessons();
-
-            var lessonDtos = new List<LessonDTO>();
-
-            foreach (var lessonModel in lessons)
-            {
-                lessonDtos.Add(LessonModelToDTO(lessonModel));
-            }
-            return lessonDtos;
-        }
-
-        private LessonDTO LessonModelToDTO(Lesson lessonModel) => new LessonDTO(
-            lessonModel.Id,
-            lessonModel.Date,
-            lessonModel.Room,
-            lessonModel.Group.ToString());
-
-        private AttendanceDTO AttendanceModelToDTO(Attendance attendanceModel) => new AttendanceDTO(
-            attendanceModel.Id,
-            attendanceModel.Lesson.Id.ToString(),
-            attendanceModel.PresentStudent.Id);
-
-        public IEnumerable<AttendanceDTO> GetPresentStudentsOnLesson(int lessonId)
-        {
-            var attendance = db.Attendances.GetAllPresentStudentsOnLesson(lessonId);
-
-            if (attendance == null)
-                return null;
-
-            var attendanceDtos = new List<AttendanceDTO>();
-
-            foreach (var attendanceModel in attendance)
-                attendanceDtos.Add(AttendanceModelToDTO(attendanceModel));
-
-            return attendanceDtos;
-        }
+        
 
         private GroupDTO GroupModelToGroupDTO(Group groupModel) => new GroupDTO(
             groupModel.Id,

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using DanceCoolDTO;
 
-namespace DanceCoolBusinessLogic.Services
+namespace DanceCoolBusinessLogic.Interfaces
 {
     public interface IUserService
     {

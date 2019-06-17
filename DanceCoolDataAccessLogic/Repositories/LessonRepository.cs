@@ -30,6 +30,16 @@ namespace DanceCoolDataAccessLogic.Repositories
                 .Where(group => group.GroupId == groupId).ToList();
         }
 
+        public IEnumerable<Lesson> GetLessonsByMonthForGroup(int groupId, int month)
+        {
+            var lessonsInMonth = Context.Lessons
+                .Include(lesson => lesson.Group).ThenInclude(group => group.Direction)
+                .Include(lesson => lesson.Group).ThenInclude(group => group.Level)
+                .Where(lesson => lesson.Date.Month == month && lesson.GroupId == groupId);
+
+            return lessonsInMonth;
+        }
+
         //public IEnumerable<Lesson> GetAllPresentStudentsOnLesson(int lessonId)
         //{
         //    return Context.Lessons

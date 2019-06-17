@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using DanceCoolBusinessLogic.Services;
-using DanceCoolDTO;
-using Microsoft.AspNetCore.Http;
+﻿using DanceCoolBusinessLogic.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DanceCoolWebApiReact.Controllers
@@ -12,50 +6,33 @@ namespace DanceCoolWebApiReact.Controllers
     [ApiController]
     public class AttendanceController : ControllerBase
     {
-        private IGroupService _groupService;
+        private ILessonService _lessonService;
+        private IAttendanceService _attendanceService;
 
-        public AttendanceController(IGroupService groupService)
+        public AttendanceController(ILessonService lessonService, IAttendanceService attendanceService)
         {
-            _groupService = groupService;
+            _lessonService = lessonService;
+            _attendanceService = attendanceService;
         }
 
-        //// GET: api/Attendance
         //[HttpGet]
-        //public IEnumerable<string> Get()
+        //[Route("api/attendance/{lessonId}/present-students/")] 
+        //public IEnumerable<AttendanceDTO> GetPresentStudentsByLessonId(int lessonId)
         //{
-        //    return new string[] { "value1", "value2" };
-        //}
-
-        //// GET: api/Attendance/5
-        //[HttpGet("{id}", Name = "Get")]
-        //public string Get(int id)
-        //{
-        //    return "value";
+        //    return _lessonService.GetPresentStudentsOnLesson(lessonId);
         //}
 
         [HttpGet]
-        [Route("api/attendance/{lessonId}/present-students/")] 
-        public IEnumerable<AttendanceDTO> GetPresentStudentsByLessonId(int lessonId)
+        [Route("api/attendance/{groupId}/{month}/")]
+        public IActionResult GetAttendancesByGroupAndMonth(int groupId, int month)
         {
-            return _groupService.GetPresentStudentsOnLesson(lessonId);
+            var attendances = _attendanceService.GetPresentStudents(groupId, month);
+            if (attendances == null)
+            {
+                return NotFound("Жодного відвідування не знайдено за цими параметрами");
+            }
+
+            return Ok(attendances);
         }
-
-        //// POST: api/Attendance
-        //[HttpPost]
-        //public void Post([FromBody] string value)
-        //{
-        //}
-
-        //// PUT: api/Attendance/5
-        //[HttpPut("{id}")]
-        //public void Put(int id, [FromBody] string value)
-        //{
-        //}
-
-        //// DELETE: api/ApiWithActions/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //}
     }
 }

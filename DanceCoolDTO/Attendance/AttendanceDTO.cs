@@ -1,20 +1,16 @@
-﻿using System;
-
-
-namespace DanceCoolDTO
+﻿namespace DanceCoolDTO
 {
     public class AttendanceDTO
     {
         public int Id { get; set; }
-        public string Lesson { get; set; }
+        public int LessonId { get; set; }
         public int PresentStudentId { get; set; }
 
-        public AttendanceDTO(int id, string lesson, int presentStudentId)
+        public AttendanceDTO(int id, int lessonId, int presentStudentId)
         {
             Id = id;
-            Lesson = lesson;
+            LessonId = lessonId;
             PresentStudentId = presentStudentId;
         }
-
     }
 }

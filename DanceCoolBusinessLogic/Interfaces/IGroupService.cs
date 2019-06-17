@@ -2,7 +2,7 @@
 using DanceCoolDataAccessLogic.EfStructures.Entities;
 using DanceCoolDTO;
 
-namespace DanceCoolBusinessLogic.Services
+namespace DanceCoolBusinessLogic.Interfaces
 {
     public interface IGroupService
     {
@@ -14,8 +14,5 @@ namespace DanceCoolBusinessLogic.Services
         IEnumerable<SkillLevel> GetAllSkillLevels();
         void ChangeGroupLevel(int groupId, int targetLevelId);
         bool ChangeGroupMentors(int groupId, int newPrimaryMentorId, int newSecMentorId);
-        IEnumerable<LessonDTO> GetLessons();
-        IEnumerable<AttendanceDTO> GetPresentStudentsOnLesson(int lessonId);
-
     }
 }
