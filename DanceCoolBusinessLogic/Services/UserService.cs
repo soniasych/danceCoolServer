@@ -179,6 +179,11 @@ namespace DanceCoolBusinessLogic.Services
             return roleDtos;
         }
 
+        public bool ChangeUserRole(int userId, int newRoleId)
+        {
+            return db.Users.ChangeUserRole(userId, newRoleId);
+        }
+
         private UserDTO UserModelToUserDTO(User userModel) => 
             new UserDTO(userModel.Id,
                     userModel.FirstName,

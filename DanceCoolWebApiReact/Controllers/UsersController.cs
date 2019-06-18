@@ -2,6 +2,7 @@
 using DanceCoolBusinessLogic.Interfaces;
 using DanceCoolDTO;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DanceCoolWebApiReact.Controllers
@@ -47,7 +48,10 @@ namespace DanceCoolWebApiReact.Controllers
             return _userService.GetUserById(userId);
         }
 
+        /// <summary>Get user by his phoneNumber.</summary>
+        /// <param name="phoneNumber">phoneNumber of the user to be gotten.</param>
         [Authorize(Roles = "Mentor, Admin")]
+        [HttpGet]
         [Route("api/users/phone")]
         public UserDTO GetUserByPhoneNumber(string phoneNumber)
         {
@@ -99,5 +103,25 @@ namespace DanceCoolWebApiReact.Controllers
                 Ok();
             }
         }
+
+        /// <summary>Changes user role.</summary>
+        /// <param name="userRoleToChange">Object that contains user id and new role id</param>
+        [Authorize(Roles = "Admin")]
+        [HttpPut]
+        [Route("api/user/changeuserrole")]
+        public IActionResult ChangeUserRole([FromBody] dynamic userRoleToChange)
+        {
+            if (!int.TryParse(userRoleToChange.userId, out int userId))
+                return BadRequest("Невідомі дані про юзера");
+
+            if (!int.TryParse(userRoleToChange.newRoleId, out int newRoleId))
+                return BadRequest("Невідомі дані про роль");
+
+            if (userId < 1 || newRoleId < 1)
+                return BadRequest("Введено невірні дані");
+
+            return _userService.ChangeUserRole(userId, newRoleId) ? Ok() : StatusCode(500);
+        }
+
     }
 }

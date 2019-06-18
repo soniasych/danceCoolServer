@@ -135,11 +135,5 @@ namespace danceCoolWebApi.Controllers
             if (_groupService.ChangeGroupMentors(groupId, newPrimaryMentorId, newSecMentorId)) Ok();
             return StatusCode(502);
         }
-
-        //// DELETE: api/ApiWithActions/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //}
     }
 }
