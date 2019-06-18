@@ -11,8 +11,12 @@ class ManageUsersPage extends Component {
     super(props);
     this.state = {
       userIsSelected: false,
+      roleChangingPossible: false,
       selectedUserId: 0,
       selectedUser: {},
+      currentRoleId: 0,
+      newRoleId: 0,
+      newRoleName: '',
       roles: [],
       users: [],
       searchQuery: "",
@@ -20,11 +24,16 @@ class ManageUsersPage extends Component {
     };
     this.AddingStudenModalHandler = this.AddingStudenModalHandler.bind(AddingUserModal);
     this.onChangeRoleButtonClick = this.onChangeRoleButtonClick.bind(this);
+    this.onRoleSelected = this.onRoleSelected.bind(this);
   }
 
   componentDidMount() {
     this.populateAllUsers();
     this.getAllRoles();
+  }
+
+  componentDidUpdate() {
+    this.renderUsersTable();
   }
 
   TranslateRoleName(engRoleName) {
@@ -58,16 +67,25 @@ class ManageUsersPage extends Component {
       this.setState({
         userIsSelected: false,
         selectedUser: {},
-        selectedUserId: -1
+        selectedUserId: -1,
+        newRoleId: 0,
+        newRoleName: null,
+        roleChangingPossible: false
       });
     }
     else {
       this.setState({
         userIsSelected: true,
         selectedUser: user,
-        selectedUserId: userId
+        selectedUserId: userId,
+        newRoleId: user.roleId,
+        newRoleName: this.TranslateRoleName(user.roleName),
+        roleChangingPossible: false
       });
     }
+    this.setState({
+      roleChangingPossible: false
+    });
   }
 
   AddingStudenModalHandler = event => {
@@ -83,7 +101,51 @@ class ManageUsersPage extends Component {
     this.ChangeUserRole();
   }
 
+  onRoleSelected(event) {
+    let selectedIndex = event.target.options.selectedIndex;
+    let newRoleId = parseInt(event.target.options[selectedIndex].getAttribute('roleid'), 10);
+    this.setState({
+      newRoleId: newRoleId,
+      newRoleName: event.target.value
+    });
+    console.log(this.state.selectedUser.roleId, newRoleId);
+    if (newRoleId !== this.state.selectedUser.roleId) {
+      this.setState({
+        roleChangingPossible: true
+      });
+    }
+    else {
+      this.setState({
+        roleChangingPossible: false
+      });
+    }
+  }
+
+  renderUsersTable() {
+    return <table className="table table-sm">
+      <thead>
+        <tr>
+          <th>Ім'я</th>
+          <th>Нормер телефону</th>
+          <th>Роль</th>
+        </tr>
+      </thead>
+      <tbody>
+        {this.state.users.map(user => (
+          <tr key={user.id}
+            onClick={() => { this.onRowClick(user.id, user) }}
+            className={user.id === this.state.selectedUserId ? "selectedRow" : null}>
+            <td>{user.firstName} {user.lastName}</td>
+            <td>{user.phoneNumber}</td>
+            <td>{this.TranslateRoleName(user.roleName)}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  }
+
   render() {
+    let userstable = this.renderUsersTable();
     let visingStatus = this.state.addingStudentModalVisible;
     return (
       <div>
@@ -123,45 +185,28 @@ class ManageUsersPage extends Component {
                 </InputGroup.Prepend>
                 <Form.Control as="select" className="custom-select"
                   disabled={!this.state.userIsSelected}
-                  onChange={this.onSelectedPrimaryMentor}>
-                  <option selected>
-                    Оберіть особу
+                  onChange={this.onRoleSelected}>
+                  <option selected roleid={this.state.selectedUser.roleId}>
+                    {!this.state.userIsSelected ? 'Оберіть особу' : this.TranslateRoleName(this.state.selectedUser.roleName)}
                   </option>
                   {this.state.roles.map(role =>
                     <option key={role.roleId}
-                      roleId={role.roleId}>
-                      {`${role.roleName}`}
+                      roleid={role.roleId}>
+                      {`${this.TranslateRoleName(role.roleName)}`}
                     </option>)}
                 </Form.Control>
               </InputGroup>
             </Form.Group>
           </div>
           <div>
-            <Button onClick={this.onChangeRoleButtonClick}>
+            <Button
+              onClick={this.onChangeRoleButtonClick}
+              disabled={!this.state.roleChangingPossible}>
               Змінити роль
             </Button>
           </div>
         </div>
-        <table className="table table-sm">
-          <thead>
-            <tr>
-              <th>Ім'я</th>
-              <th>Нормер телефону</th>
-              <th>Роль</th>
-            </tr>
-          </thead>
-          <tbody>
-            {this.state.users.map(user => (
-              <tr key={user.id}
-                onClick={() => { this.onRowClick(user.id, user) }}
-                className={user.id === this.state.selectedUserId ? "selectedRow" : null}>
-                <td>{user.firstName} {user.lastName}</td>
-                <td>{user.phoneNumber}</td>
-                <td>{this.TranslateRoleName(user.roleName)}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table> />
+        <div>{userstable}</div>
       </div>
     );
   }
@@ -203,8 +248,8 @@ class ManageUsersPage extends Component {
 
   async ChangeUserRole() {
     Axios.put('/api/user/changeuserrole', {
-      userId: 3,
-      newRoleId: 3
+      userId: this.state.selectedUser.id,
+      newRoleId: this.state.newRoleId
     }, {
         headers: {
           Authorization: `Bearer ${this.props.access_token}`
