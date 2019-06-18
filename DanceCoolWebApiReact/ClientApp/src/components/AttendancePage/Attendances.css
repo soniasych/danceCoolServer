@@ -1,6 +1,6 @@
 .Attendances-options-toolbar{
     display: flex;
-    justify-content: space-around;
+    justify-content: stretch;
 }
 
 td, th {

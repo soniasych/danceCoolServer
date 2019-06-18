@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Route } from 'react-router';
 import { Tab, Nav, Row, Col, Container } from 'react-bootstrap';
 import { GroupList } from '../../containers/GroupList';
-import ManageUsersPage from '../../containers/ManageUsersPage';
+import ManageUsersPage from '../../containers/ManageUsersPage/ManageUsersPage';
 import GroupPage from '../../containers/GroupPage';
 import AttendancePage from '../AttendancePage/Attendances';
 

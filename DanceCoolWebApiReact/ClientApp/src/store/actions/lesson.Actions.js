@@ -9,7 +9,6 @@ export const GetLessonsByMonthForGroupStart = () => {
 
 export const GetLessonsByMonthForGroupFailed = () => {
     return {
-        type: actionTypes.GET_LESSONS_FOR_GROUP_BY_MONTH_FAILED,
-        error: error
+        type: actionTypes.GET_LESSONS_FOR_GROUP_BY_MONTH_FAILED
     }
 };

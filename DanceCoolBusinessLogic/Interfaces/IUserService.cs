@@ -17,5 +17,7 @@ namespace DanceCoolBusinessLogic.Interfaces
         void AddUser(NewUserDTO userDTO);
         void AddUserToGroup(int userId, int groupId);
         IEnumerable<UserDTO> Search(string key);
+        IEnumerable<RoleDto> GetAllRoles();
+        bool ChangeUserRole(int userId, int newRoleId);
     }
 }

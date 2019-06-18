@@ -9,7 +9,7 @@ class EditGroup extends Component {
         super(props);
         this.state = {
             ableToEdit: false,
-            editProcessBegan:false,
+            editProcessBegan: false,
             newPrimMentorId: 0,
             newSecMentorId: 0,
             newSkillLevelId: 0,
@@ -23,18 +23,18 @@ class EditGroup extends Component {
         this.onSelectedSecondaryMentor = this.onSelectedSecondaryMentor.bind(this);
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.getAvailableSkillLevels();
         this.setState({
             newSkillLevelName: this.props.group.groupLevel
         });
-        
+
     }
 
     enableEditGroup(event) {
         //this.getAvailableSkillLevels();
         this.getAvailableMentors();
-       
+
         this.setState({
             ableToEdit: true,
             newPrimMentorId: this.props.group.primaryMentorId,
@@ -46,7 +46,6 @@ class EditGroup extends Component {
     onSelectedSkillLevel(event) {
         let selectedIndex = event.target.options.selectedIndex;
         let newSkillLevelid = event.target.options[selectedIndex].getAttribute('levelid');
-        console.log(newSkillLevelid, event.target.value);
         this.setState({
             newSkillLevelName: event.target.value,
             newSkillLevelId: newSkillLevelid
@@ -56,30 +55,28 @@ class EditGroup extends Component {
     onSelectedPrimaryMentor(event) {
         let selectedIndex = event.target.options.selectedIndex;
         let newPrimMentorId = event.target.options[selectedIndex].getAttribute('primmentorid');
-        console.log(newPrimMentorId);
         this.setState({
-            newPrimMentorId:newPrimMentorId
+            newPrimMentorId: newPrimMentorId
         });
     }
 
     onSelectedSecondaryMentor(event) {
         let selectedIndex = event.target.options.selectedIndex;
         let newSecMentorId = event.target.options[selectedIndex].getAttribute('secmentorid');
-        console.log(newSecMentorId);
         this.setState({
-            newSecMentorId:newSecMentorId
+            newSecMentorId: newSecMentorId
         });
     }
 
-    confirmChanges(){
-        if(this.state.newSkillLevelName !== this.props.group.groupLevel){
+    confirmChanges() {
+        if (this.state.newSkillLevelName !== this.props.group.groupLevel) {
             this.changeGroupLevel();
         }
-        
-        if(this.state.newPrimMentorId !== this.props.group.primaryMentorId 
-            || this.state.newSecMentorId === this.props.group.secondaryMentorId){
-                this.changeGroupMentors();
-            }
+
+        if (this.state.newPrimMentorId !== this.props.group.primaryMentorId
+            || this.state.newSecMentorId === this.props.group.secondaryMentorId) {
+            this.changeGroupMentors();
+        }
         this.setState({ ableToEdit: false });
     }
 
@@ -100,9 +97,9 @@ class EditGroup extends Component {
                                         {`${this.props.groupLevel}`}
                                     </option>
                                     {this.state.availableSkillLevels.map(skillLevel =>
-                                        <option 
-                                        key={skillLevel.id}
-                                        levelid={skillLevel.id}>
+                                        <option
+                                            key={skillLevel.id}
+                                            levelid={skillLevel.id}>
                                             {skillLevel.name}
                                         </option>)}
                                 </Form.Control>
@@ -125,7 +122,7 @@ class EditGroup extends Component {
                                     </option>
                                     {this.state.availableMentors.map(primaryMentor =>
                                         <option key={primaryMentor.id}
-                                        primmentorid={primaryMentor.id}>
+                                            primmentorid={primaryMentor.id}>
                                             {`${primaryMentor.firstName} ${primaryMentor.lastName}`}
                                         </option>)}
                                 </Form.Control>
@@ -135,7 +132,7 @@ class EditGroup extends Component {
                                     <option selected>{`${this.props.group.secondaryMentorFirstName} ${this.props.group.secondaryMentorLastName}`}</option>
                                     {this.state.availableMentors.map((secondaryMentor, key) =>
                                         <option key={secondaryMentor.id}
-                                        secmentorid={secondaryMentor.id}>
+                                            secmentorid={secondaryMentor.id}>
                                             {`${secondaryMentor.firstName} ${secondaryMentor.lastName}`}
                                         </option>)}
                                 </Form.Control>
@@ -149,8 +146,8 @@ class EditGroup extends Component {
                     >Змінити групу
                     </Button>
                     <Button disabled={(this.state.newSkillLevelName === this.props.group.groupLevel
-                                    && this.state.newPrimMentorId === this.props.group.primaryMentorId
-                                    && this.state.newSecMentorId === this.props.group.secondaryMentorId)}
+                        && this.state.newPrimMentorId === this.props.group.primaryMentorId
+                        && this.state.newSecMentorId === this.props.group.secondaryMentorId)}
                         onClick={this.confirmChanges}>
                         Підтвердити зміни
                         </Button>
@@ -197,10 +194,10 @@ class EditGroup extends Component {
     changeGroupMentors() {
         const id = this.props.group.groupId;
         Axios.put('api/group/mentor', {
-                groupId: id,
-                newPrimaryMentorId: this.state.newPrimMentorId,
-                newSecMentorId: this.state.newSecMentorId
-            },{
+            groupId: id,
+            newPrimaryMentorId: this.state.newPrimMentorId,
+            newSecMentorId: this.state.newSecMentorId
+        }, {
                 headers: {
                     Authorization: `Bearer ${this.props.access_token}`
                 }

@@ -163,11 +163,33 @@ namespace DanceCoolBusinessLogic.Services
             return dtos;
         }
 
+        public IEnumerable<RoleDto> GetAllRoles()
+        {
+            var roles = db.Roles.GetAll();
+            if (roles == null)
+            {
+                return null;
+            }
+            var roleDtos = new List<RoleDto>();
+            foreach (var role in roles)
+            {
+                roleDtos.Add(new RoleDto(role.Id, role.RoleName));
+            }
+
+            return roleDtos;
+        }
+
+        public bool ChangeUserRole(int userId, int newRoleId)
+        {
+            return db.Users.ChangeUserRole(userId, newRoleId);
+        }
+
         private UserDTO UserModelToUserDTO(User userModel) => 
             new UserDTO(userModel.Id,
                     userModel.FirstName,
                     userModel.LastName,
                     userModel.PhoneNumber,
+                    userModel.RoleId,
                     userModel.Role.RoleName);
 
         private User NewUserDTOToUserModel(NewUserDTO userDto) =>
