@@ -12,14 +12,14 @@ class ManageUsersPage extends Component {
     this.state = {
       userIsSelected: false,
       selectedUserId: 0,
-      selectedUser:{},
+      selectedUser: {},
       roles: [],
       users: [],
       searchQuery: "",
-      loading: true,
       addingStudentModalVisible: false
     };
     this.AddingStudenModalHandler = this.AddingStudenModalHandler.bind(AddingUserModal);
+    this.onChangeRoleButtonClick = this.onChangeRoleButtonClick.bind(this);
   }
 
   componentDidMount() {
@@ -79,6 +79,10 @@ class ManageUsersPage extends Component {
     }
   }
 
+  onChangeRoleButtonClick(event) {
+    this.ChangeUserRole();
+  }
+
   render() {
     let visingStatus = this.state.addingStudentModalVisible;
     return (
@@ -133,7 +137,7 @@ class ManageUsersPage extends Component {
             </Form.Group>
           </div>
           <div>
-            <Button>
+            <Button onClick={this.onChangeRoleButtonClick}>
               Змінити роль
             </Button>
           </div>
@@ -149,8 +153,8 @@ class ManageUsersPage extends Component {
           <tbody>
             {this.state.users.map(user => (
               <tr key={user.id}
-              onClick={() => { this.onRowClick(user.id, user) }}
-              className={user.id === this.state.selectedUserId ? "selectedRow" : null}>
+                onClick={() => { this.onRowClick(user.id, user) }}
+                className={user.id === this.state.selectedUserId ? "selectedRow" : null}>
                 <td>{user.firstName} {user.lastName}</td>
                 <td>{user.phoneNumber}</td>
                 <td>{this.TranslateRoleName(user.roleName)}</td>
@@ -195,6 +199,19 @@ class ManageUsersPage extends Component {
         roles: response.data
       }))
       .catch();
+  }
+
+  async ChangeUserRole() {
+    Axios.put('/api/user/changeuserrole', {
+      userId: 3,
+      newRoleId: 3
+    }, {
+        headers: {
+          Authorization: `Bearer ${this.props.access_token}`
+        }
+      })
+      .then(response => console.log(response))
+      .catch(error => console.log(error))
   }
 }
 

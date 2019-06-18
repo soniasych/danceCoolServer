@@ -111,10 +111,10 @@ namespace DanceCoolWebApiReact.Controllers
         [Route("api/user/changeuserrole")]
         public IActionResult ChangeUserRole([FromBody] dynamic userRoleToChange)
         {
-            if (!int.TryParse(userRoleToChange.userId, out int userId))
+            if (!int.TryParse(userRoleToChange.userId.ToString(), out int userId))
                 return BadRequest("Невідомі дані про юзера");
 
-            if (!int.TryParse(userRoleToChange.newRoleId, out int newRoleId))
+            if (!int.TryParse(userRoleToChange.newRoleId.ToString(), out int newRoleId))
                 return BadRequest("Невідомі дані про роль");
 
             if (userId < 1 || newRoleId < 1)
