@@ -26,11 +26,14 @@ namespace DanceCoolWebApiReact.Controllers
             return _lessonService.GetLessons();
         }
 
+
         [HttpGet]
         [Route("api/lessons/{groupId}/{month}")]
         public IEnumerable<LessonDTO> GetLessonsByMonthForGroup(int groupId, int month)
         {
             return _lessonService.GetLessonsByMonthForGroup(groupId, month);
         }
+
+
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using DanceCoolBusinessLogic.Interfaces;
 using DanceCoolDataAccessLogic.EfStructures.Entities;
 using DanceCoolDataAccessLogic.UnitOfWork;
@@ -40,32 +41,25 @@ namespace DanceCoolBusinessLogic.Services
             return lessonDtos;
         }
 
-        //public IEnumerable<AttendanceDTO> GetPresentStudentsOnLesson(int lessonId)
-        //{
-        //    var attendance = db.Attendances.GetAllPresentStudentsOnLesson(lessonId);
+        public bool AddLesson(DateTime date, string room, int groupId)
+        {
+            var lessonToAdd = new Lesson()
+            {
+                Date = date,
+                Room = room,
+                GroupId = groupId
+            };
 
-        //    if (attendance == null)
-        //        return null;
+            db.Lessons.AddEntity(lessonToAdd);
+            db.Save();
+            return true;
+        }
 
-        //    var attendanceDtos = new List<AttendanceDTO>();
-
-        //    foreach (var attendanceModel in attendance)
-        //        attendanceDtos.Add(AttendanceModelToDTO(attendanceModel));
-
-        //    return attendanceDtos;
-        //}
-
-        #region Helpers
+       
         private LessonDTO LessonModelToDTO(Lesson lessonModel) => new LessonDTO(
             lessonModel.Id,
             lessonModel.Date,
             lessonModel.Room,
             $"{lessonModel.Group.Direction.Name} {lessonModel.Group.Level.Name}");
-
-        //private AttendanceDTO AttendanceModelToDTO(Attendance attendanceModel) => new AttendanceDTO(
-        //    attendanceModel.Id,
-        //    attendanceModel.Lesson.Id.ToString(),
-        //    attendanceModel.PresentStudent.Id);
-        #endregion Helpers
     }
 }
