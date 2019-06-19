@@ -5,7 +5,8 @@ import {
   , ModalBody
   , ModalFooter
 } from 'reactstrap';
-import './AuthenticationModal.css';
+import '../Authentication/AuthenticationModal.css';
+//import './AuthenticationModal.css';
 import { withRouter } from 'react-router'
 import LogInForm from './Forms/LogInForm';
 import SignUpForm from './Forms/SignUpForm';

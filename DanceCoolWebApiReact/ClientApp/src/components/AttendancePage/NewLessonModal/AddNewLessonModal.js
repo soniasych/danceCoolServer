@@ -4,7 +4,6 @@ import Axios from 'axios';
 import { Modal, Button, Container, Table, InputGroup, Form } from 'react-bootstrap';
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 import 'react-day-picker/lib/style.css';
-import './AddNewLessonModal.css'
 
 class AddNewLessonModal extends Component {
     constructor(props) {
@@ -88,7 +87,7 @@ class AddNewLessonModal extends Component {
                             <div className="col-md-3">
                                 <DayPickerInput
                                     onDayChange={this.onDateChanged}
-                                    placeholder={new Date()} />
+                                    placeholder={this.state.lessonDate} />
                             </div>
                             <div className="col-md-4">
                                 <Form.Row>
