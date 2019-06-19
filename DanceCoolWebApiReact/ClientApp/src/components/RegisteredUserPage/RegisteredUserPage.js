@@ -5,7 +5,9 @@ import { Tab, Nav, Row, Col, Container } from 'react-bootstrap';
 import { GroupList } from '../../containers/GroupList';
 import ManageUsersPage from '../../containers/ManageUsersPage/ManageUsersPage';
 import GroupPage from '../../containers/GroupPage';
+import PaymentPage from '../PaymentPage/PaymentPage';
 import AttendancePage from '../AttendancePage/Attendances';
+
 
 class RegisteredUserPage extends Component {
     render() {
@@ -44,7 +46,7 @@ class RegisteredUserPage extends Component {
                                     <AttendancePage />
                                 </Tab.Pane>
                                 <Tab.Pane eventKey="Payments">
-                                    <div>Payments</div>
+                                    <PaymentPage />
                                 </Tab.Pane>
                                 <Tab.Pane eventKey="Groups">
                                     <Route path='/groups' component={GroupList} />

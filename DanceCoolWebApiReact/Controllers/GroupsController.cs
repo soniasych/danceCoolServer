@@ -101,15 +101,14 @@ namespace danceCoolWebApi.Controllers
         }
 
         /// <summary>Changes Group skill level.</summary>
-        /// <param name="groupId">Id of the group to be changed.</param>
-        /// <param name="newSkillLevelId">New skill level id.</param>
+        /// <param name="changeGroupLevelReqObject">Parameters for group changing. Must include group id and skill Level Id</param>
         [Authorize(Roles = "Admin")]
         [HttpPut]
         [Route("api/group/skill-level/")]
-        public IActionResult ChangeGroupLevel([FromBody]dynamic requestObject)
+        public IActionResult ChangeGroupLevel([FromBody]dynamic changeGroupLevelReqObject)
         {
-            var groupId = (int)requestObject.groupId;
-            var newSkillLevelId = (int)requestObject.newSkillLevelId;
+            var groupId = (int)changeGroupLevelReqObject.groupId;
+            var newSkillLevelId = (int)changeGroupLevelReqObject.newSkillLevelId;
             if (groupId < 1 || newSkillLevelId < 1)
             {
                 return BadRequest("Вказано невірні параметри");
@@ -119,15 +118,15 @@ namespace danceCoolWebApi.Controllers
         }
 
         /// <summary>Changes Group mentors.</summary>
-        /// <param name="newMentorsReqObject">Requested object from front. Must include groupId newPrimaryMentorId newSecMentorId</param>
+        /// <param name="changeMentorsReqObject">Requested object from front. Must include groupId newPrimaryMentorId newSecMentorId</param>
         [Authorize(Roles = "Admin")]
         [HttpPut]
         [Route("api/group/mentor")]
-        public IActionResult ChangeGroupMentors([FromBody] dynamic newMentorsReqObject)
+        public IActionResult ChangeGroupMentors([FromBody] dynamic changeMentorsReqObject)
         {
-            var groupId = (int) newMentorsReqObject.groupId;
-            var newPrimaryMentorId = (int) newMentorsReqObject.newPrimaryMentorId;
-            var newSecMentorId = (int) newMentorsReqObject.newSecMentorId;
+            var groupId = (int)changeMentorsReqObject.groupId;
+            var newPrimaryMentorId = (int)changeMentorsReqObject.newPrimaryMentorId;
+            var newSecMentorId = (int)changeMentorsReqObject.newSecMentorId;
 
             if (groupId < 1 || newPrimaryMentorId < 1 || newSecMentorId < 1)
                 return BadRequest("Вказано невірні параметри");

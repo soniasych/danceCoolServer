@@ -95,7 +95,7 @@ class AddNewUserToGroupForm extends Component {
             <button className="btn btn-primary" type="button"
                 onClick={this.onAddStudentButtonClickHandler}>
                 Додати студента
-                </button>
+            </button>
         </form>);
     }
 }

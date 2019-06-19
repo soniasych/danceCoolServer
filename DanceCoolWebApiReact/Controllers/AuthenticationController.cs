@@ -92,6 +92,7 @@ namespace DanceCoolWebApiReact.Controllers
                 access_token = encodedJwt,
                 token_lifeTime = 3600000,
                 email = creds.Name,
+                userId = user.Id,
                 firstName = user.FirstName,
                 lastName = user.LastName,
                 roleName = user.RoleName
