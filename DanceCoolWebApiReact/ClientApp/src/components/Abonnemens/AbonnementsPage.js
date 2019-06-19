@@ -39,11 +39,33 @@ class AbonnementsPage extends Component {
 
     onAddNewAbonnement(){
         this.postNewAbonnement();
+        this.getAllAbonnements();
+        this.renderAbonnementTable();
+    }
+
+    renderAbonnementTable(){
+        let abonnements = this.state.abonnements;
+        return(<Table>
+            <thead>
+                <tr>
+                    <th>Найменування абонемента</th>
+                    <th>Ціна</th>
+                </tr>
+            </thead>
+            <tbody>
+                {abonnements.map(abonnement => (
+                    <tr key={abonnement.id}>
+                        <td>{abonnement.abonnementName}</td>
+                        <td>{abonnement.price}</td>
+                    </tr>
+                ))}
+            </tbody>
+        </Table>);
     }
 
 
     render() {
-        let abonnements = this.state.abonnements;
+       let abonnementsTable = this.renderAbonnementTable();
         return (
             <Container>
                 <h2>
@@ -77,38 +99,23 @@ class AbonnementsPage extends Component {
                             </Button>
                     </InputGroup.Append>
                 </InputGroup>
-                <Table>
-                    <thead>
-                        <tr>
-                            <th>Найменування абонемента</th>
-                            <th>Ціна</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {abonnements.map(abonnement => (
-                            <tr key={abonnement.id}>
-                                <td>{abonnement.abonnementName}</td>
-                                <td>{abonnement.price}</td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </Table>
+                {abonnementsTable}
             </Container>
         );
     }
 
     postNewAbonnement(){
         const addNewAbonnementReqObject ={
-            abonnementTypeName:this.state.newAbonnementName,
-            abonnementTypePrice:this.state.newAbonnementPrice
+            abonnementName:this.state.newAbonnementName,
+            abonnementprice:this.state.newAbonnementPrice
         }
         console.log(addNewAbonnementReqObject);
-        // Axios.post('api/abonnements/new-abonnement', addNewAbonnementReqObject, {
-        //     headers: {
-        //         Authorization: `Bearer ${this.props.access_token}`
-        //     }})
-        // .then(response => console.log(response))
-        // .catch(error=>console.log(error));
+        Axios.post('api/abonnements/new-abonnement', addNewAbonnementReqObject, {
+            headers: {
+                Authorization: `Bearer ${this.props.access_token}`
+            }})
+        .then(response => console.log(response))
+        .catch(error=>console.log(error));
     }
 
     getAllAbonnements() {
