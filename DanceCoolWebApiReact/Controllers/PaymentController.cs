@@ -47,18 +47,17 @@ namespace DanceCoolWebApiReact.Controllers
         [Route("api/payments/")]
         public IActionResult AddNewPayment([FromBody]dynamic addNewPaymentReqObject)
         {
-            if (!DateTime.TryParse(addNewPaymentReqObject.date.ToString(), out DateTime utcDate))
+            var objPaymentDateTime = $"{addNewPaymentReqObject.date} {addNewPaymentReqObject.time}";
+            
+            if (!DateTime.TryParse(objPaymentDateTime, out DateTime paymentDate))
                 return BadRequest("Вказано невірну дату");
-
-            var timeZone = TimeZoneInfo.Local;
-            var paymentDateTime = TimeZoneInfo.ConvertTime(utcDate, timeZone);
-
+           
             var totalSum = (decimal) addNewPaymentReqObject.totalSum;
             var userSenderId = (int) addNewPaymentReqObject.userSender;
             var userReceiverId = (int) addNewPaymentReqObject.userReceiver;
             var abonnement = (int) addNewPaymentReqObject.abonnement;
             
-            _paymentService.AddPayment(paymentDateTime, totalSum, userSenderId, userReceiverId, abonnement);
+            _paymentService.AddPayment(paymentDate, totalSum, userSenderId, userReceiverId, abonnement);
             return Ok();
         }
 

@@ -15,7 +15,7 @@ const AddPaymentModal = props => {
         {/* <button onClick={props.addNewPayment} className="btn btn-primary" type="button">
           Оплатити
         </button> */}
-        <button onClick={props.close} className="btn btn-primary">
+        <button onClick={props.close} className="btn btn-danger">
           Закрити
         </button>
       </ModalFooter>

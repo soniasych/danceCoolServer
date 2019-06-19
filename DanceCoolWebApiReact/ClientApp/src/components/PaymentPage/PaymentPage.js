@@ -13,8 +13,7 @@ class PaymentPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isAddPaymentModalOpen: false,
-      addPaymentModalVisable: false,
+      addPaymentModalVisible: false,
       currentGroupId: 0,
       userSenderId: 0,
       groups: [],
@@ -30,7 +29,6 @@ class PaymentPage extends Component {
     this.props.roleName === "Student"
       ? this.getPaymentsByUserSenderId(this.props.authUserId)
       : console.log("la la land");
-    //this.getPaymentsByGroupId();
     this.getGroups();
   }
 
@@ -47,11 +45,11 @@ class PaymentPage extends Component {
   }
 
   addingNewPaymentModalHandler = event => {
-    if (this.state.addPaymentModalVisable === false) {
-        this.setState({ addPaymentModalVisable: true });
+    if (this.state.addPaymentModalVisible === false) {
+        this.setState({ addPaymentModalVisible: true });
     }
     else {
-        this.setState({ addPaymentModalVisable: false });
+        this.setState({ addPaymentModalVisible: false });
     }
 }
 
@@ -61,7 +59,7 @@ class PaymentPage extends Component {
         <div className="payments-options-toolbar">
           <div>
             <Button variant="primary" onClick={this.addingNewPaymentModalHandler}>Створити платіж</Button>
-            <AddPaymentModal visible={this.state.addPaymentModalVisable}
+            <AddPaymentModal visible={this.state.addPaymentModalVisible}
                     close={this.addingNewPaymentModalHandler}
                 />
           </div>

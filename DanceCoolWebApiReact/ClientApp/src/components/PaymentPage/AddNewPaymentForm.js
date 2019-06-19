@@ -68,9 +68,13 @@ class AddNewPaymentForm extends Component {
 
   onAddPaymentButtonClickHandler = event => {
     const headers = { Authorization: `Bearer ${this.props.access_token}` };
-    const sender = this.props.authUserId;
+    const today = new Date();
+    let date = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`
+    let time = `${today.getHours()}:${today.getMinutes()}`
+
     const newPaymentData = {
-      date: new Date(),
+      date: `${date} `,
+      time: `${time}`,
       userSender: this.props.authUserId,
       userReceiver: this.state.userReceiverId,
       abonnement: this.state.currentAbonnementId,
