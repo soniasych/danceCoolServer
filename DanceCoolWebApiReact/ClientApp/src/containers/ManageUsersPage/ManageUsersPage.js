@@ -32,10 +32,6 @@ class ManageUsersPage extends Component {
     this.getAllRoles();
   }
 
-  componentDidUpdate() {
-    this.renderUsersTable();
-  }
-
   TranslateRoleName(engRoleName) {
     switch (engRoleName) {
       case "Admin":

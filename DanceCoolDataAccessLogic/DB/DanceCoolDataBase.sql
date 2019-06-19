@@ -344,7 +344,14 @@ VALUES
 	( '2019-05-28 19:00', N'Малий зал', 1),--33
 	( '2019-05-28 20:30', N'Малий зал', 2),--34
 	( '2019-05-30 19:00', N'Малий зал', 1),--35
-	( '2019-05-30 20:30', N'Малий зал', 2)--36
+	( '2019-05-30 20:30', N'Малий зал', 2),--36
+	------------------------------------------Червень
+    ( '2019-06-4 19:00', N'Малий зал', 1),--37
+    ( '2019-06-4 20:30', N'Малий зал', 2),--38
+    ( '2019-06-6 19:00', N'Малий зал', 1),--39
+    ( '2019-06-6 20:30', N'Малий зал', 2),--40
+    ( '2019-06-11 19:00', N'Малий зал', 1),--41
+    ( '2019-06-13 20:30', N'Малий зал', 2)--42
 GO
 
 -- Create the table in the specified schema
@@ -418,6 +425,21 @@ VALUES
 END;
 GO
 
+DECLARE @BeginnersLessonsCount INT = 37;
+WHILE @BeginnersLessonsCount <= 41
+BEGIN
+	INSERT INTO [dbo].[Attendances]
+    ([LessonId], [PresentStudentId])
+VALUES  
+  ( @BeginnersLessonsCount,  10),
+  ( @BeginnersLessonsCount,  12),
+  ( @BeginnersLessonsCount,  14),
+  ( @BeginnersLessonsCount,  16),
+  ( @BeginnersLessonsCount,  17);
+  SET @BeginnersLessonsCount = @BeginnersLessonsCount + 2;
+END;
+GO
+
 DECLARE @ImproversLessonsCount INT = 2;
 WHILE @ImproversLessonsCount <= 10
 BEGIN
@@ -465,6 +487,21 @@ GO
 
 DECLARE @ImproversLessonsCount INT = 30;
 WHILE @ImproversLessonsCount <= 36
+BEGIN
+	INSERT INTO [dbo].[Attendances]
+    ([LessonId], [PresentStudentId])
+VALUES  
+  ( @ImproversLessonsCount,  18),
+  ( @ImproversLessonsCount,  20),
+  ( @ImproversLessonsCount,  22),
+  ( @ImproversLessonsCount,  24),
+  ( @ImproversLessonsCount,  25);
+  SET @ImproversLessonsCount = @ImproversLessonsCount + 2;
+END;
+GO
+
+DECLARE @ImproversLessonsCount INT = 38;
+WHILE @ImproversLessonsCount <= 42
 BEGIN
 	INSERT INTO [dbo].[Attendances]
     ([LessonId], [PresentStudentId])

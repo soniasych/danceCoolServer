@@ -1,4 +1,5 @@
 ﻿using DanceCoolBusinessLogic.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DanceCoolWebApiReact.Controllers
@@ -33,6 +34,18 @@ namespace DanceCoolWebApiReact.Controllers
             }
 
             return Ok(attendances);
+        }
+
+        [Authorize(Roles = "Mentor, Admin")]
+        [HttpPost]
+        [Route("api/attendance/{lessonId}/new-attendance/")]
+        public IActionResult AddAttendancesForLesson(int lessonId, [FromBody] dynamic presentStudents)
+        {
+            int[] presentStudentsId = presentStudents.checkedStudents.ToObject<int[]>();
+
+            _attendanceService.AddAttendancesFromLesson(lessonId, presentStudentsId);            
+
+            return Ok();
         }
     }
 }

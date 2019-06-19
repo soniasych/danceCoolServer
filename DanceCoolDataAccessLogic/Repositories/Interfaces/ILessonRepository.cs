@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using DanceCoolDataAccessLogic.EfStructures.Entities;
 
 namespace DanceCoolDataAccessLogic.Repositories.Interfaces
@@ -9,6 +10,7 @@ namespace DanceCoolDataAccessLogic.Repositories.Interfaces
         Lesson GetLessonById(int id);
         IEnumerable<Lesson> GetLessonByGroupId(int groupId);
         IEnumerable<Lesson> GetLessonsByMonthForGroup(int groupId, int month);
+        Lesson GetLessonByParameters(DateTime date, string room, int groupId);
         //IEnumerable<Lesson> GetAllPresentStudentsOnLesson(int lessonId);
     }
 }

@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 import { Table, Form, InputGroup, Button } from 'react-bootstrap';
 import Axios from 'axios';
 import './Attendances.css';
+import AddNewLessonModal from './NewLessonModal/AddNewLessonModal';
 import { connect } from 'react-redux';
 
 class AttendancePage extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            isAddNewLessoModalOpen: false,
             groupId: 0,
             month: 0,
             year: 0,
@@ -36,12 +38,13 @@ class AttendancePage extends Component {
         this.onSelectedMonth = this.onSelectedMonth.bind(this);
         this.onSelectedYear = this.onSelectedYear.bind(this);
         this.onSelectedGroup = this.onSelectedGroup.bind(this);
+        this.showAddNewLessonModal = this.showAddNewLessonModal.bind(this);
+        this.closeAddNewLessonModal = this.closeAddNewLessonModal.bind(AddNewLessonModal);
     }
 
     componentDidMount() {
         this.getGroups();
         this.setCurrentDate();
-        this.getStudents();
         this.getLessonsInMonth();
         this.getAttendancesInMonth();
     }
@@ -50,7 +53,7 @@ class AttendancePage extends Component {
         let selectedIndex = event.target.options.selectedIndex;
         let newMonth = event.target.options[selectedIndex].getAttribute('month');
         this.setState({
-            month:newMonth
+            month: newMonth
         });
         this.getStudents(this.state.groupId);
         this.getLessonsInMonth(this.state.groupId, newMonth);
@@ -61,22 +64,30 @@ class AttendancePage extends Component {
         let selectedIndex = event.target.options.selectedIndex;
         let newYear = event.target.options[selectedIndex].getAttribute('year');
         this.setState({
-            year:newYear
+            year: newYear
         });
         this.getStudents();
         this.getLessonsInMonth();
         this.getAttendancesInMonth();
     }
 
-    onSelectedGroup(event){
+    onSelectedGroup(event) {
         let selectedIndex = event.target.options.selectedIndex;
         let newGroup = event.target.options[selectedIndex].getAttribute('groupid');
         this.setState({
-            groupId:newGroup
+            groupId: newGroup
         });
         this.getStudents(newGroup);
         this.getLessonsInMonth(newGroup, this.state.month);
         this.getAttendancesInMonth(newGroup, this.state.month);
+    }
+
+    showAddNewLessonModal = (event) => {
+        this.setState({ isAddNewLessoModalOpen: true });
+    }
+
+    closeAddNewLessonModal = (event) => {
+        this.setState({ isAddNewLessoModalOpen: false });
     }
 
     render() {
@@ -94,12 +105,12 @@ class AttendancePage extends Component {
                                 </InputGroup.Prepend>
                                 <Form.Control as="select" className="custom-select"
                                     onChange={this.onSelectedGroup}>
-                                        <option selected>Оберіть групу</option>
+                                    <option selected>Оберіть групу</option>
                                     {this.state.groups.map(
                                         group =>
-                                            <option 
-                                            key={group.groupId}
-                                            groupid={group.groupId}>
+                                            <option
+                                                key={group.groupId}
+                                                groupid={group.groupId}>
                                                 {group.groupDirection} {group.groupLevel}
                                             </option>
                                     )}
@@ -137,35 +148,40 @@ class AttendancePage extends Component {
                         </Form.Group>
                     </div>
                     <div>
-                        <Button>
+                        <Button onClick={this.showAddNewLessonModal} disabled={this.state.groupId < 1}>
                             Додати заняття
                         </Button>
+                        <AddNewLessonModal
+                            groupId={this.state.groupId}
+                            isOpen={this.state.isAddNewLessoModalOpen}
+                            showModal={this.showAddNewLessonModal}
+                            closeModal={this.closeAddNewLessonModal}
+                            students={this.state.students}
+                        />
                     </div>
                 </div>
                 <br />
                 <div>
-                    <div>
-                        <Table bordered>
-                            <thead>
-                                <tr>
-                                    <th>Студенти</th>
-                                    {this.state.lessons.map(lesson =>
-                                        <th key={lesson.id}>{lesson.date}</th>)}
+                    <Table bordered>
+                        <thead>
+                            <tr>
+                                <th>Студенти</th>
+                                {this.state.lessons.map(lesson =>
+                                    <th key={lesson.id}>{lesson.date}</th>)}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {this.state.studentAttendances.map(studentAttendance =>
+                                <tr key={studentAttendance.studentId}>
+                                    <td>{studentAttendance.studentFirstName} {studentAttendance.studentLastName}</td>
+                                    {
+                                        studentAttendance.presences.map(presence =>
+                                            <td key={presence.lessonId}>{presence.wasPresent ? "+" : ""}</td>)
+                                    }
                                 </tr>
-                            </thead>
-                            <tbody>
-                                {this.state.studentAttendances.map(studentAttendance =>
-                                    <tr key={studentAttendance.studentId}>
-                                        <td>{studentAttendance.studentFirstName} {studentAttendance.studentLastName}</td>
-                                        {
-                                            studentAttendance.presences.map(presence =>
-                                                <td key={presence.lessonId}>{presence.wasPresent ? "+" : ""}</td>)
-                                        }
-                                    </tr>
-                                )}
-                            </tbody>
-                        </Table>
-                    </div>
+                            )}
+                        </tbody>
+                    </Table>
                 </div>
             </div>
         );
