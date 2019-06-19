@@ -82,11 +82,11 @@ class AttendancePage extends Component {
         this.getAttendancesInMonth(newGroup, this.state.month);
     }
 
-    showAddNewLessonModal = (event)=> {
+    showAddNewLessonModal = (event) => {
         this.setState({ isAddNewLessoModalOpen: true });
     }
 
-    closeAddNewLessonModal = (event) =>{
+    closeAddNewLessonModal = (event) => {
         this.setState({ isAddNewLessoModalOpen: false });
     }
 
@@ -152,10 +152,11 @@ class AttendancePage extends Component {
                             Додати заняття
                         </Button>
                         <AddNewLessonModal
-                        isOpen={this.state.isAddNewLessoModalOpen}
-                        showModal={this.showAddNewLessonModal}
-                        closeModal={this.closeAddNewLessonModal}
-                        students={this.state.students}
+                            groupId={this.state.groupId}
+                            isOpen={this.state.isAddNewLessoModalOpen}
+                            showModal={this.showAddNewLessonModal}
+                            closeModal={this.closeAddNewLessonModal}
+                            students={this.state.students}
                         />
                     </div>
                 </div>
