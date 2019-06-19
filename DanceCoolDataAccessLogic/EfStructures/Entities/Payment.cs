@@ -8,7 +8,7 @@ namespace DanceCoolDataAccessLogic.EfStructures.Entities
         public int Id { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime Date { get; set; }
-        [Column(TypeName = "money")]
+        [Column(TypeName = "decimal(18, 0)")]
         public decimal TotalSum { get; set; }
         public int UserSenderId { get; set; }
         public int UserReceiverId { get; set; }

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using DanceCoolDTO;
 
-namespace DanceCoolBusinessLogic.Services
+namespace DanceCoolBusinessLogic.Interfaces
 {
     public interface IUserService
     {
@@ -17,5 +17,7 @@ namespace DanceCoolBusinessLogic.Services
         void AddUser(NewUserDTO userDTO);
         void AddUserToGroup(int userId, int groupId);
         IEnumerable<UserDTO> Search(string key);
+        IEnumerable<RoleDto> GetAllRoles();
+        bool ChangeUserRole(int userId, int newRoleId);
     }
 }

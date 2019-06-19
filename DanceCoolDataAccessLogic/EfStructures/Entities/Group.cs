@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DanceCoolDataAccessLogic.EfStructures.Entities
@@ -16,6 +17,8 @@ namespace DanceCoolDataAccessLogic.EfStructures.Entities
         public int? SecondaryMentorId { get; set; }
         public int DirectionId { get; set; }
         public int? LevelId { get; set; }
+        [StringLength(256)]
+        public string GroupName { get; set; }
 
         [ForeignKey("DirectionId")]
         [InverseProperty("Groups")]

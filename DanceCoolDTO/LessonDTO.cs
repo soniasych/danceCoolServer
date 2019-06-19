@@ -17,6 +17,5 @@ namespace DanceCoolDTO
             Room = room;
             LessonGroup = lessonGroup;
         }
-
     }
 }

@@ -1,5 +1,6 @@
-﻿using System.Collections.Generic;
-using DanceCoolBusinessLogic.Services;
+﻿using System;
+using System.Collections.Generic;
+using DanceCoolBusinessLogic.Interfaces;
 using DanceCoolDTO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -10,11 +11,11 @@ namespace DanceCoolWebApiReact.Controllers
     [ApiController]
     public class LessonsController : ControllerBase
     {
-        private IGroupService _groupService;
+        private ILessonService _lessonService;
 
-        public LessonsController(IGroupService groupService, IUserService userService)
+        public LessonsController(ILessonService lessonService)
         {
-            _groupService = groupService;
+            _lessonService = lessonService;
         }
 
         // GET: api/Lessons
@@ -23,32 +24,38 @@ namespace DanceCoolWebApiReact.Controllers
         [Route("api/lessons")]
         public IEnumerable<LessonDTO> GetAllStudents()
         {
-            return _groupService.GetLessons();
+            return _lessonService.GetLessons();
         }
 
-        //// GET: api/Lessons/5
-        //[HttpGet("{id}", Name = "Get")]
-        //public string Get(int id)
-        //{
-        //    return "value";
-        //}
+        [HttpGet]
+        [Route("api/lessons/{groupId}/{month}")]
+        public IEnumerable<LessonDTO> GetLessonsByMonthForGroup(int groupId, int month)
+        {
+            return _lessonService.GetLessonsByMonthForGroup(groupId, month);
+        }
 
-        //// POST: api/Lessons
-        //[HttpPost]
-        //public void Post([FromBody] string value)
-        //{
-        //}
+        [Authorize(Roles = "Mentor, Admin")]
+        [HttpPost]
+        [Route("api/lessons/new-lesson")]
+        public IActionResult AddNewLesson([FromBody] dynamic newLessonParameters)
+        {
+            string dateTimeToParse = $"{newLessonParameters.lessonDate} {newLessonParameters.lessonTime}";
+            if (!DateTime.TryParse(dateTimeToParse, out DateTime lessonTime))
+                return BadRequest("Невідомі дані про юзера");
 
-        //// PUT: api/Lessons/5
-        //[HttpPut("{id}")]
-        //public void Put(int id, [FromBody] string value)
-        //{
-        //}
+            string roomName = newLessonParameters.lessonRoom;
 
-        //// DELETE: api/ApiWithActions/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //}
+            if (!int.TryParse(newLessonParameters.groupId.ToString(), out int groupId) && groupId < 1)
+                return BadRequest("Невідомі дані про роль");
+
+            var newLessonId = _lessonService.AddLesson(lessonTime, roomName, groupId);
+
+            if (newLessonId < 1)
+            {
+                return StatusCode(500);
+            }
+
+            return Ok(newLessonId);
+        }
     }
 }

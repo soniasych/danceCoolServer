@@ -17,5 +17,6 @@ namespace DanceCoolDataAccessLogic.Repositories.Interfaces
         
         User GetUserByPhoneNumber(string phoneNumber);
         User GetUserByEmail(string email);
+        bool ChangeUserRole(int userId, int newRoleId);
     }
 }

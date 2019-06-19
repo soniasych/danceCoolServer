@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using DanceCoolDataAccessLogic.EfStructures.Context;
 using DanceCoolDataAccessLogic.EfStructures.Entities;
@@ -30,10 +31,21 @@ namespace DanceCoolDataAccessLogic.Repositories
                 .Where(group => group.GroupId == groupId).ToList();
         }
 
-        //public IEnumerable<Lesson> GetAllPresentStudentsOnLesson(int lessonId)
-        //{
-        //    return Context.Lessons
-        //        .Include(l => l.Attendances);
-        //}
+        public Lesson GetLessonByParameters(DateTime date, string room, int groupId)
+        {
+            Lesson foundLesson = Context.Lessons
+                .FirstOrDefault(lesson => lesson.Date == date && lesson.Room == room && lesson.GroupId == groupId);
+            return foundLesson;
+        }
+
+        public IEnumerable<Lesson> GetLessonsByMonthForGroup(int groupId, int month)
+        {
+            var lessonsInMonth = Context.Lessons
+                .Include(lesson => lesson.Group).ThenInclude(group => group.Direction)
+                .Include(lesson => lesson.Group).ThenInclude(group => group.Level)
+                .Where(lesson => lesson.Date.Month == month && lesson.GroupId == groupId);
+
+            return lessonsInMonth;
+        }
     }
 }

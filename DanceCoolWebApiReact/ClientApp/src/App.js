@@ -4,9 +4,9 @@ import Layout from './components/Layout';
 import { GuestPage } from './components/GuestComponent/GuestPage';
 import { GroupList } from './containers/GroupList';
 import GroupPage from './containers/GroupPage'
-import ManageUsersPage from './containers/ManageUsersPage';
+import ManageUsersPage from './containers/ManageUsersPage/ManageUsersPage';
 import RegisteredUserPage from './components/RegisteredUserPage/RegisteredUserPage'
-import { AttendancePage } from './components/AttendancePage/Attendances';
+import AttendancePage from './components/AttendancePage/Attendances';
 import Schedule from './components/GuestComponent/Schedule/Schedule';
 import AboutUs from './components/GuestComponent/AboutUs/AboutUs';
 import GroupsGuestPage from './components/GuestComponent/GroupsGuest/GroupsGuestPage';

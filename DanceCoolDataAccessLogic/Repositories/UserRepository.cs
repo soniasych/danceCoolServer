@@ -90,5 +90,13 @@ namespace DanceCoolDataAccessLogic.Repositories
             var credentials = Context.UserCredentials.FirstOrDefault(uc => uc.Email == email);
             return credentials == null ? null : Context.Users.Find(credentials.UserId);
         }
+
+        public bool ChangeUserRole(int userId, int newRoleId)
+        {
+            var userModel = Context.Users.Find(userId);
+            userModel.RoleId = newRoleId;
+            Context.SaveChanges();
+            return true;
+        }
     }
 }
