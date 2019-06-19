@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using DanceCoolBusinessLogic.Interfaces;
+using DanceCoolDataAccessLogic.EfStructures.Entities;
 using DanceCoolDataAccessLogic.UnitOfWork;
 using DanceCoolDTO.Attendance;
 
@@ -40,6 +41,23 @@ namespace DanceCoolBusinessLogic.Services
             }
 
             return studentPresences;
+        }
+
+        public bool AddAttendancesFromLesson(int lessonId, int[] checkedStudents)
+        {
+            var attendancesToAdd = new List<Attendance>();
+            foreach(var checkedStudent in checkedStudents)
+            {
+                attendancesToAdd.Add(new Attendance()
+                {
+                    LessonId = lessonId,
+                    PresentStudentId=checkedStudent
+                });
+            }
+
+            db.Attendances.AddRange(attendancesToAdd);
+            db.Save();
+            return true;
         }
     }
 }

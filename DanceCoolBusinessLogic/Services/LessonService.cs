@@ -41,7 +41,7 @@ namespace DanceCoolBusinessLogic.Services
             return lessonDtos;
         }
 
-        public bool AddLesson(DateTime date, string room, int groupId)
+        public int AddLesson(DateTime date, string room, int groupId)
         {
             var lessonToAdd = new Lesson()
             {
@@ -52,7 +52,12 @@ namespace DanceCoolBusinessLogic.Services
 
             db.Lessons.AddEntity(lessonToAdd);
             db.Save();
-            return true;
+            Lesson addedLesson = db.Lessons.GetLessonByParameters(date, room, groupId);
+            if (addedLesson == null)
+            {
+                return 0;
+            }
+            return addedLesson.Id;
         }
 
        

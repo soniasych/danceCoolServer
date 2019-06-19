@@ -226,7 +226,6 @@ class AttendancePage extends Component {
             }
         })
             .then(response => {
-                console.log(response.data);
                 this.setState({ students: response.data });
             })
             .catch(error => console.log(error));
