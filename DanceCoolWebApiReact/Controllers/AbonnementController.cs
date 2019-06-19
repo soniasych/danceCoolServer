@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using DanceCoolBusinessLogic.Interfaces;
 using DanceCoolDataAccessLogic.EfStructures.Entities;
 using DanceCoolDTO;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,11 +21,26 @@ namespace DanceCoolWebApiReact.Controllers
         }
 
         // GET: api/Abonnement
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         [Route("api/abonnements")]
         public IEnumerable<AbonnementDTO> GetAllAbonnements()
         {
             return _abonnementService.GetAllAbonnements();
+        }
+
+        /// <summary>Adding new abonnement.</summary>
+        /// <param name="addNewAbonnementReqObject">Parameters for adding new abonnement.</param>
+        
+        [HttpPost]
+        [Route("api/abonnements/new-abonnement")]
+        public IActionResult AddNewAbonnement([FromBody]dynamic addNewAbonnementReqObject)
+        {
+            var abonnementTypeName = (string)addNewAbonnementReqObject.abonnementName;
+            var abonnementTypePrice = (decimal)addNewAbonnementReqObject.price;
+
+            _abonnementService.AddAbonnement(abonnementTypeName, abonnementTypePrice);
+            return Ok();
         }
 
         //// GET: api/Anonnement/5
