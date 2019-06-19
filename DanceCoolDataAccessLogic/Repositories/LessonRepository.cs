@@ -47,11 +47,5 @@ namespace DanceCoolDataAccessLogic.Repositories
 
             return lessonsInMonth;
         }
-
-        //public IEnumerable<Lesson> GetAllPresentStudentsOnLesson(int lessonId)
-        //{
-        //    return Context.Lessons
-        //        .Include(l => l.Attendances);
-        //}
     }
 }

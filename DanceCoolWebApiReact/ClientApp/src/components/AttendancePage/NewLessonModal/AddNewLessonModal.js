@@ -157,15 +157,19 @@ class AddNewLessonModal extends Component {
             groupId: this.props.groupId
         };
         console.log(newLessonParameters);
-        Axios.post('api/lessons/new-lesson', newLessonParameters)
+        Axios.post('api/lessons/new-lesson', newLessonParameters, {
+            headers: { Authorization: `Bearer ${this.props.access_token}` }
+        })
             .then(response => {
                 const presentStudents = {
                     checkedStudents: this.state.presentStudents
                 }
                 const lessonId = response.data;
-                Axios.post(`api/attendance/${lessonId}/new-attendance/`, presentStudents)
-                    .then()
-                    .catch()
+                Axios.post(`api/attendance/${lessonId}/new-attendance/`, presentStudents, {
+                    headers: { Authorization: `Bearer ${this.props.access_token}` }
+                })
+                    .then(response => console.log(response))
+                    .catch(error => console.log(error))
             })
             .catch(error => console.log(error));
     }

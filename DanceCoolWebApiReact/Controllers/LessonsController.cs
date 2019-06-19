@@ -34,6 +34,7 @@ namespace DanceCoolWebApiReact.Controllers
             return _lessonService.GetLessonsByMonthForGroup(groupId, month);
         }
 
+        [Authorize(Roles = "Mentor, Admin")]
         [HttpPost]
         [Route("api/lessons/new-lesson")]
         public IActionResult AddNewLesson([FromBody] dynamic newLessonParameters)
