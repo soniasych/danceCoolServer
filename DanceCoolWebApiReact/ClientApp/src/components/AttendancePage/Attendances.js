@@ -45,7 +45,6 @@ class AttendancePage extends Component {
     componentDidMount() {
         this.getGroups();
         this.setCurrentDate();
-        this.getStudents();
         this.getLessonsInMonth();
         this.getAttendancesInMonth();
     }
@@ -149,13 +148,14 @@ class AttendancePage extends Component {
                         </Form.Group>
                     </div>
                     <div>
-                        <Button onClick={this.showAddNewLessonModal}>
+                        <Button onClick={this.showAddNewLessonModal} disabled={this.state.groupId < 1}>
                             Додати заняття
                         </Button>
                         <AddNewLessonModal
                         isOpen={this.state.isAddNewLessoModalOpen}
                         showModal={this.showAddNewLessonModal}
                         closeModal={this.closeAddNewLessonModal}
+                        students={this.state.students}
                         />
                     </div>
                 </div>
@@ -225,6 +225,7 @@ class AttendancePage extends Component {
             }
         })
             .then(response => {
+                console.log(response.data);
                 this.setState({ students: response.data });
             })
             .catch(error => console.log(error));

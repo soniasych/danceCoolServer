@@ -108,7 +108,7 @@ class EditGroup extends Component {
                     </div>
                 </div>
                 <div className="row justify-content-md-left">
-                    <div className="col-md-6">
+                    <div className="col-md-auto">
                         <Form.Group controlId="getGroupMentors">
                             <InputGroup>
                                 <InputGroup.Prepend>

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Modal, Button } from 'react-bootstrap';
+import { Modal, Button, Container, Table, Form, InputGroup } from 'react-bootstrap';
+import DayPickerInput from 'react-day-picker/DayPickerInput';
+import 'react-day-picker/lib/style.css';
 
 class AddNewLessonModal extends Component {
     constructor(props) {
@@ -11,23 +13,56 @@ class AddNewLessonModal extends Component {
     }
 
     render() {
+        let today = new Date();
+        let time = today.getTime();
+        const students = this.props.students;
+        console.log(this.props.students);
         return (
             <Modal show={this.props.isOpen} onHide={this.props.closeModal}>
                 <Modal.Header closeButton>
                     <Modal.Title> Додати нове заняття</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
+                    <Container>
+                        <div className="row justify-content-md-center">
+                            <div className="col-md-auto">
+                                <label>Час заняття</label>
+                            </div>
+                            <div className="col-md-auto">
+                                <DayPickerInput />
+                            </div>
+                            <div className="col-md-auto">
+                            <Form.Control as="time"
+                            step="1"
+                            value={time}>
 
+                            </Form.Control>
+                            </div>
+                        </div>
+                    </Container>
+                    <Container>
+                        <Table striped bordered hover size="sm">
+                            <thead>
+                                <tr>Студент</tr>
+                            </thead>
+                            <tbody>
+                                {students.map(student => (
+                                    <tr key={student.id}>
+                                        <td>{student.firstName} {student.lastName}</td>
+                                    </tr>)
+                                )}
+                            </tbody>
+
+                        </Table>
+                    </Container>
                 </Modal.Body>
                 <Modal.Footer>
-
-                    <Button variant="success" onClick={this.handleClose}>
+                    <Button variant="success" onClick={this.props.closeModal}>
                         Зберегти
-            </Button>
+                    </Button>
                     <Button variant="secondary" onClick={this.props.closeModal}>
                         Закрити
-            </Button>
-
+                    </Button>
                 </Modal.Footer>
             </Modal>);
     }
