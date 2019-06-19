@@ -6,6 +6,7 @@ import { GroupList } from '../../containers/GroupList';
 import ManageUsersPage from '../../containers/ManageUsersPage';
 import GroupPage from '../../containers/GroupPage';
 import { AttendancePage } from '../AttendancePage/Attendances';
+import PaymentPage from '../PaymentPage/PaymentPage';
 
 class RegisteredUserPage extends Component {
     render() {
@@ -44,7 +45,7 @@ class RegisteredUserPage extends Component {
                                     <AttendancePage />
                                 </Tab.Pane>
                                 <Tab.Pane eventKey="Payments">
-                                    <div>Payments</div>
+                                    <PaymentPage />
                                 </Tab.Pane>
                                 <Tab.Pane eventKey="Groups">
                                     <Route path='/groups' component={GroupList} />

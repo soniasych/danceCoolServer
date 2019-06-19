@@ -9,5 +9,6 @@ namespace DanceCoolBusinessLogic.Interfaces
     {
         IEnumerable<PaymentDTO> GetPaymentsByGroupId(int groupId);
         void AddPayment(DateTime date, decimal totalSum, int userSender, int userReceiver, int abonnement);
+        IEnumerable<PaymentDTO> GetPaymentsByUserSenderId(int userSenderId);
     }
 }

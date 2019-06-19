@@ -61,6 +61,7 @@ namespace DanceCoolWebApiReact
             services.AddTransient<IUserService, UserService>();
             services.AddScoped<IAuthenticationService, AuthenticationService>();
             services.AddTransient<IPaymentService, PaymentService>();
+            services.AddTransient<IAbonnementService, AbonnementService>();
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {

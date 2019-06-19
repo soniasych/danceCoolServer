@@ -43,11 +43,27 @@ namespace DanceCoolBusinessLogic.Services
             db.Save();
         }
 
+        public IEnumerable<PaymentDTO> GetPaymentsByUserSenderId(int userSenderId)
+        {
+            var paymentModels = db.Payments.GetPaymentsByUserSenderId(userSenderId);
+
+            if (paymentModels == null)
+                return null;
+
+            var paymentDtos = new List<PaymentDTO>();
+
+            foreach (var model in paymentModels)
+                paymentDtos.Add(PaymentModelToDTO(model));
+
+            return paymentDtos;
+        }
+
         private PaymentDTO PaymentModelToDTO(Payment paymentModel) => new PaymentDTO(
             paymentModel.Id,
             paymentModel.Date,
             paymentModel.TotalSum,
             $"{paymentModel.UserSender.FirstName} {paymentModel.UserSender.LastName}",
+            paymentModel.UserSenderId,
             $"{paymentModel.UserReceiver.FirstName} {paymentModel.UserReceiver.LastName}",
             paymentModel.Abonnement.AbonnementName);
 

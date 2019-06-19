@@ -13,6 +13,7 @@ import GroupsGuestPage from './components/GuestComponent/GroupsGuest/GroupsGuest
 import MentorsGuestPage from './components/GuestComponent/MentorsGuest/MentorsGuestPage';
 import ContactsGuestPage from './components/GuestComponent/ContactsGuest/ContactsGuestPage';
 import StudentProfile from './components/Profiles/StudentProfile/StudentProfile';
+import PaymentPage from './components/PaymentPage/PaymentPage';
 
 export class App extends Component {
 
@@ -31,6 +32,7 @@ export class App extends Component {
         <Route exact path='/students/' component={ManageUsersPage} />
         <Route exact path='/attendances' component={AttendancePage} />
         <Route exact path='/student-profile/1' component={StudentProfile} />
+        <Route exact path='/payments/1' component={PaymentPage} />
       </Layout>
     );
   }

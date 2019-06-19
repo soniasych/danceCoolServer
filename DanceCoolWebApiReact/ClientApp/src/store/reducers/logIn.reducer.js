@@ -5,6 +5,7 @@ const initialState = {
     access_token: null,
     token_lifeTime: null,
     email: null,
+    userId:null,
     firstName: null,
     lastName: null,
     roleName: null,
@@ -24,6 +25,7 @@ const logInSuccess = (state, action) => {
         access_token: action.access_token,
         token_lifeTime: action.token_lifeTime,
         email: action.email,
+        userId:action.userId,
         firstName: action.firstName,
         lastName: action.lastName,
         roleName: action.roleName,
@@ -44,6 +46,7 @@ const logOut = (state, action) => {
     return updateObject(state, {
         access_token: null,
         email: null,
+        userId:null,
         firstName: null,
         lastName: null
     });

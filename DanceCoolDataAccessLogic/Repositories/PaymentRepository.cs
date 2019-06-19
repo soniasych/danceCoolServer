@@ -32,5 +32,17 @@ namespace DanceCoolDataAccessLogic.Repositories
 
             return payments;
         }
+
+        public IEnumerable<Payment> GetPaymentsByUserSenderId(int userSenderId)
+        {
+            var payments = Context.Payments
+                .Include(payment => payment.UserSender)
+                .Include(payment => payment.UserReceiver)
+                .Include(payment => payment.Abonnement)
+                .Where(payment => payment.UserSenderId == userSenderId)
+                .ToList();
+
+            return payments;
+        }
     }
 }

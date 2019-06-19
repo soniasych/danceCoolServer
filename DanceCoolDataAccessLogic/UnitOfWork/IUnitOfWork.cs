@@ -15,7 +15,7 @@ namespace DanceCoolDataAccessLogic.UnitOfWork
         ILessonRepository Lessons { get; }
         IAttendanceRepository Attendances { get; }
         IPaymentRepository Payments { get; }
-
+        IAbonnementRepository Abonnements { get; }
         void Save();
     }
 }

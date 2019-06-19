@@ -23,12 +23,13 @@ export const LogInStart = () => {
     };
 };
 
-export const LogInSuccess = (access_token, token_lifeTime, email, firstName, lastName, roleName) => {
+export const LogInSuccess = (access_token, token_lifeTime, email, userId, firstName, lastName, roleName) => {
     return {
         type: actionTypes.LOG_IN_SUCCESS,
         access_token: access_token,
         token_lifeTime: token_lifeTime,
         email: email,
+        userId:userId,
         firstName: firstName,
         lastName: lastName,
         roleName: roleName
@@ -59,6 +60,7 @@ export const LogIn = (email, password) => {
                     response.data.access_token,
                     response.data.token_lifeTime,
                     response.data.email,
+                    response.data.userId,
                     response.data.firstName,
                     response.data.lastName,
                     response.data.roleName));
@@ -82,6 +84,7 @@ export const CheckLogInState = () => {
                 dispatch(LogInSuccess(authData.access_token,
                     authData.token_lifeTime,
                     authData.email,
+                    authData.userId,
                     authData.firstName,
                     authData.lastName,
                     authData.roleName));
