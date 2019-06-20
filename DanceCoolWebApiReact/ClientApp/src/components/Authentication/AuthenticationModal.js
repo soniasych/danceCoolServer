@@ -10,6 +10,7 @@ import '../Authentication/AuthenticationModal.css';
 import { withRouter } from 'react-router'
 import LogInForm from './Forms/LogInForm';
 import SignUpForm from './Forms/SignUpForm';
+import { FormErrors } from './Forms/FormErrors';
 import { connect } from 'react-redux';
 import * as actionsTypes from '../../store/actions/index';
 
@@ -26,46 +27,71 @@ class AuthenticationModal extends Component {
       regPassword: '',
       regConfPassword: '',
       autEmail: '',
-      autPassword: ''
+      autPassword: '',
+      formErrors: {autEmail: '', autPassword: ''},
+      emailValid: false,
+      passwordValid: false,
+      formValid: false
     }
     this.onAuthenticationSelectTab = this.onAuthenticationSelectTab.bind(this);
 
-    this.onRegFNInput = this.onRegFNInput.bind(SignUpForm);
-    this.onRegLNInput = this.onRegLNInput.bind(SignUpForm);
-    this.onPhonNumberInput = this.onPhonNumberInput.bind(SignUpForm);
-    this.onRegEmailInput = this.onRegEmailInput.bind(SignUpForm);
-    this.onRegPasswordInput = this.onRegPasswordInput.bind(SignUpForm);
-    this.onRegConfPasswordInput = this.onRegConfPasswordInput.bind(SignUpForm);
+    // this.onRegFNInput = this.onRegFNInput.bind(SignUpForm);
+    // this.onRegLNInput = this.onRegLNInput.bind(SignUpForm);
+    // this.onPhonNumberInput = this.onPhonNumberInput.bind(SignUpForm);
+    // this.onRegEmailInput = this.onRegEmailInput.bind(SignUpForm);
+    // this.onRegPasswordInput = this.onRegPasswordInput.bind(SignUpForm);
+    // this.onRegConfPasswordInput = this.onRegConfPasswordInput.bind(SignUpForm);
     this.onAutEmailInput = this.onAutEmailInput.bind(LogInForm);
     this.onAutPasswordInput = this.onAutPasswordInput.bind(LogInForm);
     this.onAuthenticateClick = this.onAuthenticateClick.bind(this);
   }
 
-  onRegFNInput = event => {
-    this.setState({ regFirstName: event.target.value });
-  }
-  onRegLNInput = event => {
-    this.setState({ regLastName: event.target.value });
-  }
-  onPhonNumberInput = event => {
-    this.setState({ regPhoneNumber: event.target.value });
-  }
-  onRegEmailInput = event => {
-    this.setState({ regEmail: event.target.value });
-  }
-  onRegPasswordInput = event => {
-    this.setState({ regPassword: event.target.value });
-  }
-  onRegConfPasswordInput = event => {
-    this.setState({ regConfPassword: event.target.value });
-  }
+  // onRegFNInput = event => {
+  //   this.setState({ regFirstName: event.target.value}, 
+  //     () => { this.validateField(regFirstName, value) });
+  // }
+  // onRegLNInput = event => {
+  //   this.setState({ regLastName: event.target.value }, 
+  //     () => { this.validateField(regLastName, value) });
+  // }
+  // onPhonNumberInput = event => {
+  //   this.setState({ regPhoneNumber: event.target.value }, 
+  //     () => { this.validateField(regPhoneNumber, value) });
+  // }
+  // onRegEmailInput = event => {
+  //   this.setState({ regEmail: event.target.value }, 
+  //     () => { this.validateField(regEmail, value) });
+  // }
+  // onRegPasswordInput = event => {
+  //   this.setState({ regPassword: event.target.value }, 
+  //     () => { this.validateField(regPassword, value) });
+  // }
+  // onRegConfPasswordInput = event => {
+  //   this.setState({ regConfPassword: event.target.value }, 
+  //     () => { this.validateField(regConfPassword, value) });
+  // }
+  
 
   onAutEmailInput = event => {
-    this.setState({ autEmail: event.target.value });
+    const name = event.target.name;
+    const value = event.target.value;
+    this.setState({
+        [name]: value
+      },
+      () => {
+        this.validateField(name, value)
+      });
   }
 
   onAutPasswordInput = event => {
-    this.setState({ autPassword: event.target.value });
+    const name = event.target.name;
+    const value = event.target.value;
+    this.setState({
+        [name]: value
+      },
+      () => {
+        this.validateField(name, value)
+      });
   }
 
   onAuthenticationSelectTab = (eventKey) => {
@@ -96,6 +122,32 @@ class AuthenticationModal extends Component {
     }
   }
 
+  validateField(fieldName, value) {
+    let fieldValidationErrors = this.state.formErrors;
+    let emailValid = this.state.emailValid;
+    let passwordValid = this.state.passwordValid;
+  switch(fieldName) {
+      case 'autEmail':
+        emailValid = value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
+        fieldValidationErrors.autEmail = emailValid ? '' : ' is invalid';
+        break;
+      case 'autPassword':
+        passwordValid = value.length >= 8;
+        fieldValidationErrors.autPassword = passwordValid ? '': ' is too short';
+        break;
+      default:
+        break;
+    }
+    this.setState({formErrors: fieldValidationErrors,
+                    emailValid: emailValid,
+                    passwordValid: passwordValid
+                  }, this.validateForm);
+  }
+  validateForm() {
+    this.setState({formValid: this.state.emailValid &&
+                              this.state.passwordValid});
+  }
+
   render() {
     return (
       <Modal isOpen={this.props.visible}
@@ -120,8 +172,14 @@ class AuthenticationModal extends Component {
               />
             </Tab>
           </Tabs>
+          <div className="panel panel-default">
+              <FormErrors formErrors={this.state.formErrors} />
+          </div>
         </ModalBody>
-        <ModalFooter>
+        <ModalFooter className="my-modal-footer">
+          {/* <div className="panel panel-default">
+            <FormErrors formErrors={this.state.formErrors} />
+          </div> */}
           <Button
             variant="primary"
             type="submit"
@@ -133,7 +191,7 @@ class AuthenticationModal extends Component {
             Закрити
           </Button>
         </ModalFooter>
-      </Modal >
+      </Modal>
     );
   }
 }
