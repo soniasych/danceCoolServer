@@ -148,9 +148,12 @@ class AttendancePage extends Component {
                         </Form.Group>
                     </div>
                     <div>
-                        <Button onClick={this.showAddNewLessonModal} disabled={this.state.groupId < 1}>
+                        {this.props.roleName === 'Student' 
+                        ? null
+                        :<Button onClick={this.showAddNewLessonModal} disabled={this.state.groupId < 1}>
                             Додати заняття
-                        </Button>
+                        </Button>}
+                        
                         <AddNewLessonModal
                             groupId={this.state.groupId}
                             isOpen={this.state.isAddNewLessoModalOpen}

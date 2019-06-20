@@ -226,7 +226,7 @@ class ManageUsersPage extends Component {
           Authorization: `Bearer ${this.props.access_token}`
         }
       }).then(response =>
-        this.setState({ students: response.data }))
+        this.setState({ users: response.data }))
       .catch(error => console.log(error));
   }
 

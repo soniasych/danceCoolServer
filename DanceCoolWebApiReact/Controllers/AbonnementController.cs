@@ -16,7 +16,6 @@ namespace DanceCoolWebApiReact.Controllers
         }
 
         // GET: api/Abonnement
-        [Authorize(Roles = "Admin")]
         [HttpGet]
         [Route("api/abonnements")]
         public IEnumerable<AbonnementDTO> GetAllAbonnements()

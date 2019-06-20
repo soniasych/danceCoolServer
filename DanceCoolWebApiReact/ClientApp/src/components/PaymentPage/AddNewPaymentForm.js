@@ -102,7 +102,7 @@ class AddNewPaymentForm extends Component {
                 className="select"
                 onChange={this.onSelectedAbonement}
               >
-                <option selected>Оберіть тип пбонементу</option>
+                <option selected>Оберіть тип абонементу</option>
                 {this.state.abonnements.map(abonnement => (
                   <option key={abonnement.id} abonnementid={abonnement.id}>
                     {abonnement.abonnementName}
