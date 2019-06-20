@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using DanceCoolBusinessLogic.Interfaces;
 using DanceCoolDataAccessLogic.EfStructures.Entities;
 using DanceCoolDataAccessLogic.UnitOfWork;
 using DanceCoolDTO;
@@ -50,27 +51,6 @@ namespace DanceCoolBusinessLogic.Services
             return groupDtos;
         }
 
-        public IEnumerable<UserDTO> GetStudentsNotInCurrentGroup(int groupId)
-        {
-            var studentsNotInCurrentGroup = db.Users.GetStudentsNotInGroup(groupId);
-            if (studentsNotInCurrentGroup == null)
-            {
-                return null;
-            }
-            var dtos = new List<UserDTO>();
-
-            foreach (var student in studentsNotInCurrentGroup)
-            {
-                dtos.Add(new UserDTO(student.Id,
-                    student.FirstName,
-                    student.LastName,
-                    student.PhoneNumber,
-                    student.Role.RoleName));
-            }
-
-            return dtos;
-        }
-
         public bool ChangeGroupMentors(int groupId, int newPrimaryMentorId, int newSecMentorId)
         {
             return db.Groups.ChangeGroupMentors(groupId, newPrimaryMentorId, newSecMentorId);
@@ -86,52 +66,17 @@ namespace DanceCoolBusinessLogic.Services
             db.Groups.ChangeGroupLevel(groupId, targetLevelId);
         }
 
-        public IEnumerable<LessonDTO> GetLessons()
-        {
-            var lessons = db.Lessons.GetAllLessons();
-
-            var lessonDtos = new List<LessonDTO>();
-
-            foreach (var lessonModel in lessons)
-            {
-                lessonDtos.Add(LessonModelToDTO(lessonModel));
-            }
-            return lessonDtos;
-        }
-
-        private LessonDTO LessonModelToDTO(Lesson lessonModel) => new LessonDTO(
-            lessonModel.Id,
-            lessonModel.Date,
-            lessonModel.Room,
-            lessonModel.Group.ToString());
-
-        private AttendanceDTO AttendanceModelToDTO(Attendance attendanceModel) => new AttendanceDTO(
-            attendanceModel.Id,
-            attendanceModel.Lesson.Id.ToString(),
-            attendanceModel.PresentStudent.Id);
-
-        public IEnumerable<AttendanceDTO> GetPresentStudentsOnLesson(int lessonId)
-        {
-            var attendance = db.Attendances.GetAllPresentStudentsOnLesson(lessonId);
-
-            if (attendance == null)
-                return null;
-
-            var attendanceDtos = new List<AttendanceDTO>();
-
-            foreach (var attendanceModel in attendance)
-                attendanceDtos.Add(AttendanceModelToDTO(attendanceModel));
-
-            return attendanceDtos;
-        }
+        
 
         private GroupDTO GroupModelToGroupDTO(Group groupModel) => new GroupDTO(
             groupModel.Id,
-            groupModel.Direction.Name,
-            $"{groupModel.PrimaryMentor.FirstName} {groupModel.PrimaryMentor.LastName}",
-            groupModel.SecondaryMentor == null
-                ? null
-                : $"{groupModel.SecondaryMentor.FirstName} {groupModel.SecondaryMentor.LastName}",
+            groupModel.Direction.Name,  
+            groupModel.PrimaryMentorId,
+            groupModel.PrimaryMentor.FirstName,
+            groupModel.PrimaryMentor.LastName,
+            groupModel.SecondaryMentorId ?? 0,
+            groupModel.SecondaryMentor?.FirstName,
+            groupModel.SecondaryMentor?.LastName,
             groupModel.Level?.Name);
     }
 }

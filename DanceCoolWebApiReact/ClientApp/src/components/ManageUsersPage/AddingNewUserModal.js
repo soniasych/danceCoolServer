@@ -4,7 +4,7 @@ import {
     ModalHeader,
     ModalBody
 } from 'reactstrap';
-import { AddNewUserForm } from '../common/AddNewUserForm'
+import AddNewUserForm from '../common/AddNewUserForm'
 
 const AddingUserModal = (props) => {
     return (<Modal

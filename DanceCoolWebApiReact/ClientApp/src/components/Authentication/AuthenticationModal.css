@@ -1,9 +1,4 @@
 .my-modal {
-    width: 50vw;    /* Occupy the 90% of the screen width */
+    width: 50vw;
     max-width: 50vw;
 } 
-
-.my-modal-footer{
-    display: flex;
-    /* justify-content: start; */
-}

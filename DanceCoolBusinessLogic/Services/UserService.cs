@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using DanceCoolBusinessLogic.Interfaces;
 using DanceCoolDataAccessLogic.EfStructures.Entities;
 using DanceCoolDataAccessLogic.UnitOfWork;
 using DanceCoolDTO;
@@ -23,11 +24,6 @@ namespace DanceCoolBusinessLogic.Services
         {
             db.UserGroups.AddUserToGroup(userId, groupId);
             db.Save();
-        }
-
-        public IEnumerable<User> GetAllUserModels()
-        {
-            return db.Users.GetAllUsers();
         }
 
         public IEnumerable<UserDTO> GetAllUsers()
@@ -85,6 +81,23 @@ namespace DanceCoolBusinessLogic.Services
             return usersInGroup;
         }
 
+        public IEnumerable<UserDTO> GetStudentsNotInCurrentGroup(int groupId)
+        {
+            var studentsNotInCurrentGroup = db.Users.GetStudentsNotInGroup(groupId);
+            if (studentsNotInCurrentGroup == null)
+            {
+                return null;
+            }
+            var studentsDtos = new List<UserDTO>();
+
+            foreach (var student in studentsNotInCurrentGroup)
+            {
+                studentsDtos.Add(UserModelToUserDTO(student));
+            }
+
+            return studentsDtos;
+        }
+
         public IEnumerable<UserDTO> GetAllStudents()
         {
             var studentModels = db.Users.GetStudents();
@@ -122,6 +135,21 @@ namespace DanceCoolBusinessLogic.Services
             return mentorsDtos;
         }
 
+        public IEnumerable<UserDTO> GetMentorsNotInGroup(int[] usedMentors)
+        {
+            var unUSedMentors = db.Users.GetMentorsNotInGroup(usedMentors);
+
+            if (unUSedMentors == null)
+                return null;
+
+            var mentorDtos = new List<UserDTO>();
+
+            foreach (var item in unUSedMentors)
+                mentorDtos.Add(UserModelToUserDTO(item));
+
+            return mentorDtos;
+        }
+
         public IEnumerable<UserDTO> Search(string key)
         {
             var users = db.Users.Search(key);
@@ -135,11 +163,33 @@ namespace DanceCoolBusinessLogic.Services
             return dtos;
         }
 
+        public IEnumerable<RoleDto> GetAllRoles()
+        {
+            var roles = db.Roles.GetAll();
+            if (roles == null)
+            {
+                return null;
+            }
+            var roleDtos = new List<RoleDto>();
+            foreach (var role in roles)
+            {
+                roleDtos.Add(new RoleDto(role.Id, role.RoleName));
+            }
+
+            return roleDtos;
+        }
+
+        public bool ChangeUserRole(int userId, int newRoleId)
+        {
+            return db.Users.ChangeUserRole(userId, newRoleId);
+        }
+
         private UserDTO UserModelToUserDTO(User userModel) => 
             new UserDTO(userModel.Id,
                     userModel.FirstName,
                     userModel.LastName,
                     userModel.PhoneNumber,
+                    userModel.RoleId,
                     userModel.Role.RoleName);
 
         private User NewUserDTOToUserModel(NewUserDTO userDto) =>

@@ -12,16 +12,9 @@ class GroupPage extends Component {
         this.state = {
             student: {},
             group: {},
-            skillLevels: [],
-            mentors: [],
-            newSkillLevelId: null,
-            newPimMentorId: null,
-            newSecMentorId: null,
             groupStudents: [],
             studentsNotInGroup: [],
-            addingStudentToGroupModalVisible: false,
-            editGroupModalVisible: false,
-            requestHeader: ''
+            addingStudentToGroupModalVisible: false
         }
         this.AddingStudenToGroupModalHandler = this.AddingStudenToGroupModalHandler.bind(AddingStudentToGroupModal);
         this.onChooseStudentNotInGroupTab = this.onChooseStudentNotInGroupTab.bind(AddingStudentToGroupModal);
@@ -30,6 +23,11 @@ class GroupPage extends Component {
     componentDidMount() {
         this.populateCurrentGroupData();
         this.populateCurrentGroupStudentsData();
+        this.setState({
+            newPimMentorId: this.state.group.primaryMentorId,
+            newSecMentorId: this.state.group.secondaryMentorId,
+            
+        });
     }
 
     AddingStudenToGroupModalHandler = event => {
@@ -57,8 +55,7 @@ class GroupPage extends Component {
                 {this.props.roleName === 'Admin' ?
                     <EditGroup
                         group={this.state.group}
-                        mentors={this.state.mentors}
-                        skillLevels={this.state.skillLevels}
+                        groupLevel={this.state.group.groupLevel}
                     /> :
                     <GroupTittle group={this.state.group} />
                 }
@@ -84,20 +81,11 @@ class GroupPage extends Component {
             }
         })
             .then(response => this.setState({ group: response.data }))
-            .catch(error => console.log(error))
-            ;
-    }
-
-    async populateStudentsNotInCurrentGroup() {
-        const id = this.props.match.params.id;
-        Axios.get(`api/groups/${id}/students/not-in-group`, {
-            headers: {
-                Authorization: `Bearer ${this.props.access_token}`
-            }
-        })
-            .then(response =>
-                this.setState({ studentsNotInGroup: response.data }))
-            .catch(error => { console.log(error) });
+            .then(() => this.setState({
+                newPrimMentorId: this.state.group.primaryMentorId,
+                newSecMentorId: this.state.group.secondaryMentorId,
+            }))
+            .catch(error => console.log(error));
     }
 
     async populateCurrentGroupStudentsData() {
@@ -113,49 +101,19 @@ class GroupPage extends Component {
             .catch(error => console.log(error));
     }
 
-    async getAllSkillLevels() {
-        Axios.get('api/skill-levels/')
-            .then(response => this.setState({
-                skillLevels: response.data
-            }))
-            .catch(error => console.log(error));
-    }
-
-    async getAllMentors() {
-        Axios.get('api/mentors', {
+    async populateStudentsNotInCurrentGroup() {
+        const id = this.props.match.params.id;
+        Axios.get(`api/groups/${id}/students/not-in-group`, {
             headers: {
                 Authorization: `Bearer ${this.props.access_token}`
             }
-        }).then(response => this.setState({
-            mentors: response.data
-        })).catch(error => console.log(error));
-    }
-
-    async changeGroupLevel() {
-        const id = this.props.match.params.id;
-        Axios.put('api/group/skill-level/',
-            {
-                params: {
-                    groupId: id,
-                    newSkillLevelId: this.state.newSkillLevelId
-                }
-            })
-            .then(response => console.log(response))
-            .catch(error => console.log(error));
-    }
-
-    async changeGroupMentors() {
-        const id = this.props.match.params.id;
-        Axios.put('api/group/mentor', null, {
-            params: {
-                groupId: id,
-                newPrimaryMentorId: this.state.newPimMentorId,
-                newSecMentorId: this.state.newSecMentorId
-            }
         })
-            .then(response => console.log(response))
-            .catch(error => console.log(error));
+            .then(response =>
+                this.setState({ studentsNotInGroup: response.data }))
+            .catch(error => { console.log(error) });
     }
+
+    
 }
 
 const mapStateToProps = state => {

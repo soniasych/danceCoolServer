@@ -1,9 +1,4 @@
-﻿-- Sonia's server DESKTOP-MSSKMVD\SQLEXPRESS
--- Create a new database called 'DanceCool'
--- Connect to the 'master' database to run this snippet
-
-
-USE master
+﻿USE master
 GO
 IF NOT EXISTS (
     SELECT [name]
@@ -129,14 +124,15 @@ INSERT INTO [dbo].[Users]
     ( [FirstName], [LastName], [PhoneNumber] )
 VALUES
     ( N'Каріна', N'Кравченко', '+380635595952' ),--10
-    ( N'Юрій', N'Чабаренко', '+380730401631' ),
-    ( N'Любов', N'Горбова', '+380671793382' ),
-    ( N'Оксана', N'Котик', '+380979071237' ),
-    ( N'Уляна', N'Коваль', '+380988737362' ),
-    ( N'Дзвонемира', N'Довгалюк', '+380680356776' ),
-    ( N'Артем', N'Монастирев', '+380934627446' ),
-    ( N'Анна-Тереза', N'Бенко', '+380504627446' ),
-    ( N'Оксана', N'Кость', '+380550933568' ),
+    ( N'Юрій', N'Чабаренко', '+380730401631' ),--11
+    ( N'Андрій', N'Панчишин', '+380730041631' ),--12
+    ( N'Любов', N'Горбова', '+380671793382' ),--13
+    ( N'Оксана', N'Котик', '+380979071237' ),--14
+    ( N'Уляна', N'Коваль', '+380988737362' ),--15
+    ( N'Дзвонемира', N'Довгалюк', '+380680356776' ),--16
+    ( N'Артем', N'Монастирев', '+380934627446' ),--17
+    ( N'Анна-Тереза', N'Бенко', '+380504627446' ),--18
+    ( N'Оксана', N'Кость', '+380550933568' ),--19
     ( N'Володимир', N'Бережанський', '+380950427186' ),
     ( N'Юлія', N'Рубаха', '+380445930404' ),
     ( N'Діана', N'Срібна', '+380324972238' ),
@@ -149,7 +145,8 @@ VALUES
     ( N'Петрик', N'П''яточкін', '+380739110666' ),
     ( N'Капітошка', N'Малий', '+380559475073' ),
     ( N'Вовчик', N'Братик', '+380934946898' ),
-    ( N'Лисичка', N'Сестричка', '+380634119407' )--31
+    ( N'Лисичка', N'Сестричка', '+380634119407' ),
+    ( N'Кривенька', N'Качечка', '+380634019407' )--33
 GO
 
 -- Create a new table called '[UserCredentials]' in schema '[dbo]'
@@ -164,21 +161,21 @@ CREATE TABLE [dbo].[UserCredentials]
 );
 GO
 
-/*-- Insert rows into table 'UserCredentials' in schema '[dbo]'
+-- Insert rows into table 'UserCredentials' in schema '[dbo]'
 INSERT INTO [dbo].[UserCredentials]
     ([UserId], [Email], [PasswordHash], [PasswordSalt])
 VALUES
-    (1, 'andrushchenko@mail.com', 'MamaMylaRamu'),
-    (2, 'peliukh@mail.com', 'MamaMylaRamu'),
-    (3, 'lutsshyn@mail.com', 'MamaMylaRamu'),
-    (4, 'pakholkiv@mail.com', 'MamaMylaRamu'),
-    (5, 'koval@mail.com', 'MamaMylaRamu'),
-    (6, 'danchuk@mail.com', 'MamaMylaRamu'),
-    (7, 'kravchenko@mail.com', 'MamaMylaRamu'),
-    (8, 'chabarenko@mail.com', 'MamaMylaRamu'),
-    (9, 'gorbova@mail.com', 'MamaMylaRamu'),
-    (10, 'kotyk@mail.com', 'MamaMylaRamu')
-GO*/
+    (1, 'andrushchenko@mail.com', CONVERT(VARBINARY(MAX), '0x801EAC0A3E9EDA42FD8BA68F3E110593CDB73B1A19F704222AEDD0EB1A231D96E981128528A8E7EA411AF8F0F9E84B422716136EBCB8959F5DA0FD72D279C064',1), CONVERT(VARBINARY(MAX), '0x25BF0E070435974639A9E4C89458A2FF4628BEAA429D27330651A0484BD197D68F01EEF4A8A7E8074CEF2383BA7FD178B799C6C55339278B925878AC3CAEA17ADBF2CDC0D3685AD5CEDC6DED650F2CE8425B6A1AC36B234D47AAF336505F9B1A00DFF90CDDE8BFEDBB2625125CA86D497027A8F1DB2586A8570911F6A51C7FDD',1)),
+    (2, 'peliukh@mail.com', CONVERT(VARBINARY(MAX), '0x801EAC0A3E9EDA42FD8BA68F3E110593CDB73B1A19F704222AEDD0EB1A231D96E981128528A8E7EA411AF8F0F9E84B422716136EBCB8959F5DA0FD72D279C064',1), CONVERT(VARBINARY(MAX), '0x25BF0E070435974639A9E4C89458A2FF4628BEAA429D27330651A0484BD197D68F01EEF4A8A7E8074CEF2383BA7FD178B799C6C55339278B925878AC3CAEA17ADBF2CDC0D3685AD5CEDC6DED650F2CE8425B6A1AC36B234D47AAF336505F9B1A00DFF90CDDE8BFEDBB2625125CA86D497027A8F1DB2586A8570911F6A51C7FDD',1)),
+    (3, 'lutsshyn@mail.com', CONVERT(VARBINARY(MAX), '0x801EAC0A3E9EDA42FD8BA68F3E110593CDB73B1A19F704222AEDD0EB1A231D96E981128528A8E7EA411AF8F0F9E84B422716136EBCB8959F5DA0FD72D279C064',1), CONVERT(VARBINARY(MAX), '0x25BF0E070435974639A9E4C89458A2FF4628BEAA429D27330651A0484BD197D68F01EEF4A8A7E8074CEF2383BA7FD178B799C6C55339278B925878AC3CAEA17ADBF2CDC0D3685AD5CEDC6DED650F2CE8425B6A1AC36B234D47AAF336505F9B1A00DFF90CDDE8BFEDBB2625125CA86D497027A8F1DB2586A8570911F6A51C7FDD',1)),
+    (4, 'pakholkiv@mail.com',  CONVERT(VARBINARY(MAX), '0x801EAC0A3E9EDA42FD8BA68F3E110593CDB73B1A19F704222AEDD0EB1A231D96E981128528A8E7EA411AF8F0F9E84B422716136EBCB8959F5DA0FD72D279C064',1), CONVERT(VARBINARY(MAX), '0x25BF0E070435974639A9E4C89458A2FF4628BEAA429D27330651A0484BD197D68F01EEF4A8A7E8074CEF2383BA7FD178B799C6C55339278B925878AC3CAEA17ADBF2CDC0D3685AD5CEDC6DED650F2CE8425B6A1AC36B234D47AAF336505F9B1A00DFF90CDDE8BFEDBB2625125CA86D497027A8F1DB2586A8570911F6A51C7FDD',1)),
+    (5, 'koval@mail.com', CONVERT(VARBINARY(MAX), '0x801EAC0A3E9EDA42FD8BA68F3E110593CDB73B1A19F704222AEDD0EB1A231D96E981128528A8E7EA411AF8F0F9E84B422716136EBCB8959F5DA0FD72D279C064',1), CONVERT(VARBINARY(MAX), '0x25BF0E070435974639A9E4C89458A2FF4628BEAA429D27330651A0484BD197D68F01EEF4A8A7E8074CEF2383BA7FD178B799C6C55339278B925878AC3CAEA17ADBF2CDC0D3685AD5CEDC6DED650F2CE8425B6A1AC36B234D47AAF336505F9B1A00DFF90CDDE8BFEDBB2625125CA86D497027A8F1DB2586A8570911F6A51C7FDD',1)),
+    (6, 'danchuk@mail.com',  CONVERT(VARBINARY(MAX), '0x801EAC0A3E9EDA42FD8BA68F3E110593CDB73B1A19F704222AEDD0EB1A231D96E981128528A8E7EA411AF8F0F9E84B422716136EBCB8959F5DA0FD72D279C064',1), CONVERT(VARBINARY(MAX), '0x25BF0E070435974639A9E4C89458A2FF4628BEAA429D27330651A0484BD197D68F01EEF4A8A7E8074CEF2383BA7FD178B799C6C55339278B925878AC3CAEA17ADBF2CDC0D3685AD5CEDC6DED650F2CE8425B6A1AC36B234D47AAF336505F9B1A00DFF90CDDE8BFEDBB2625125CA86D497027A8F1DB2586A8570911F6A51C7FDD',1)),
+    (7, 'kravchenko@mail.com',  CONVERT(VARBINARY(MAX), '0x801EAC0A3E9EDA42FD8BA68F3E110593CDB73B1A19F704222AEDD0EB1A231D96E981128528A8E7EA411AF8F0F9E84B422716136EBCB8959F5DA0FD72D279C064',1), CONVERT(VARBINARY(MAX), '0x25BF0E070435974639A9E4C89458A2FF4628BEAA429D27330651A0484BD197D68F01EEF4A8A7E8074CEF2383BA7FD178B799C6C55339278B925878AC3CAEA17ADBF2CDC0D3685AD5CEDC6DED650F2CE8425B6A1AC36B234D47AAF336505F9B1A00DFF90CDDE8BFEDBB2625125CA86D497027A8F1DB2586A8570911F6A51C7FDD',1)),
+    (8, 'chabarenko@mail.com',  CONVERT(VARBINARY(MAX), '0x801EAC0A3E9EDA42FD8BA68F3E110593CDB73B1A19F704222AEDD0EB1A231D96E981128528A8E7EA411AF8F0F9E84B422716136EBCB8959F5DA0FD72D279C064',1), CONVERT(VARBINARY(MAX), '0x25BF0E070435974639A9E4C89458A2FF4628BEAA429D27330651A0484BD197D68F01EEF4A8A7E8074CEF2383BA7FD178B799C6C55339278B925878AC3CAEA17ADBF2CDC0D3685AD5CEDC6DED650F2CE8425B6A1AC36B234D47AAF336505F9B1A00DFF90CDDE8BFEDBB2625125CA86D497027A8F1DB2586A8570911F6A51C7FDD',1)),
+    (9, 'gorbova@mail.com', CONVERT(VARBINARY(MAX), '0x801EAC0A3E9EDA42FD8BA68F3E110593CDB73B1A19F704222AEDD0EB1A231D96E981128528A8E7EA411AF8F0F9E84B422716136EBCB8959F5DA0FD72D279C064',1), CONVERT(VARBINARY(MAX), '0x25BF0E070435974639A9E4C89458A2FF4628BEAA429D27330651A0484BD197D68F01EEF4A8A7E8074CEF2383BA7FD178B799C6C55339278B925878AC3CAEA17ADBF2CDC0D3685AD5CEDC6DED650F2CE8425B6A1AC36B234D47AAF336505F9B1A00DFF90CDDE8BFEDBB2625125CA86D497027A8F1DB2586A8570911F6A51C7FDD',1)),
+    (10, 'kotyk@mail.com', CONVERT(VARBINARY(MAX), '0x801EAC0A3E9EDA42FD8BA68F3E110593CDB73B1A19F704222AEDD0EB1A231D96E981128528A8E7EA411AF8F0F9E84B422716136EBCB8959F5DA0FD72D279C064',1), CONVERT(VARBINARY(MAX), '0x25BF0E070435974639A9E4C89458A2FF4628BEAA429D27330651A0484BD197D68F01EEF4A8A7E8074CEF2383BA7FD178B799C6C55339278B925878AC3CAEA17ADBF2CDC0D3685AD5CEDC6DED650F2CE8425B6A1AC36B234D47AAF336505F9B1A00DFF90CDDE8BFEDBB2625125CA86D497027A8F1DB2586A8570911F6A51C7FDD',1))
+GO
 
 -- Create a new table called '[DanceDirections]' in schema '[dbo]'
 CREATE TABLE [dbo].[DanceDirections]
@@ -226,6 +223,7 @@ CREATE TABLE [dbo].[Groups]
     [SecondaryMentorId] INT NULL,
     [DirectionId] INT NOT NULL,
     [LevelId] INT NULL,
+	[GroupName] VARCHAR(256) NULL,
     CONSTRAINT FK_Direction_Group FOREIGN KEY ([DirectionId]) REFERENCES [dbo].[DanceDirections]([Id]),
     CONSTRAINT FK_Level_Group FOREIGN KEY ([LevelId]) REFERENCES [dbo].[SkillLevels]([Id]),
     CONSTRAINT FK_PrimMentor_Group FOREIGN KEY ([PrimaryMentorId]) REFERENCES [dbo].[Users]([Id]),
@@ -282,9 +280,9 @@ BEGIN
 END;
 GO
 
-DECLARE @salsaLaCount INT = 23;
+DECLARE @salsaLaCount INT = 25;
 
-WHILE @salsaLaCount <= 31
+WHILE @salsaLaCount <= 33
 BEGIN
     INSERT INTO [dbo].[UserGroups]
         ( UserId, GroupId )
@@ -309,19 +307,51 @@ GO
 INSERT INTO [dbo].[Lessons]
     ([Date], [Room], [GroupId])
 VALUES
-    ( '2019-05-27 19:00', N'Малий зал', 1),
-    ( '2019-05-24 21:00', N'Великий зал', 3),
-    ( '2019-05-23 21:00', N'Великий зал', 7),
-  ( '2019-05-22 19:30', N'Малий зал', 4),
-  ( '2019-05-21 20:30', N'Малий зал', 2),
-  ( '2019-05-20 20:00', N'Малий зал', 5),
-  ( '2019-05-18 19:00', N'Великий зал', 8),
-    ( '2019-05-17 21:00', N'Великий зал', 3),
-    ( '2019-05-16 21:00', N'Малий зал', 4),
-  ( '2019-05-15 19:30', N'Малий зал', 6),
-  ( '2019-05-14 20:30', N'Великий зал', 7),
-  ( '2019-05-13 20:00', N'Малий зал', 2),
-  ( '2019-05-12 20:00', N'Малий зал', 6)
+------------------------------------------Квітень
+	( '2019-04-2 19:00', N'Малий зал', 1),--1
+	( '2019-04-2 20:30', N'Малий зал', 2),--2
+	( '2019-04-4 19:00', N'Малий зал', 1),--3
+	( '2019-04-4 20:30', N'Малий зал', 2),--4
+	( '2019-04-9 19:00', N'Малий зал', 1),--5
+	( '2019-04-9 20:30', N'Малий зал', 2),--6
+	( '2019-04-11 19:00', N'Малий зал', 1),--7
+	( '2019-04-11 20:30', N'Малий зал', 2),--8
+	( '2019-04-16 19:00', N'Малий зал', 1),--9
+	( '2019-04-16 20:30', N'Малий зал', 2),--10
+	( '2019-04-18 19:00', N'Малий зал', 1),--11
+	( '2019-04-18 20:30', N'Малий зал', 2),--12
+	( '2019-04-23 19:00', N'Малий зал', 1),--13
+	( '2019-04-23 20:30', N'Малий зал', 2),--14
+	( '2019-04-25 19:00', N'Малий зал', 1),--15
+	( '2019-04-25 20:30', N'Малий зал', 2),--16
+	( '2019-04-30 19:00', N'Малий зал', 1),--17
+	( '2019-04-30 20:30', N'Малий зал', 2),--18
+	------------------------------------------Травень
+	( '2019-05-2 19:00', N'Малий зал', 1),--19
+	( '2019-05-2 20:30', N'Малий зал', 2),--20
+	( '2019-05-7 19:00', N'Малий зал', 1),--21
+	( '2019-05-7 20:30', N'Малий зал', 2),--22
+	( '2019-05-9 19:00', N'Малий зал', 1),--23
+	( '2019-05-9 20:30', N'Малий зал', 2),--24
+	( '2019-05-14 19:00', N'Малий зал', 1),--25
+	( '2019-05-14 20:30', N'Малий зал', 2),--26
+	( '2019-05-16 19:00', N'Малий зал', 1),--27
+	( '2019-05-16 20:30', N'Малий зал', 2),--28
+	( '2019-05-21 19:00', N'Малий зал', 1),--29
+	( '2019-05-21 20:30', N'Малий зал', 2),--30
+	( '2019-05-23 19:00', N'Малий зал', 1),--31
+	( '2019-05-23 20:30', N'Малий зал', 2),--32
+	( '2019-05-28 19:00', N'Малий зал', 1),--33
+	( '2019-05-28 20:30', N'Малий зал', 2),--34
+	( '2019-05-30 19:00', N'Малий зал', 1),--35
+	( '2019-05-30 20:30', N'Малий зал', 2),--36
+	------------------------------------------Червень
+    ( '2019-06-4 19:00', N'Малий зал', 1),--37
+    ( '2019-06-4 20:30', N'Малий зал', 2),--38
+    ( '2019-06-6 19:00', N'Малий зал', 1),--39
+    ( '2019-06-6 20:30', N'Малий зал', 2),--40
+    ( '2019-06-11 19:00', N'Малий зал', 1),--41
+    ( '2019-06-13 20:30', N'Малий зал', 2)--42
 GO
 
 -- Create the table in the specified schema
@@ -335,95 +365,155 @@ CREATE TABLE [dbo].[Attendances]
 );
 GO
 
--- Insert rows into table '[Attendances]' in schema '[dbo]'
-INSERT INTO [dbo].[Attendances]
+DECLARE @BeginnersLessonsCount INT = 1;
+WHILE @BeginnersLessonsCount <= 9
+BEGIN
+	INSERT INTO [dbo].[Attendances]
     ([LessonId], [PresentStudentId])
-VALUES
-  --1
-  ( 1,  10),
-  ( 1,  13),
-  ( 1,  14),
-  ( 1,  15),
-  ( 1,  17),
-  --2
-  ( 2,  18),
-  ( 2,  20),
-  ( 2,  21),
-  ( 2,  22),
-  ( 2,  24),
-  ( 2,  25),
-  --3
-  ( 3,  10),
-  ( 3,  11),
-  ( 3,  12),
-  ( 3,  14),
-  ( 3,  16),
-  --4
-  ( 4,  19),
-  ( 4,  20),
-  ( 4,  21),
-  ( 4,  23),
-  ( 4,  24),
-  --5
-  ( 5,  23),
-  ( 5,  25),
-  ( 5,  27),
-  ( 5,  28),
-  ( 5,  30),
-  ( 5,  31),
-  --6
-  ( 6,  18),
-  ( 6,  21),
-  ( 6,  22),
-  ( 6,  23),
-  ( 6,  24),
-  ( 6,  25),
-  --7
-  ( 7, 10),
-  ( 7, 13),
-  ( 7, 14),
-  ( 7, 15),
-  ( 7, 17),
-  --8
-  ( 8,  23),
-  ( 8,  24),
-  ( 8,  26),
-  ( 8,  28),
-  ( 8,  20),
-  ( 8,  30),
-  ( 8,  31),
-  --9
-  ( 9, 18),
-  ( 9, 21),
-  ( 9, 22),
-  ( 9, 23),
-  --10
-  ( 10, 10),
-  ( 10, 11),
-  ( 10, 14),
-  ( 10, 15),
-  ( 10, 16),
-  ( 10, 17),
-  --11
-  ( 11, 18),
-  ( 11, 19),
-  ( 11, 20),
-  ( 11, 21),
-  ( 11, 22),
-  ( 11, 23),
-  --12
-  ( 12, 23),
-  ( 12, 26),
-  ( 12, 27),
-  ( 12, 30),
-  ( 12, 31),
-  --13
-  ( 13, 18),
-  ( 13, 20),
-  ( 13, 21),
-  ( 13, 22),
-  ( 13, 23)
-  GO
+VALUES  
+  ( @BeginnersLessonsCount,  10),
+  ( @BeginnersLessonsCount,  12),
+  ( @BeginnersLessonsCount,  14),
+  ( @BeginnersLessonsCount,  16),
+  ( @BeginnersLessonsCount,  17);
+  SET @BeginnersLessonsCount = @BeginnersLessonsCount + 2;
+END;
+GO
+
+DECLARE @BeginnersLessonsCount INT = 11;
+WHILE @BeginnersLessonsCount <= 17
+BEGIN
+	INSERT INTO [dbo].[Attendances]
+    ([LessonId], [PresentStudentId])
+VALUES  
+  ( @BeginnersLessonsCount,  11),
+  ( @BeginnersLessonsCount,  13),
+  ( @BeginnersLessonsCount,  15),
+  ( @BeginnersLessonsCount,  16),
+  ( @BeginnersLessonsCount,  17);
+  SET @BeginnersLessonsCount = @BeginnersLessonsCount + 2;
+END;
+GO
+
+DECLARE @BeginnersLessonsCount INT = 19;
+WHILE @BeginnersLessonsCount <= 27
+BEGIN
+	INSERT INTO [dbo].[Attendances]
+    ([LessonId], [PresentStudentId])
+VALUES  
+  ( @BeginnersLessonsCount,  11),
+  ( @BeginnersLessonsCount,  13),
+  ( @BeginnersLessonsCount,  15),
+  ( @BeginnersLessonsCount,  16),
+  ( @BeginnersLessonsCount,  17);
+  SET @BeginnersLessonsCount = @BeginnersLessonsCount + 2;
+END;
+GO
+
+DECLARE @BeginnersLessonsCount INT = 29;
+WHILE @BeginnersLessonsCount <= 35
+BEGIN
+	INSERT INTO [dbo].[Attendances]
+    ([LessonId], [PresentStudentId])
+VALUES  
+  ( @BeginnersLessonsCount,  10),
+  ( @BeginnersLessonsCount,  12),
+  ( @BeginnersLessonsCount,  14),
+  ( @BeginnersLessonsCount,  16),
+  ( @BeginnersLessonsCount,  17);
+  SET @BeginnersLessonsCount = @BeginnersLessonsCount + 2;
+END;
+GO
+
+DECLARE @BeginnersLessonsCount INT = 37;
+WHILE @BeginnersLessonsCount <= 41
+BEGIN
+	INSERT INTO [dbo].[Attendances]
+    ([LessonId], [PresentStudentId])
+VALUES  
+  ( @BeginnersLessonsCount,  10),
+  ( @BeginnersLessonsCount,  12),
+  ( @BeginnersLessonsCount,  14),
+  ( @BeginnersLessonsCount,  16),
+  ( @BeginnersLessonsCount,  17);
+  SET @BeginnersLessonsCount = @BeginnersLessonsCount + 2;
+END;
+GO
+
+DECLARE @ImproversLessonsCount INT = 2;
+WHILE @ImproversLessonsCount <= 10
+BEGIN
+	INSERT INTO [dbo].[Attendances]
+    ([LessonId], [PresentStudentId])
+VALUES  
+  ( @ImproversLessonsCount,  18),
+  ( @ImproversLessonsCount,  20),
+  ( @ImproversLessonsCount,  22),
+  ( @ImproversLessonsCount,  24),
+  ( @ImproversLessonsCount,  25);
+  SET @ImproversLessonsCount = @ImproversLessonsCount + 2;
+END;
+GO
+
+DECLARE @ImproversLessonsCount INT = 12;
+WHILE @ImproversLessonsCount <= 18
+BEGIN
+	INSERT INTO [dbo].[Attendances]
+    ([LessonId], [PresentStudentId])
+VALUES  
+  ( @ImproversLessonsCount,  19),
+  ( @ImproversLessonsCount,  21),
+  ( @ImproversLessonsCount,  23),
+  ( @ImproversLessonsCount,  24),
+  ( @ImproversLessonsCount,  25);
+  SET @ImproversLessonsCount = @ImproversLessonsCount + 2;
+END;
+GO
+
+DECLARE @ImproversLessonsCount INT = 20;
+WHILE @ImproversLessonsCount <= 28
+BEGIN
+	INSERT INTO [dbo].[Attendances]
+    ([LessonId], [PresentStudentId])
+VALUES  
+  ( @ImproversLessonsCount,  19),
+  ( @ImproversLessonsCount,  21),
+  ( @ImproversLessonsCount,  23),
+  ( @ImproversLessonsCount,  24),
+  ( @ImproversLessonsCount,  25);
+  SET @ImproversLessonsCount = @ImproversLessonsCount + 2;
+END;
+GO
+
+DECLARE @ImproversLessonsCount INT = 30;
+WHILE @ImproversLessonsCount <= 36
+BEGIN
+	INSERT INTO [dbo].[Attendances]
+    ([LessonId], [PresentStudentId])
+VALUES  
+  ( @ImproversLessonsCount,  18),
+  ( @ImproversLessonsCount,  20),
+  ( @ImproversLessonsCount,  22),
+  ( @ImproversLessonsCount,  24),
+  ( @ImproversLessonsCount,  25);
+  SET @ImproversLessonsCount = @ImproversLessonsCount + 2;
+END;
+GO
+
+DECLARE @ImproversLessonsCount INT = 38;
+WHILE @ImproversLessonsCount <= 42
+BEGIN
+	INSERT INTO [dbo].[Attendances]
+    ([LessonId], [PresentStudentId])
+VALUES  
+  ( @ImproversLessonsCount,  18),
+  ( @ImproversLessonsCount,  20),
+  ( @ImproversLessonsCount,  22),
+  ( @ImproversLessonsCount,  24),
+  ( @ImproversLessonsCount,  25);
+  SET @ImproversLessonsCount = @ImproversLessonsCount + 2;
+END;
+GO
 
 -- Create a new table called '[Abonnements]' in schema '[dbo]'
 CREATE TABLE [dbo].[Abonnements]
@@ -439,13 +529,13 @@ INSERT INTO [dbo].[Abonnements]
     ( [AbonnementName], [Price])
 VALUES
   ( N'разовий одинарний', 60),
-  ( N'разовий парий', 50),
-    ( N'4-разовий одинарний', 200),
-  ( N'4-разовий парий', 150),
-    ( N'8-разовий одинарний', 300),
+  ( N'разовий парний', 50),
+  ( N'4-разовий одинарний', 200),
+  ( N'4-разовий парний', 150),
+  ( N'8-разовий одинарний', 300),
   ( N'8-разовий парний', 250),
-    ( N'індивідуальний одинарний', 250),
-    ( N'індивідуальний парний', 175)
+  ( N'індивідуальний одинарний', 250),
+  ( N'індивідуальний парний', 175)
 GO
 
 -- Create a new table called '[Payments]' in schema '[dbo]'
@@ -461,4 +551,33 @@ CREATE TABLE [dbo].[Payments]
     CONSTRAINT FK_UserReceiver_Payment FOREIGN KEY ([UserReceiverId]) REFERENCES [dbo].[Users]([Id]),
     CONSTRAINT FK_Abonement_Payment FOREIGN KEY ([AbonnementId]) REFERENCES [dbo].[Abonnements]([Id])
 );
+GO
+
+-- Insert rows into table 'Payments' in schema '[dbo]'
+INSERT INTO [dbo].[Payments]
+    ( [Date], [TotalSum], [UserSenderId], [UserReceiverId], [AbonnementId])
+VALUES
+  --2/04/19
+  ( '2019-04-2 20:05', 50, 11, 1, 2),
+  ( '2019-04-2 20:06', 60, 15, 1, 1),
+  ( '2019-04-2 20:09', 60, 17, 1, 1),
+  ( '2019-04-2 22:05', 50, 22, 1, 2),
+  ( '2019-04-2 22:06', 60, 21, 1, 1),
+  ( '2019-04-2 22:09', 60, 19, 1, 1),
+  ( '2019-04-2 22:11', 200, 18, 1, 3),
+  ( '2019-04-2 22:12', 200, 20, 1, 3),
+  --4/04/19
+  ( '2019-04-4 20:02', 200, 12, 1, 3),
+  ( '2019-04-4 20:03', 150, 14, 1, 4),
+  ( '2019-04-4 20:05', 200, 15, 1, 3),
+  ( '2019-04-4 20:08', 300, 16, 1, 5),
+  ( '2019-04-4 20:10', 200, 17, 1, 3),
+  ( '2019-04-4 22:12', 300, 18, 1, 5),
+  ( '2019-04-4 22:14', 200, 19, 1, 3),
+  ( '2019-04-4 22:17', 150, 21, 1, 4),
+  --9/04/19
+  ( '2019-04-9 20:10', 200, 10, 1, 3),
+  ( '2019-04-9 20:12', 150, 13, 1, 4),
+  ( '2019-04-9 20:08', 300, 16, 1, 5),
+  ( '2019-04-9 22:03', 250, 22, 1, 6)
 GO

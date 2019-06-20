@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
-using DanceCoolBusinessLogic.Services;
+using DanceCoolBusinessLogic.Interfaces;
 using DanceCoolDTO;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DanceCoolWebApiReact.Controllers
@@ -21,7 +21,6 @@ namespace DanceCoolWebApiReact.Controllers
         }
 
         /// <summary>Get all users in database.</summary>
-        //GET: api/Users
         [Authorize(Roles = "Admin")]
         [HttpGet]
         [Route("api/users")]
@@ -31,7 +30,6 @@ namespace DanceCoolWebApiReact.Controllers
         }
 
         /// <summary>Get all students in database.</summary>
-        //GET: api/students
         [Authorize(Roles = "Admin")]
         [HttpGet]
         [Route("api/students")]
@@ -40,25 +38,9 @@ namespace DanceCoolWebApiReact.Controllers
             return _userService.GetAllStudents();
         }
 
-        /// <summary>Get all mentors in database.</summary>
-        [Authorize(Roles = "Admin")]
-        [HttpGet]
-        [Route("api/mentors")]
-        public IActionResult GetAllMentors()
-        {
-            var mentors = _userService.GetMentors();
-
-            if (!mentors.Any())
-            {
-                return NotFound("No mentors in database");
-            }
-            return Ok(mentors);
-        }
-
         /// <summary>Get user by his id in database.</summary>
         /// <param name="userId">Id of the student to be gotten.</param>
         [Authorize(Roles = "Mentor, Admin")]
-        [Authorize]
         [HttpGet]
         [Route("api/users/{userId}")]
         public UserDTO GetUserById(int userId)
@@ -66,20 +48,39 @@ namespace DanceCoolWebApiReact.Controllers
             return _userService.GetUserById(userId);
         }
 
+        /// <summary>Get user by his phoneNumber.</summary>
+        /// <param name="phoneNumber">phoneNumber of the user to be gotten.</param>
         [Authorize(Roles = "Mentor, Admin")]
+        [HttpGet]
         [Route("api/users/phone")]
         public UserDTO GetUserByPhoneNumber(string phoneNumber)
         {
             var user = _userService.GetUserByPhoneNumber(phoneNumber);
             return user;
         }
-         [Authorize(Roles = "Admin")]
+
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         [Route("api/users/search")]
         public IEnumerable<UserDTO> Search(string searchQuery)
         {
             var searchResult = new List<UserDTO>();
             return searchQuery == null ? searchResult : _userService.Search(searchQuery);
+        }
+
+        /// <summary>Get all roles from database.</summary>
+        [Authorize(Roles = "Mentor, Admin")]
+        [HttpGet]
+        [Route("api/roles/")]
+        public IActionResult GetAllRoles()
+        {
+            var roles = _userService.GetAllRoles();
+            if (roles== null)
+            {
+                return NotFound("Не знайдено жодної ролі");
+            }
+
+            return Ok(roles);
         }
 
         // POST: api/Users
@@ -103,16 +104,24 @@ namespace DanceCoolWebApiReact.Controllers
             }
         }
 
-        //// PUT: api/Users/5
-        //[HttpPut("{id}")]
-        //public void Put(int id, [FromBody] string value)
-        //{
-        //}
+        /// <summary>Changes user role.</summary>
+        /// <param name="userRoleToChange">Object that contains user id and new role id</param>
+        [Authorize(Roles = "Admin")]
+        [HttpPut]
+        [Route("api/user/changeuserrole")]
+        public IActionResult ChangeUserRole([FromBody] dynamic userRoleToChange)
+        {
+            if (!int.TryParse(userRoleToChange.userId.ToString(), out int userId))
+                return BadRequest("Невідомі дані про юзера");
 
-        //// DELETE: api/ApiWithActions/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //}
+            if (!int.TryParse(userRoleToChange.newRoleId.ToString(), out int newRoleId))
+                return BadRequest("Невідомі дані про роль");
+
+            if (userId < 1 || newRoleId < 1)
+                return BadRequest("Введено невірні дані");
+
+            return _userService.ChangeUserRole(userId, newRoleId) ? Ok() : StatusCode(500);
+        }
+
     }
 }

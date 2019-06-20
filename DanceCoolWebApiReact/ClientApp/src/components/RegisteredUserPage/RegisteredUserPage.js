@@ -3,9 +3,12 @@ import { connect } from 'react-redux';
 import { Route } from 'react-router';
 import { Tab, Nav, Row, Col, Container } from 'react-bootstrap';
 import { GroupList } from '../../containers/GroupList';
-import ManageUsersPage from '../../containers/ManageUsersPage';
+import ManageUsersPage from '../../containers/ManageUsersPage/ManageUsersPage';
 import GroupPage from '../../containers/GroupPage';
-import { AttendancePage } from '../AttendancePage/Attendances';
+import PaymentPage from '../PaymentPage/PaymentPage';
+import AttendancePage from '../AttendancePage/Attendances';
+import AbonnementsPage from '../Abonnemens/AbonnementsPage'
+
 
 class RegisteredUserPage extends Component {
     render() {
@@ -44,7 +47,7 @@ class RegisteredUserPage extends Component {
                                     <AttendancePage />
                                 </Tab.Pane>
                                 <Tab.Pane eventKey="Payments">
-                                    <div>Payments</div>
+                                    <PaymentPage />
                                 </Tab.Pane>
                                 <Tab.Pane eventKey="Groups">
                                     <Route path='/groups' component={GroupList} />
@@ -55,7 +58,7 @@ class RegisteredUserPage extends Component {
                                     <ManageUsersPage />
                                 </Tab.Pane>
                                 <Tab.Pane eventKey="Abonnements">
-                                    <div>Абонементи</div>
+                                    <AbonnementsPage/>
                                 </Tab.Pane>
                             </Tab.Content>
                         </Col>

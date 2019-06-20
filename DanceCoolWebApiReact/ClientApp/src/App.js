@@ -4,15 +4,16 @@ import Layout from './components/Layout';
 import { GuestPage } from './components/GuestComponent/GuestPage';
 import { GroupList } from './containers/GroupList';
 import GroupPage from './containers/GroupPage'
-import ManageUsersPage from './containers/ManageUsersPage';
+import ManageUsersPage from './containers/ManageUsersPage/ManageUsersPage';
 import RegisteredUserPage from './components/RegisteredUserPage/RegisteredUserPage'
-import { AttendancePage } from './components/AttendancePage/Attendances';
+import AttendancePage from './components/AttendancePage/Attendances';
 import Schedule from './components/GuestComponent/Schedule/Schedule';
 import AboutUs from './components/GuestComponent/AboutUs/AboutUs';
 import GroupsGuestPage from './components/GuestComponent/GroupsGuest/GroupsGuestPage';
 import MentorsGuestPage from './components/GuestComponent/MentorsGuest/MentorsGuestPage';
 import ContactsGuestPage from './components/GuestComponent/ContactsGuest/ContactsGuestPage';
 import StudentProfile from './components/Profiles/StudentProfile/StudentProfile';
+import PaymentPage from './components/PaymentPage/PaymentPage';
 
 export class App extends Component {
 
@@ -31,6 +32,7 @@ export class App extends Component {
         <Route exact path='/students/' component={ManageUsersPage} />
         <Route exact path='/attendances' component={AttendancePage} />
         <Route exact path='/student-profile/1' component={StudentProfile} />
+        <Route exact path='/payments/1' component={PaymentPage} />
       </Layout>
     );
   }

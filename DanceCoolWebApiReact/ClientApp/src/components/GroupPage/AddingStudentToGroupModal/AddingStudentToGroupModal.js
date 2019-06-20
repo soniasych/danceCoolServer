@@ -6,7 +6,7 @@ import {
     ModalFooter
 } from 'reactstrap';
 import { Tabs, Tab } from 'react-bootstrap';
-import { AddNewUserToGroupForm } from './AddNewUserToGroupForm';
+import AddNewUserToGroupForm from './AddNewUserToGroupForm';
 import ExistingSudentsTable from './ExistingSudentsTable';
 
 const AddingStudentToGroupModal = props => {

@@ -15,6 +15,7 @@ namespace DanceCoolDataAccessLogic.EfStructures.Entities
         public int Id { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime Date { get; set; }
+        [Required]
         [StringLength(1024)]
         public string Room { get; set; }
         public int? GroupId { get; set; }
