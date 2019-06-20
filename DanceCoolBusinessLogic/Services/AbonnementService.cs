@@ -33,6 +33,17 @@ namespace DanceCoolBusinessLogic.Services
             return abonnementDtos;
         }
 
+        public void AddAbonnement(string abonnementName, decimal price)
+        {
+            var abonnement = new Abonnement()
+            {
+                AbonnementName = abonnementName,
+                Price = price
+            };
+            db.Abonnements.AddEntity(abonnement);
+            db.Save();
+        }
+
         private AbonnementDTO AbonnementModelToAbonnementDTO(Abonnement abonnementModel) =>
             new AbonnementDTO(abonnementModel.Id,
                 abonnementModel.AbonnementName,

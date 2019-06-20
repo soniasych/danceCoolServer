@@ -7,6 +7,7 @@ import ManageUsersPage from '../../containers/ManageUsersPage/ManageUsersPage';
 import GroupPage from '../../containers/GroupPage';
 import PaymentPage from '../PaymentPage/PaymentPage';
 import AttendancePage from '../AttendancePage/Attendances';
+import AbonnementsPage from '../Abonnemens/AbonnementsPage'
 
 
 class RegisteredUserPage extends Component {
@@ -57,7 +58,7 @@ class RegisteredUserPage extends Component {
                                     <ManageUsersPage />
                                 </Tab.Pane>
                                 <Tab.Pane eventKey="Abonnements">
-                                    <div>Абонементи</div>
+                                    <AbonnementsPage/>
                                 </Tab.Pane>
                             </Tab.Content>
                         </Col>

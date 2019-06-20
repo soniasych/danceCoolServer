@@ -40,7 +40,7 @@ namespace DanceCoolWebApiReact.Controllers
             return _paymentService.GetPaymentsByUserSenderId(userSenderId);
         }
 
-        /// <summary>Changes Group skill level.</summary>
+        /// <summary>Adding new payment.</summary>
         /// <param name="addNewPaymentReqObject">Parameters for adding new payment. Must include userSenderId, userReceiverId and abonnementId</param>
         [Authorize]
         [HttpPost]

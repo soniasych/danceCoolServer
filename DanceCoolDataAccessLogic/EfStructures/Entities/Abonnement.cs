@@ -17,10 +17,6 @@ namespace DanceCoolDataAccessLogic.EfStructures.Entities
         public string AbonnementName { get; set; }
         [Column(TypeName = "decimal(18, 0)")]
         public decimal Price { get; set; }
-
-        [Required]
-        public decimal Price { get; set; }
-
         [InverseProperty("Abonnement")]
         public virtual ICollection<Payment> Payments { get; set; }
     }
