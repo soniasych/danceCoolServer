@@ -9,12 +9,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DanceCoolDataAccessLogic", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DanceCoolBusinessLogic", "DanceCoolBusinessLogic\DanceCoolBusinessLogic.csproj", "{B2787E82-C37F-4A0C-8445-0F929B6DD6BD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DanceCoolWebApiReact", "DanceCoolWebApiReact\DanceCoolWebApiReact.csproj", "{14A17CD4-C7CD-4E0C-915A-6C51A5510626}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{0BCE0C51-226E-4507-8662-1D8990658399}"
 	ProjectSection(SolutionItems) = preProject
 		Migrations.txt = Migrations.txt
 	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DanceCoolWebApi", "DanceCoolWebApi\DanceCoolWebApi.csproj", "{FD4312F9-9D94-47F3-9BB2-02101062893D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -34,10 +34,10 @@ Global
 		{B2787E82-C37F-4A0C-8445-0F929B6DD6BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B2787E82-C37F-4A0C-8445-0F929B6DD6BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B2787E82-C37F-4A0C-8445-0F929B6DD6BD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{14A17CD4-C7CD-4E0C-915A-6C51A5510626}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{14A17CD4-C7CD-4E0C-915A-6C51A5510626}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{14A17CD4-C7CD-4E0C-915A-6C51A5510626}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{14A17CD4-C7CD-4E0C-915A-6C51A5510626}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD4312F9-9D94-47F3-9BB2-02101062893D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD4312F9-9D94-47F3-9BB2-02101062893D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD4312F9-9D94-47F3-9BB2-02101062893D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD4312F9-9D94-47F3-9BB2-02101062893D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
