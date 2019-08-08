@@ -26,7 +26,7 @@ namespace DanceCoolDataAccessLogic.EfStructures.Context
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Data Source=DESKTOP-MSSKMVD\\SQLEXPRESS;Initial Catalog=DanceCool;Integrated Security=True");
+                optionsBuilder.UseSqlServer("Data Source=XPS15\\SQLEXPRESS;Initial Catalog=DanceCool;Integrated Security=True");
             }
         }
 
@@ -108,7 +108,7 @@ namespace DanceCoolDataAccessLogic.EfStructures.Context
             modelBuilder.Entity<User>(entity =>
             {
                 entity.HasIndex(e => e.PhoneNumber)
-                    .HasName("UQ__Users__85FB4E3822E7A5CD")
+                    .HasName("UQ__Users__85FB4E3892150191")
                     .IsUnique();
 
                 entity.Property(e => e.PhoneNumber).IsUnicode(false);
@@ -125,11 +125,11 @@ namespace DanceCoolDataAccessLogic.EfStructures.Context
             modelBuilder.Entity<UserCredential>(entity =>
             {
                 entity.HasIndex(e => e.Email)
-                    .HasName("UQ__UserCred__A9D1053487EC0EDD")
+                    .HasName("UQ__UserCred__A9D1053437E3744E")
                     .IsUnique();
 
                 entity.HasIndex(e => e.UserId)
-                    .HasName("UQ__UserCred__1788CC4D3446343A")
+                    .HasName("UQ__UserCred__1788CC4D5F1D2D86")
                     .IsUnique();
 
                 entity.HasOne(d => d.User)

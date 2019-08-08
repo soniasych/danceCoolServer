@@ -26,6 +26,7 @@ namespace DanceCoolDataAccessLogic.EfStructures.Entities
         [StringLength(17)]
         public string PhoneNumber { get; set; }
         public int RoleId { get; set; }
+        public int PayedLessons { get; set; }
 
         [ForeignKey("RoleId")]
         [InverseProperty("Users")]
