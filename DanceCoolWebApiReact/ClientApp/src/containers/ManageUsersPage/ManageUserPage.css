@@ -1,8 +1,0 @@
-.Manage-options-toolbar{
-    display: flex;
-    justify-content: left;
-}
-
-.selectedRow{
-    background-color: lightblue;
-}

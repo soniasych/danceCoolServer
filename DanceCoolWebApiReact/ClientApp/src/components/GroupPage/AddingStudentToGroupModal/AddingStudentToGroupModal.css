@@ -1,8 +1,0 @@
-ModalHeader {
-    display: flex;
-    justify-content: space-between;
-}
-
-.selectedRow {
-    background-color: #ffd3d3;
-}
